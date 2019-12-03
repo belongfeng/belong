@@ -1,0 +1,86 @@
+package com.belong.service.gen.controller;
+
+import cn.lioncity.platform.admin.base.common.controller.BaseController;
+import cn.lioncity.platform.common.dto.MyPageInfo;
+import cn.lioncity.platform.common.dto.Result;
+import com.belong.common.core.base.ResponseVO;
+import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import lombok.AllArgsConstructor;
+import ${package}.domain.${className}DO;
+import ${package}.dto.${className}DTO;
+import ${package}.service.I${className}Service;
+import ${package}.vo.${className}ListVO;
+import ${package}.vo.${className}VO;
+
+
+/**
+ * @Description:    ${comments}
+ * @Author:         ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:     ${author}
+ * @UpdateDate:     ${datetime}
+ * @UpdateRemark:   ${className}
+ * @Version: 1.0
+ */
+@Api(tags = "${tableComments}")
+@RestController
+@AllArgsConstructor
+@RequestMapping("/${classname}")
+@Slf4j
+public class ${className}Controller extends BaseController {
+    @Autowired
+    private final I${className}Service ${classname}Service;
+
+
+    @ApiOperation(value = "获取分页数据", notes = "权限标识 sys:${classname}:view")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页数", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "条数", dataType = "Integer", paramType = "query")
+    })
+    @PreAuthorize("hasAuthority('sys:${classname}:view')")
+    @GetMapping(value = "/list")
+    public ResponseVO<PageDataInfo<${className}ListVO>> list() {
+        Long pageNum = ServletUtils.getParameterToLong("pageNum");
+        Long pageSize = ServletUtils.getParameterToLong("pageSize");
+        if (StringUtils.isNull(pageNum) || StringUtils.isNull(pageSize)) {
+            throw new PageException("请填写分页参数！");
+        }
+        return ResponseVO.ok(Ipage2PageDataInfo(${classname}Service.select${classname}DOList(startPage(pageNum, pageSize), null), ${classname}ListVO.class));
+    }
+
+    @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:${classname}:edit")
+    @PostMapping(value = "")
+    @PreAuthorize("hasAuthority('sys:${classname}:edit')")
+    public ResponseVO save${className}(@RequestBody ${className}DTO ${classname}DTO) {
+            ${className}DO ${classname}DO = generator.convert(${classname}DTO, ${className}DO.class);
+        if (${classname}Service.save(${classname}DO)) {
+            return ResponseVO.ok();
+        }
+        return ResponseVO.failed();
+
+    }
+
+    @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:${classname}:view")
+    @PreAuthorize("hasAuthority('sys:${classname}:view')")
+    @GetMapping(value = "/{id}")
+    public ResponseVO<${className}VO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
+        if (StringUtils.isEmpty(id)) {
+            throw new WxAppletParameterLossException();
+        }
+        return ResponseVO.ok(generator.convert(${classname}Service.getById(id), ${className}VO.class));
+    }
+
+    @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:${classname}:remove")
+    @PreAuthorize("hasAuthority('sys:${classname}:remove')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseVO delete(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
+        if (${classname}Service.removeById(id)) {
+            return ResponseVO.ok();
+        }
+        return ResponseVO.failed();
+    }
+}

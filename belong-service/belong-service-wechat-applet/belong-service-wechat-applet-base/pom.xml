@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.group</groupId>
+        <artifactId>belong-service-wechat-applet</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.group</groupId>
+    <artifactId>belong-service-wechat-applet-base</artifactId>
+    <description>用于security区别服务</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-auth</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-swagger</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-service-wechat-applet-info-api</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

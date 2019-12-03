@@ -1,0 +1,14 @@
+-- 按钮父菜单ID
+set @parentId = REPLACE(UUID(),'-','');
+INSERT INTO `platform`.`sys_menu`(`id`, `parent_id`, `type`, `parent_ids`, `name`, `sort`, `href`, `icon`, `is_show`, `permission`, `remarks`, `create_date`, `update_date`, `del_flag`)
+SELECT @parentId,  '5a35c2e14c8740bebf5278e1e3f0e7f3', 1, NULL, '${tableComments}', 20, NULL, 'coach', '1', 'sys:${classname}:view', NULL, now(), now(), '0';
+
+INSERT INTO `platform`.`sys_menu`(`id`, `parent_id`, `type`, `parent_ids`, `name`, `sort`, `href`, `icon`, `is_show`, `permission`, `remarks`, `create_date`, `update_date`, `del_flag`)
+SELECT REPLACE(UUID(),'-',''), @parentId, 2, NULL, '增加', 20, NULL, 'btn-add', '1', 'sys:${classname}:edit', NULL, now(), now(), '0';
+INSERT INTO `platform`.`sys_menu`(`id`, `parent_id`, `type`, `parent_ids`, `name`, `sort`, `href`, `icon`, `is_show`, `permission`, `remarks`, `create_date`, `update_date`, `del_flag`)
+SELECT REPLACE(UUID(),'-',''), @parentId, 2, NULL, '修改', 20, NULL, 'btn-edit', '1', 'sys:${classname}:edit', NULL, now(), now(), '0';
+INSERT INTO `platform`.`sys_menu`(`id`, `parent_id`, `type`, `parent_ids`, `name`, `sort`, `href`, `icon`, `is_show`, `permission`, `remarks`, `create_date`, `update_date`, `del_flag`)
+SELECT REPLACE(UUID(),'-',''), @parentId, 2, NULL, '查看', 20, NULL, 'btn-show', '1', 'sys:${classname}:view', NULL, now(), now(), '0';
+INSERT INTO `platform`.`sys_menu`(`id`, `parent_id`, `type`, `parent_ids`, `name`, `sort`, `href`, `icon`, `is_show`, `permission`, `remarks`, `create_date`, `update_date`, `del_flag`)
+SELECT REPLACE(UUID(),'-',''), @parentId, 2, NULL, '删除', 20, NULL, 'btn-del', '1', 'sys:${classname}:remove', NULL, now(), now(), '0';
+

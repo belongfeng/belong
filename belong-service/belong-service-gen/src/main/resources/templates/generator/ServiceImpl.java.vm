@@ -1,0 +1,34 @@
+package com.belong.service.wechat.applet.info.serviceImpl;
+
+import cn.lioncity.platform.admin.rf.mapper.${className}Mapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
+import ${package}.domain.${className}DO;
+import ${package}.service.I${className}Service;
+import org.springframework.stereotype.Service;
+
+/**
+ * @Description:    ${comments}
+ * @Author:          ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:      ${author}
+ * @UpdateDate:     ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+@Service
+@Transactional(readOnly = true)
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}DO> implements I${className}Service {
+    /**
+     * 查询${className}DO列表
+     *
+     * @param ${className}DO
+     * @return ${className}DO集合
+     */
+    @Override
+    public IPage<${className}DO> select${className}DOList(IPage<${className}DO> page, QueryWrapper<${className}DO> queryWrapper){
+        return baseMapper.selectPage(page, queryWrapper);
+    }
+}

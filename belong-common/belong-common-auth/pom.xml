@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.group</groupId>
+        <artifactId>belong-common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.group</groupId>
+    <artifactId>belong-common-auth</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JSON工具类 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!--jwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+
+
+        <!-- redis模块-->
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-redis</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- core模块-->
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-core</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- util模块-->
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-util</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

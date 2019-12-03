@@ -1,0 +1,45 @@
+package ${package}.vo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+
+import java.io.Serializable;
+#if(${hasDatetime})
+import java.util.Date;
+#end
+#if(${hasBigDecimal})
+#end
+/**
+ * @Description:    ${comments}
+ * @Author:          ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:      ${author}
+ * @UpdateDate:     ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "${className}VO", description = "${tableComments}详情")
+public class ${className}VO implements Serializable {
+    private static final long serialVersionUID = -1L;
+
+    @ApiModelProperty(value = "id")
+    private String id;
+
+    #foreach ($column in $columns)
+        #if($column.attrname!="createBy"&&$column.attrname!="updateBy")
+        @ApiModelProperty(value = "$column.comments")
+            #if ($column.attrType=="Date")
+            @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm")
+            private $column.attrType $column.attrname;
+            #end
+            #if ($column.attrType!="Date")
+                private $column.attrType $column.attrname;
+            #end
+        #end
+    #end
+}

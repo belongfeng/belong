@@ -1,0 +1,25 @@
+package ${package}.service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+
+/**
+ * @Description:    ${comments}
+ * @Author:         ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:     ${author}
+ * @UpdateDate:      ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+public interface I${className}Service extends IService<${className}DO> {
+    /**
+     * 查询${className}DO列表
+     *
+     * @param ${className}DO
+     * @return ${className}DO集合
+     */
+
+    public IPage<${className}DO> select${className}DOList(IPage<${className}DO> page, QueryWrapper<${className}DO> queryWrapper);
+}

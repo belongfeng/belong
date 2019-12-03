@@ -1,0 +1,19 @@
+package com.belong.service.wechat.applet.info.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+import ${package}.domain.${className}DO;
+
+/**
+ * @Description:    ${comments}
+ * @Author:          ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:      ${author}
+ * @UpdateDate:     ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+@Mapper
+public interface ${className}Mapper extends BaseMapper<${className}DO> {
+}

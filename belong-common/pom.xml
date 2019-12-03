@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.group</groupId>
+        <artifactId>belong</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.group</groupId>
+    <artifactId>belong-common</artifactId>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>belong-common-redis</module>
+        <module>belong-common-stream</module>
+        <module>belong-common-mybatisplus</module>
+        <module>belong-common-datasource</module>
+        <module>belong-common-swagger</module>
+        <module>belong-common-auth</module>
+        <module>belong-common-util</module>
+        <module>belong-common-exception</module>
+        <module>belong-common-core</module>
+        <module>belong-common-log</module>
+        <module>belong-common-mongodb</module>
+        <module>belong-common-dozer</module>
+    </modules>
+</project>
