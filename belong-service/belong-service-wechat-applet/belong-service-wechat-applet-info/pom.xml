@@ -67,6 +67,10 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.group</groupId>
             <artifactId>belong-service-wechat-applet-info-api</artifactId>
             <version>${belong.version}</version>
@@ -111,6 +115,20 @@
         <dependency>
             <groupId>com.group</groupId>
             <artifactId>belong-common-dozer</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-redis</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-service-wechat-applet-base</artifactId>
             <version>${belong.version}</version>
         </dependency>
     </dependencies>

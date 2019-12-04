@@ -14,14 +14,14 @@ spring:
         locator:
           enabled: true
       routes:
-        #wxapplet 模块
-        - id: belong-wxapplet-websocket
-          uri: lb://belong-wxapplet-websocket
+        #微信小程序个人中心模块
+        - id: belong-service-wechat-applet-info
+          uri: lb://belong-service-wechat-applet-info
           predicates:
-            - Path=/wxapplet/websocket/**
+            - Path=/wechat/applet/info/**
           filters:
             # 限流配置
-            - StripPrefix=2
+            - StripPrefix=3
             - CacheRequest
             - name: RequestRateLimiter
               args:

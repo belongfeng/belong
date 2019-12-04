@@ -30,11 +30,11 @@ import java.util.Objects;
 public class AllFilter implements GlobalFilter, Ordered {
     @Autowired
     private StringRedisTemplate redisTemplate;
-    public static final String LIMIT_KEY = "Limit_KEY:";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         try {
+            redisTemplate.opsForValue().set("fengyu", "fengyu");
             ServerHttpRequest httpRequest = exchange.getRequest();
             String url = httpRequest.getURI().toString();
             log.info("拦截的请求为：{}", url);

@@ -14,4 +14,11 @@
     <modules>
         <module>belong-service-wechat-applet-api</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
 </project>

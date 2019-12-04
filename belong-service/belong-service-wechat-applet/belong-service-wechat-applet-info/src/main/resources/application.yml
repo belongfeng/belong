@@ -6,20 +6,19 @@ project:
   version: 1.0
   # 版权年份
   copyrightYear: 2019
-  #站点配置
-  site:
-    host: https://getoffer.xiliangmen.com
-    staticHost: https://getoffer.xiliangmen.com
-    whiteDomainList: localhost,xiliangmen.com
-    siteDirPath: /
   #swagger 文档配置
   swagger:
-    title: 熊猫体测微信小程序扫码以及个人中心接口
+    title: GetOffer微信小程序个人中心接口
     description: 开发人员太懒，没有写描述
     contactName: Fengyu
     contactEmail: 475788922@qq.com
     contactUrl: https://getoffer.xiliangmen.com/doc.html
     version: 1.0
+  wx:
+    applet:
+      configs:
+        appid: 123
+        secret: 456
 
 
 mybatis-plus:
@@ -42,4 +41,13 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+    #    日志打印
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+security:
+  jwt:
+    secret: k09BQnaF
+    expiration: 604800 #7Days

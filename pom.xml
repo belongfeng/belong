@@ -47,7 +47,9 @@
         <swagger-models.version>1.5.21</swagger-models.version>
         <swagger-annotations.version>1.5.21</swagger-annotations.version>
 
-
+        <!--weixin-java-->
+        <weixin-java-miniapp.version>3.5.0</weixin-java-miniapp.version>
+        <weixin-java-pay.version>3.5.0</weixin-java-pay.version>
     </properties>
     <!-- 依赖声明-->
     <dependencyManagement>
@@ -256,6 +258,18 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+
+            <!--weixin-java-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin-java-miniapp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-pay</artifactId>
+                <version>${weixin-java-pay.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

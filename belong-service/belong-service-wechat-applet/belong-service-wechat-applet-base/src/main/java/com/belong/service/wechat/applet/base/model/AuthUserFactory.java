@@ -1,6 +1,7 @@
 package com.belong.service.wechat.applet.base.model;
 
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 
 
 /**
@@ -26,7 +27,7 @@ public final class AuthUserFactory {
      * @author fengyu
      * @date 2019/12/3 17:33
      */
-    public static AuthUser create(WxUserInfoDO user) {
+    public static AuthUser create(WxUserInfoVO user) {
         return new AuthUser(
                 user.getId(),
                 user.getOpenId(),

@@ -1,9 +1,12 @@
 package com.belong.service.wechat.applet.info.api.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -61,4 +64,17 @@ public class WxUserInfoVO implements Serializable {
     private Boolean enabled;
     @ApiModelProperty(value = "备注 备注")
     private String remark;
+
+    /**
+     * 创建日期
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField("create_date")
+    @ApiModelProperty(value = "创建时间", required = false, hidden = true)
+    private Date createDate;
+
+    @TableField(exist = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String tokenPwd;
 }

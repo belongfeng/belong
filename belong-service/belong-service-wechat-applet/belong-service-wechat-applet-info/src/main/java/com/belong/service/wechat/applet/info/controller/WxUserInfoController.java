@@ -10,6 +10,7 @@ import com.belong.common.util.ServletUtils;
 import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.dto.WxUserInfoDTO;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
@@ -33,7 +34,7 @@ import lombok.AllArgsConstructor;
 @Api(tags = "微信用户信息表")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/wxUserInfo")
+@RequestMapping("/v1/db/wxUserInfo")
 @Slf4j
 public class WxUserInfoController extends BaseController {
     @Autowired
@@ -57,7 +58,7 @@ public class WxUserInfoController extends BaseController {
     }
 
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserInfo:edit")
-    @PostMapping(value = "")
+    @PostMapping(value = "/saveOrUpdate")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:edit')")
     public ResponseVO saveWxUserInfo(@RequestBody WxUserInfoDTO wxUserInfoDTO) {
         WxUserInfoDO wxUserInfoDO = generator.convert(wxUserInfoDTO, WxUserInfoDO.class);
@@ -70,7 +71,7 @@ public class WxUserInfoController extends BaseController {
 
     @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseVO<WxUserInfoVO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
             throw new WxAppletParameterLossException();
@@ -80,11 +81,21 @@ public class WxUserInfoController extends BaseController {
 
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserInfo:remove")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:remove')")
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/remove/{id}")
     public ResponseVO delete(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (wxUserInfoService.removeById(id)) {
             return ResponseVO.ok();
         }
         return ResponseVO.failed();
+    }
+
+    @ApiOperation(value = "根据openId获取用户信息", notes = "权限标识 sys:wxUserInfo:view")
+    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
+    @GetMapping(value = "/getWxUserInfoByOpenId/{openId}")
+    public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
+        if (StringUtils.isEmpty(openId)) {
+            throw new WxAppletParameterLossException();
+        }
+        return ResponseVO.ok(generator.convert(wxUserInfoService.getOne(new QueryWrapper<WxUserInfoDO>(WxUserInfoDO.builder().openId(openId).build())), WxUserInfoVO.class));
     }
 }

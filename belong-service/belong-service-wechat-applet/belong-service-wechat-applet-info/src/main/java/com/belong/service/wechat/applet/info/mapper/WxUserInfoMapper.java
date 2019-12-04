@@ -14,6 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
-@Mapper
 public interface WxUserInfoMapper extends BaseMapper<WxUserInfoDO> {
 }
