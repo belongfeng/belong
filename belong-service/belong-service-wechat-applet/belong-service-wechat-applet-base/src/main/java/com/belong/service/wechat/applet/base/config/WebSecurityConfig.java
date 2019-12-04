@@ -18,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
  * @Version: 1.0
  */
 @Configuration
-@Order(-50)
 public class WebSecurityConfig extends AbstractWebSecurityConfig {
     /**
      * @Description: 放过的资源接口请求路径，将不在验证关键字 Authorization
@@ -33,8 +32,8 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     public void configure(WebSecurity web) throws Exception {
         //忽略权限校验的访问路径
         web.ignoring()
-                .antMatchers(PermitAllUrl.permitAllUrl("/**/wxUserAuth/**","/**/db/**"));
-                //.antMatchers(HttpMethod.POST, "/*/user");
+                .antMatchers(PermitAllUrl.permitAllUrl("/**/wxUserAuth/**", "/**/db/**"));
+        //.antMatchers(HttpMethod.POST, "/*/user");
     }
 
     /**
@@ -49,7 +48,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/**/wxUserAuth/**","/**/db/**").permitAll();
+                .antMatchers(HttpMethod.POST, "/**/wxUserAuth/**", "/**/db/**").permitAll();
         //.antMatchers(HttpMethod.POST, "/*/authLogin/token").permitAll();
         super.configure(security);
     }

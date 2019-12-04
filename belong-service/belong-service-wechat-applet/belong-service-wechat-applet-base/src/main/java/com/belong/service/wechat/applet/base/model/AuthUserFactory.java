@@ -1,6 +1,5 @@
 package com.belong.service.wechat.applet.base.model;
 
-import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 
 

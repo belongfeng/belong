@@ -1,16 +1,15 @@
 package com.belong.service.wechat.applet.info.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.belong.common.core.base.BaseController;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.core.page.PageDataInfo;
 import com.belong.common.exception.base.PageException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.util.ServletUtils;
 import com.belong.common.util.StringUtils;
+import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.dto.WxUserInfoDTO;
-import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
@@ -36,7 +35,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/v1/db/wxUserInfo")
 @Slf4j
-public class WxUserInfoController extends BaseController {
+public class WxUserInfoController extends AppletController {
     @Autowired
     private final IWxUserInfoService wxUserInfoService;
 

@@ -18,6 +18,10 @@ import lombok.*;
 public class WeChatAppletLoginResultVO {
     @ApiModelProperty(name = "token", required = true)
     private String access_token;
+    @ApiModelProperty(name = "expires_in", value = "过期时间（秒）", required = true)
+    private Long expires_in;
+    @ApiModelProperty(name = "token_type", value = "token类型", required = true)
+    private String token_type;
     @ApiModelProperty(name = "userInfo", value = "微信用户信息")
     private WxUserInfoVO userInfo;
 }

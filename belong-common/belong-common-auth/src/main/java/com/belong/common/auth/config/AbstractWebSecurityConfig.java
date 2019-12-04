@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
-public  class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 用户信息服务
      */
