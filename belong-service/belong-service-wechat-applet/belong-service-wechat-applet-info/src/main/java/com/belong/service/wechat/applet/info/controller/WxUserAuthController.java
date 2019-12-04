@@ -7,6 +7,7 @@ import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatAppletLoginResultVO;
+import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
 import com.mysql.cj.util.StringUtils;
@@ -76,5 +77,23 @@ public class WxUserAuthController extends AppletController {
         return ResponseVO.ok(weChatAppletLoginResultVO);
     }
 
+    @PostMapping(value = "/completeLogin", produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "全量登录")
+    public ResponseVO<WeChatAppletLoginResultVO> registryUser(@RequestBody WeChatRegistryUserVO registryUser) {
+        if (com.belong.common.util.StringUtils.isNull(registryUser)) {
+            throw new WxAppletParameterLossException();
+        }
+        WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
+        WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
+        //完成授权
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        final String token = tokenUtil.generateToken(userDetails);
+        WeChatAppletLoginResultVO weChatAppletLoginResultVO = WeChatAppletLoginResultVO.builder().access_token(token).expires_in(tokenUtil.getExpiration()).token_type(TokenUtil.TOKEN_TYPE_BEARER).userInfo(generator.convert(wxUserInfoDO, WxUserInfoVO.class)).build();
+        return ResponseVO.ok(weChatAppletLoginResultVO);
+    }
 
 }

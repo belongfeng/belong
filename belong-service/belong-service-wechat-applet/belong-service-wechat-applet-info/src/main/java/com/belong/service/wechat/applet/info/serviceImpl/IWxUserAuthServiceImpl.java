@@ -2,10 +2,11 @@ package com.belong.service.wechat.applet.info.serviceImpl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.belong.common.exception.wxapplet.WxAppletException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +78,28 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         wxUserInfoDO.setEnabled(true);
         wxUserInfoDO.setDelFlag("0");
         wxUserInfoDO.setOpenId(wxMaJscode2SessionResult.getOpenid());
-        wxUserInfoService.save(wxUserInfoDO);
+        wxUserInfoService.saveOrUpdate(wxUserInfoDO);
+        return wxUserInfoDO;
+    }
+
+    @Override
+    public WxUserInfoDO userInfo(String sessionKey, WeChatRegistryUserVO registryUser) {
+        // 用户信息校验
+        if (!wxMaService.getUserService().checkUserInfo(sessionKey, registryUser.getRawData(), registryUser.getSignature())) {
+            throw new WxAppletParameterLossException();
+        }
+        // 解密用户信息
+        WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
+        WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(userInfo.getOpenId()).build()));
+        if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
+            wxUserInfoDO = new WxUserInfoDO();
+        }
+        wxUserInfoDO.setLastLoginTime(new Date());
+        wxUserInfoDO.setEnabled(true);
+        wxUserInfoDO.setDelFlag("0");
+        wxUserInfoDO.setNickName(userInfo.getNickName());
+        wxUserInfoDO.setOpenId(userInfo.getOpenId());
+        wxUserInfoService.saveOrUpdate(wxUserInfoDO);
         return wxUserInfoDO;
     }
 }
