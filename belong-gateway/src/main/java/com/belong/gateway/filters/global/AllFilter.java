@@ -1,18 +1,22 @@
 package com.belong.gateway.filters.global;
 
+import com.belong.common.core.constant.Constants;
 import com.belong.gateway.config.GatewayContext;
 import com.belong.gateway.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -31,21 +35,30 @@ public class AllFilter implements GlobalFilter, Ordered {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    /**
+     * 过滤的路径
+     */
+    private static final String[] SWAGGER_WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext","/actuator","/test","/wxUserAuth","/db/"};
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        try {
-            redisTemplate.opsForValue().set("fengyu", "fengyu");
-            ServerHttpRequest httpRequest = exchange.getRequest();
-            String url = httpRequest.getURI().toString();
-            log.info("拦截的请求为：{}", url);
-            //将path和body缓存到GatewayContext
-            GatewayContext gatewayContext = new GatewayContext();
-            gatewayContext.setPath(httpRequest.getPath().pathWithinApplication().value());
-            exchange.getAttributes().put("startTime", System.currentTimeMillis());
-            return returnMono(chain, exchange);
-        } catch (Exception e) {
-            return ResponseUtil.setUnauthorizedResponse(exchange, -1, "系统错误，请检查请求是否正确！");
+        ServerHttpRequest httpRequest = exchange.getRequest();
+        String url = httpRequest.getURI().toString();
+        log.info("请求方式：{},地址：{}", httpRequest.getMethod(), httpRequest.getURI().getPath());
+        //将path和body缓存到GatewayContext
+        //GatewayContext gatewayContext = new GatewayContext();
+        //gatewayContext.setPath(httpRequest.getPath().pathWithinApplication().value());
+        // 跳过不需要验证的路径
+        if (Arrays.asList(SWAGGER_WHITE_LIST).contains(url)) {
+            return chain.filter(exchange);
         }
+        String token = exchange.getRequest().getHeaders().getFirst(Constants.AUTHORIZATION);
+        //判断是否存在Token
+        if (StringUtils.isBlank(token) || !token.startsWith(Constants.TOKEN_TYPE_BEARER)) {
+            return ResponseUtil.setUnauthorizedResponse(exchange, 401, "请携带————》" + Constants.AUTHORIZATION);
+        }
+        exchange.getAttributes().put("startTime", System.currentTimeMillis());
+        return returnMono(chain, exchange);
     }
 
     /**

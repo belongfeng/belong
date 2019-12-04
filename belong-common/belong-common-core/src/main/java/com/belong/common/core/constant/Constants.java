@@ -39,8 +39,8 @@ public class Constants {
     public static final String TOKEN = "token";
 
     public static final String DEFAULT_CODE_KEY = "random_code_";
-
-
+    public static final String AUTHORIZATION = "authorization";
+    public static final String TOKEN_TYPE_BEARER = "Bearer";
     /**
      * 删除标记0：正常
      */
