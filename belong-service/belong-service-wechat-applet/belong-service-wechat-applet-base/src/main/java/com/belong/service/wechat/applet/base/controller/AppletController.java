@@ -2,6 +2,7 @@ package com.belong.service.wechat.applet.base.controller;
 
 import com.belong.common.auth.security.AuthenticationTokenFilter;
 import com.belong.common.core.base.BaseController;
+import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;

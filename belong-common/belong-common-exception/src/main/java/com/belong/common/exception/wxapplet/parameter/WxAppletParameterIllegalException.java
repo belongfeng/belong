@@ -15,7 +15,7 @@ public class WxAppletParameterIllegalException extends WxAppletException {
     private static final long serialVersionUID = 1L;
 
     public WxAppletParameterIllegalException(Object[] args) {
-        super("wxapplet.parameter.illegal", args);
+        super("wxapplet.parameter.definite.illegal", args);
     }
 
     public WxAppletParameterIllegalException() {

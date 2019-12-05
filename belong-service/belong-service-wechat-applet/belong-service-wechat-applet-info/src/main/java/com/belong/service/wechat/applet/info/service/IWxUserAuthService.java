@@ -1,8 +1,11 @@
 package com.belong.service.wechat.applet.info.service;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
+import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * @Classname WxUserAuthService
@@ -36,4 +39,27 @@ public interface IWxUserAuthService {
      * @return
      */
     WxUserInfoDO userInfo(String sessionKey, WeChatRegistryUserVO registryUser);
+
+    /**
+     * 微信用户绑定的手机号相关信息
+     *
+     * @param sessionKey
+     * @param registryUser
+     * @return
+     */
+    WxMaPhoneNumberInfo userPhone(String appid, String sessionKey, WeChatRegistryUserVO registryUser) ;
+
+    /**
+     * 获取微信小程序接口调用凭证
+     *
+     * @return
+     */
+    String getAccessToken(String appid);
+
+    /**
+     * 发送微信小程序模板消息
+     *
+     * @return
+     */
+    void sendWxMaTemplateMessage(String appid, WxMaTemplateMessage wxMaTemplateMessage) throws WxErrorException;
 }

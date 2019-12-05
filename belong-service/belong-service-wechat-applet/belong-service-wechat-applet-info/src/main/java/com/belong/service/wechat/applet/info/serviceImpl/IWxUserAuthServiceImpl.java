@@ -2,10 +2,13 @@ package com.belong.service.wechat.applet.info.serviceImpl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterIllegalException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
+import com.belong.common.exception.wxapplet.request.WxappletrequestException;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
@@ -102,5 +105,30 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         wxUserInfoDO.setOpenId(userInfo.getOpenId());
         wxUserInfoService.saveOrUpdate(wxUserInfoDO);
         return wxUserInfoDO;
+    }
+
+    @Override
+    public WxMaPhoneNumberInfo userPhone(String appid, String sessionKey, WeChatRegistryUserVO registryUser) {
+        // 用户信息校验
+        if (!wxMaService.getUserService().checkUserInfo(sessionKey, registryUser.getRawData(), registryUser.getSignature())) {
+            throw new WxAppletParameterIllegalException();
+        }
+        // 解密
+        WxMaPhoneNumberInfo phoneNoInfo = wxMaService.getUserService().getPhoneNoInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
+        return phoneNoInfo;
+    }
+
+    @Override
+    public String getAccessToken(String appid) {
+        try {
+            return wxMaService.getAccessToken();
+        } catch (WxErrorException e) {
+            throw new WxappletrequestException("获取AccessToken失败");
+        }
+    }
+
+    @Override
+    public void sendWxMaTemplateMessage(String appid, WxMaTemplateMessage wxMaTemplateMessage) throws WxErrorException {
+        wxMaService.getMsgService().sendTemplateMsg(wxMaTemplateMessage);
     }
 }
