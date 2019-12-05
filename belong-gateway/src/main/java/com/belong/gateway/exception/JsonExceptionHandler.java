@@ -92,7 +92,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
      * @date 2019/11/27 10:28
      */
     private String buildMessage(ServerRequest request, Throwable ex) {
-        StringBuilder message = new StringBuilder("服务请求失败,[");
+        StringBuilder message = new StringBuilder("请求超时，请刷新网络重试,[");
         message.append(request.methodName());
         message.append(" ");
         message.append(request.uri());

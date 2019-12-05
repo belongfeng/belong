@@ -31,7 +31,11 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
     /**
      * 白名单
      */
-    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator", "/test", "/v1/api/wxUserAuth/baseLogin", "/v1/api/wxUserAuth/completeLogin"};
+    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator"
+            , "/test", "/v1/api/wxUserAuth/baseLogin"
+            , "/v1/api/wxUserAuth/completeLogin"
+            ,"/v1/api/wxUserAuth/userInfo"
+    };
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -39,7 +43,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
             ServerHttpRequest httpRequest = exchange.getRequest();
             String url = httpRequest.getURI().toString();
             log.info("请求方式=======>{},过滤后的地址=======>{}", httpRequest.getMethod(), url);
-            String path= httpRequest.getURI().getPath();
+            String path = httpRequest.getURI().getPath();
             // 跳过不需要验证的路径
             if (Arrays.asList(WHITE_LIST).contains(path)) {
                 return chain.filter(exchange);
