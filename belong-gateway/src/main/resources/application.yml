@@ -21,8 +21,9 @@ spring:
             - Path=/wechat/applet/info/**
           filters:
             # 限流配置
-            - StripPrefix=3
             - CacheRequest
+            - StripPrefix=3
+            - WxAppletFilter
             - name: RequestRateLimiter
               args:
                 key-resolver: '#{@remoteAddrKeyResolver}'

@@ -32,31 +32,15 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class AllFilter implements GlobalFilter, Ordered {
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    /**
-     * 过滤的路径
-     */
-    private static final String[] SWAGGER_WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext","/actuator","/test","/wxUserAuth","/db/"};
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest httpRequest = exchange.getRequest();
         String url = httpRequest.getURI().toString();
-        log.info("请求方式：{},地址：{}", httpRequest.getMethod(), httpRequest.getURI().getPath());
+        log.info("请求方式：{},过滤前的地址：{}", httpRequest.getMethod(), url);
         //将path和body缓存到GatewayContext
-        //GatewayContext gatewayContext = new GatewayContext();
-        //gatewayContext.setPath(httpRequest.getPath().pathWithinApplication().value());
+        GatewayContext gatewayContext = new GatewayContext();
+        gatewayContext.setPath(httpRequest.getPath().pathWithinApplication().value());
         // 跳过不需要验证的路径
-        if (Arrays.asList(SWAGGER_WHITE_LIST).contains(url)) {
-            return chain.filter(exchange);
-        }
-        String token = exchange.getRequest().getHeaders().getFirst(Constants.AUTHORIZATION);
-        //判断是否存在Token
-        if (StringUtils.isBlank(token) || !token.startsWith(Constants.TOKEN_TYPE_BEARER)) {
-            return ResponseUtil.setUnauthorizedResponse(exchange, 401, "请携带————》" + Constants.AUTHORIZATION);
-        }
         exchange.getAttributes().put("startTime", System.currentTimeMillis());
         return returnMono(chain, exchange);
     }
@@ -76,8 +60,7 @@ public class AllFilter implements GlobalFilter, Ordered {
             Long startTime = exchange.getAttribute("startTime");
             if (startTime != null) {
                 long executeTime = (System.currentTimeMillis() - startTime);
-                log.info("处理参数耗时：{}ms", executeTime);
-                log.info("状态码：{}", Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
+                log.info("网关转发耗时：{}ms,状态码：{}", executeTime,Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
             }
         }));
     }
