@@ -38,7 +38,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
         return (exchange, chain) -> {
             ServerHttpRequest httpRequest = exchange.getRequest();
             String url = httpRequest.getURI().toString();
-            log.info("请求方式：{},过滤后的地址：{}", httpRequest.getMethod(), url);
+            log.info("请求方式=======>{},过滤后的地址=======>{}", httpRequest.getMethod(), url);
             String path= httpRequest.getURI().getPath();
             // 跳过不需要验证的路径
             if (Arrays.asList(WHITE_LIST).contains(path)) {
@@ -47,7 +47,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
             String token = exchange.getRequest().getHeaders().getFirst(Constants.AUTHORIZATION);
             //判断是否存在Token
             if (StringUtils.isBlank(token) || !token.startsWith(Constants.TOKEN_TYPE_BEARER)) {
-                return ResponseUtil.setUnauthorizedResponse(exchange, 401, "请携带关键字————》" + Constants.AUTHORIZATION);
+                return ResponseUtil.setUnauthorizedResponse(exchange, 401, "请携带关键字=======>" + Constants.AUTHORIZATION);
             }
             return chain.filter(exchange);
         };

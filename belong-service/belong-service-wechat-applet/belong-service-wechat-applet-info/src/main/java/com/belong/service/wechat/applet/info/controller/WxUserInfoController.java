@@ -73,7 +73,7 @@ public class WxUserInfoController extends AppletController {
     @GetMapping(value = "/get/{id}")
     public ResponseVO<WxUserInfoVO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterLossException(new String[]{"id"});
         }
         return ResponseVO.ok(generator.convert(wxUserInfoService.getById(id), WxUserInfoVO.class));
     }
@@ -93,7 +93,7 @@ public class WxUserInfoController extends AppletController {
     @GetMapping(value = "/getWxUserInfoByOpenId/{openId}")
     public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
         if (StringUtils.isEmpty(openId)) {
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterLossException(new String[]{"openId"});
         }
         return ResponseVO.ok(generator.convert(wxUserInfoService.getOne(new QueryWrapper<WxUserInfoDO>(WxUserInfoDO.builder().openId(openId).build())), WxUserInfoVO.class));
     }

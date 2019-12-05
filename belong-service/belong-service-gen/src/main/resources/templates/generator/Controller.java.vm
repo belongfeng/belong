@@ -69,7 +69,7 @@ public class ${className}Controller extends BaseController {
     @GetMapping(value = "/{id}")
     public ResponseVO<${className}VO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterLossException(new String[]{"id"});
         }
         return ResponseVO.ok(generator.convert(${classname}Service.getById(id), ${className}VO.class));
     }

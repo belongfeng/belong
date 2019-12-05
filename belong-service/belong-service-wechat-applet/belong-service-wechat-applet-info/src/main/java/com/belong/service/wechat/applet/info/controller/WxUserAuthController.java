@@ -62,7 +62,7 @@ public class WxUserAuthController extends AppletController {
     @ApiOperation(value = "基础登录")
     public ResponseVO<WeChatAppletLoginResultVO> baseLogin(@RequestBody String code) {
         if (StringUtils.isNullOrEmpty(code)) {
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterLossException(new String[] {"code"});
         }
         WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(code);
         WxUserInfoDO wxUserInfoDO = wxUserAuthService.baseUserInfo(result);

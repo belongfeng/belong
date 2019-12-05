@@ -15,7 +15,7 @@ public class WxAppletParameterLossException extends WxAppletException {
     private static final long serialVersionUID = 1L;
 
     public WxAppletParameterLossException(Object[] args) {
-        super("wxapplet.parameter.loss", args);
+        super("wxapplet.parameter.definite.loss", args);
     }
 
     public WxAppletParameterLossException() {

@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.belong.common.exception.wxapplet.parameter.WxAppletParameterIllegalException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
@@ -44,7 +45,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     @Override
     public WxMaJscode2SessionResult wxUserLoginByCode(String code) {
         if (StringUtils.isBlank(code)) {
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterLossException(new String[]{"code"});
         }
         try {
             WxMaJscode2SessionResult session = wxMaService.getUserService().getSessionInfo(code);
@@ -54,7 +55,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
             //TODO 可以增加自己的逻辑，关联业务相关数据
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
-            throw new WxAppletParameterLossException();
+            throw new WxAppletParameterIllegalException(new String[]{"code"});
         }
     }
 

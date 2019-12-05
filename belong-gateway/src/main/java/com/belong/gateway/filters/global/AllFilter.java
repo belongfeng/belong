@@ -36,7 +36,7 @@ public class AllFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest httpRequest = exchange.getRequest();
         String url = httpRequest.getURI().toString();
-        log.info("请求方式：{},过滤前的地址：{}", httpRequest.getMethod(), url);
+        log.info("请求方式=======>{},过滤前的地址=======>{}", httpRequest.getMethod(), url);
         //将path和body缓存到GatewayContext
         GatewayContext gatewayContext = new GatewayContext();
         gatewayContext.setPath(httpRequest.getPath().pathWithinApplication().value());
@@ -60,7 +60,7 @@ public class AllFilter implements GlobalFilter, Ordered {
             Long startTime = exchange.getAttribute("startTime");
             if (startTime != null) {
                 long executeTime = (System.currentTimeMillis() - startTime);
-                log.info("网关转发耗时：{}ms,状态码：{}", executeTime,Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
+                log.info("网关转发耗时=======>{}ms,状态码=======>{}", executeTime,Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
             }
         }));
     }
