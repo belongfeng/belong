@@ -5,7 +5,7 @@ import com.belong.common.core.base.ResponseVO;
 import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.model.AuthUserFactory;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
-import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOService;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,13 +35,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * 用户服务
      */
     @Autowired
-    private RemoteWxUserInfoDOService remoteWxUserInfoDOService;
+    private RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
     @Autowired
     private StringRedisTemplate redisTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String openid) {
-        ResponseVO<WxUserInfoVO> responseVO = remoteWxUserInfoDOService.getWxUserInfoByOpenId(openid);
+        ResponseVO<WxUserInfoVO> responseVO = remoteWxUserInfoDOFService.getWxUserInfoByOpenId(openid);
         if (StringUtils.isNull(responseVO) || StringUtils.isNull(responseVO.getData())) {
             throw new UsernameNotFoundException(String.format("No user found with openid '%s'.", openid));
         } else {

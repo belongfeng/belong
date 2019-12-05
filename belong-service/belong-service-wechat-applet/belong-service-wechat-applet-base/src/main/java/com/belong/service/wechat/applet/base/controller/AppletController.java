@@ -2,9 +2,8 @@ package com.belong.service.wechat.applet.base.controller;
 
 import com.belong.common.auth.security.AuthenticationTokenFilter;
 import com.belong.common.core.base.BaseController;
-import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
-import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOService;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +23,7 @@ public class AppletController extends BaseController {
      * 用户服务
      */
     @Autowired
-    protected RemoteWxUserInfoDOService remoteWxUserInfoDOService;
+    protected RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
 
     public String getUserId() {
         return getUserInfo().getId();
@@ -33,7 +32,7 @@ public class AppletController extends BaseController {
     public WxUserInfoVO getUserInfo() {
         String tokenHeader = getRequest().getHeader(AuthenticationTokenFilter.TOKEN_HEADER);
         UserDetails userDetails = tokenUtil.getUserDetails(tokenHeader);
-        WxUserInfoVO user = remoteWxUserInfoDOService.getWxUserInfoByOpenId(userDetails.getUsername()).getData();
+        WxUserInfoVO user = remoteWxUserInfoDOFService.getWxUserInfoByOpenId(userDetails.getUsername()).getData();
         return user;
     }
 }

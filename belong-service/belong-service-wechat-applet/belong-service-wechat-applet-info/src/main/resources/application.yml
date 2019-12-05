@@ -19,6 +19,11 @@ project:
       configs:
         appid: 123
         secret: 456
+    pay:
+      appId: 123
+      mchId: 123
+      mchKey: 123
+      keyPath: 123
 
 
 mybatis-plus:

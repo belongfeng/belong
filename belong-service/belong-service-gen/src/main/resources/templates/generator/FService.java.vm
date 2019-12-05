@@ -1,0 +1,34 @@
+package ${package}.feign;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.belong.common.core.base.ResponseVO;
+import com.belong.common.core.constant.ServiceNameConstants;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.belong.common.core.page.PageDataInfo;
+import java.util.Map;
+/**
+ * @Description:    ${comments}Feign服务层
+ * @Author:         ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:     ${author}
+ * @UpdateDate:      ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+@FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = Remote${className}DOFallbackFactory.class)
+public interface Remote${className}DOFService {
+    @GetMapping("/v1/db/${classname}/list")
+    public ResponseVO<PageDataInfo<${className}ListVO>> list(@RequestParam Map<String, Object> map);
+
+    @PostMapping("/v1/db/${classname}/saveOrUpdate")
+    public ResponseVO saveOrUpdate(@RequestBody ${className}VO ${classname}VO);
+
+    @GetMapping("/v1/db/${classname}/get/{id}")
+    public ResponseVO<${className}VO> get(@RequestParam("id") String id);
+
+    @GetMapping("/v1/db/${classname}/remove/{id}")
+    public ResponseVO remove(@RequestParam("id") String id);
+
+}

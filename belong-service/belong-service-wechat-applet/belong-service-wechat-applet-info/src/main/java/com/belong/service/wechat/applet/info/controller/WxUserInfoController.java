@@ -10,6 +10,7 @@ import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.dto.WxUserInfoDTO;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
@@ -19,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -38,6 +42,9 @@ import lombok.AllArgsConstructor;
 public class WxUserInfoController extends AppletController {
     @Autowired
     private final IWxUserInfoService wxUserInfoService;
+
+    @Autowired
+    private final RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
 
 
     @ApiOperation(value = "获取分页数据", notes = "权限标识 sys:wxUserInfo:view")
@@ -59,8 +66,8 @@ public class WxUserInfoController extends AppletController {
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserInfo:edit")
     @PostMapping(value = "/saveOrUpdate")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:edit')")
-    public ResponseVO saveWxUserInfo(@RequestBody WxUserInfoDTO wxUserInfoDTO) {
-        WxUserInfoDO wxUserInfoDO = generator.convert(wxUserInfoDTO, WxUserInfoDO.class);
+    public ResponseVO saveOrUpdate(@RequestBody WxUserInfoVO wxUserInfoVO) {
+        WxUserInfoDO wxUserInfoDO = generator.convert(wxUserInfoVO, WxUserInfoDO.class);
         if (wxUserInfoService.saveOrUpdate(wxUserInfoDO)) {
             return ResponseVO.ok();
         }
@@ -71,7 +78,7 @@ public class WxUserInfoController extends AppletController {
     @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
     @GetMapping(value = "/get/{id}")
-    public ResponseVO<WxUserInfoVO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
+    public ResponseVO<WxUserInfoVO> get(@ApiParam(required = true, value = "id") @RequestParam("id") String id) {
         if (StringUtils.isEmpty(id)) {
             throw new WxAppletParameterLossException(new String[]{"id"});
         }
@@ -80,8 +87,8 @@ public class WxUserInfoController extends AppletController {
 
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserInfo:remove")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:remove')")
-    @DeleteMapping(value = "/remove/{id}")
-    public ResponseVO delete(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
+    @GetMapping(value = "/remove/{id}")
+    public ResponseVO remove(@ApiParam(required = true, value = "id") @RequestParam("id") String id) {
         if (wxUserInfoService.removeById(id)) {
             return ResponseVO.ok();
         }
@@ -91,7 +98,7 @@ public class WxUserInfoController extends AppletController {
     @ApiOperation(value = "根据openId获取用户信息", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
     @GetMapping(value = "/getWxUserInfoByOpenId/{openId}")
-    public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
+    public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@ApiParam(required = true, value = "openId") @RequestParam("openId") String openId) {
         if (StringUtils.isEmpty(openId)) {
             throw new WxAppletParameterLossException(new String[]{"openId"});
         }

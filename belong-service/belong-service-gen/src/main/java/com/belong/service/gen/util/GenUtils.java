@@ -62,6 +62,8 @@ public class GenUtils {
         templates.add("/templates/generator/Service.java.vm");
         templates.add("/templates/generator/ServiceImpl.java.vm");
         templates.add("/templates/generator/Controller.java.vm");
+        templates.add("/templates/generator/FService.java.vm");
+        templates.add("/templates/generator/FallbackFactory.java.vm");
         templates.add("/templates/generator/menu.sql.vm");
         return templates;
     }
@@ -94,7 +96,7 @@ public class GenUtils {
         List<ColumnDO> columsList = new ArrayList<>();
         List<ColumnDO> allColumsList = new ArrayList<>();
         Set<String> dataTypes = new HashSet<>(), columnNames = new HashSet<>();
-        List<String> baseColumnNames = Arrays.asList("create_date", "update_date", "del_flag", "id","version");
+        List<String> baseColumnNames = Arrays.asList("create_date", "update_date", "del_flag", "id", "version");
         for (Map<String, String> column : columns) {
             columnNames.add(column.get("columnName"));
             ColumnDO columnDO = new ColumnDO();
@@ -281,7 +283,9 @@ public class GenUtils {
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
-
+        if (template.contains("FService.java.vm")) {
+            return "feign" + File.separator + "Remote"+className + "DOFService.java";
+        }
         if (template.contains("Controller.java.vm")) {
             String packController = config.get("controller");
             if (StringUtils.isNotBlank(packController)) {
@@ -358,7 +362,18 @@ public class GenUtils {
                 return "serviceImpl" + File.separator + className + "ServiceImpl.java";
             }
         }
-
+        if (template.contains("DO.java.vm")) {
+            String packController = config.get("do");
+            if (StringUtils.isNotBlank(packController)) {
+                packController += packController.replace(".", File.separator) + File.separator;
+                return packController + className + "DO.java";
+            } else {
+                return "domain" + File.separator + className + "DO.java";
+            }
+        }
+        if (template.contains("FallbackFactory.java.vm")) {
+            return "feign/factory" + File.separator + "Remote"+className + "DOFallbackFactory.java";
+        }
 
         if (template.contains("Mapper.xml.vm")) {
             String packController = config.get("mapperXml");

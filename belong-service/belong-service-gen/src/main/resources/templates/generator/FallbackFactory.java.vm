@@ -1,0 +1,45 @@
+package ${package}.api.feign.factory;
+
+import feign.hystrix.FallbackFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import com.belong.common.core.base.ResponseVO;
+/**
+ * @Description:    ${comments}Feign服务层
+ * @Author:         ${author}
+ * @CreateDate:      ${datetime}
+ * @UpdateUser:     ${author}
+ * @UpdateDate:      ${datetime}
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
+
+@Slf4j
+@Component
+public class Remote${className}DOFallbackFactory implements FallbackFactory<Remote${className}DOFService> {
+    @Override
+    public Remote${className}FService create(Throwable throwable) {
+        log.error("回退原因{}", throwable.getMessage());
+        return new Remote${className}DOFService() {
+            @Override
+            public ResponseVO<PageDataInfo<${className}ListVO>> list(Map<String, Object> map) {
+                return null;
+            }
+
+            @Override
+            public ResponseVO saveOrUpdate(${className}VO ${classname}VO) {
+                return null;
+            }
+
+            @Override
+            public ResponseVO<${className}VO> get(String id) {
+                return null;
+            }
+
+            @Override
+            public ResponseVO remove(String id) {
+                return null;
+            }
+        };
+    }
+}

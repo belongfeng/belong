@@ -35,10 +35,10 @@ public class WxMaAutoConfiguration {
     @Bean
     public WxPayService wxPayConfig() {
         WxPayConfig payConfig = new WxPayConfig();
-        payConfig.setAppId(StringUtils.trimToNull(env.getProperty("sys.wx.pay.appId")));
-        payConfig.setMchId(StringUtils.trimToNull(env.getProperty("sys.wx.pay.mchId")));
-        payConfig.setMchKey(StringUtils.trimToNull(env.getProperty("sys.wx.pay.mchKey")));
-        payConfig.setKeyPath(StringUtils.trimToNull(env.getProperty("sys.wx.pay.keyPath")));
+        payConfig.setAppId(StringUtils.trimToNull(env.getProperty("project.wx.pay.appId")));
+        payConfig.setMchId(StringUtils.trimToNull(env.getProperty("project.wx.pay.mchId")));
+        payConfig.setMchKey(StringUtils.trimToNull(env.getProperty("project.wx.pay.mchKey")));
+        payConfig.setKeyPath(StringUtils.trimToNull(env.getProperty("project.wx.pay.keyPath")));
         // 可以指定是否使用沙箱环境
         payConfig.setUseSandboxEnv(false);
         WxPayService wxPayService = new WxPayServiceImpl();
