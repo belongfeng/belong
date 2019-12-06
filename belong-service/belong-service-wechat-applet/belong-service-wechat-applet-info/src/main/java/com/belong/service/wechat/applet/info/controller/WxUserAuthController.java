@@ -91,6 +91,7 @@ public class WxUserAuthController extends AppletController {
         }
         WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
         WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
+        //生成令牌
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
         );

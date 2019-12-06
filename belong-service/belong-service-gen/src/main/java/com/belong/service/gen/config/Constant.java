@@ -14,6 +14,5 @@ public class Constant {
     public static class Generator {
         // 自动去除表前缀
         public static String AUTO_REOMVE_PRE = "true";
-
     }
 }
