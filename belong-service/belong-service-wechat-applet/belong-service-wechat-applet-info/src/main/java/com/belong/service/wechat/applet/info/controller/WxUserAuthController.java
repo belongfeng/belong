@@ -86,6 +86,9 @@ public class WxUserAuthController extends AppletController {
         if (com.belong.common.util.StringUtils.isNull(registryUser)) {
             throw new WxAppletParameterLossException();
         }
+        if (StringUtils.isNullOrEmpty(registryUser.getCode())) {
+            throw new WxAppletParameterLossException(new String[]{"code"});
+        }
         WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
         WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
         final Authentication authentication = authenticationManager.authenticate(
