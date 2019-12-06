@@ -30,7 +30,6 @@ public class FeignHeadersInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-
         HttpServletRequest request = getHttpServletRequest();
 
         if (Objects.isNull(request)) {
