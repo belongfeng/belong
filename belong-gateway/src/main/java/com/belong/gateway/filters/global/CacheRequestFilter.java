@@ -22,9 +22,7 @@ import java.util.List;
  * @Description: 参数分离拦截
  * @Author: fengyu
  * @CreateDate: 2019/9/16 13:35
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/9/16 13:35
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component
@@ -35,7 +33,7 @@ public class CacheRequestFilter extends AbstractGatewayFilterFactory<CacheReques
 
     @Override
     public String name() {
-        return "CacheRequest";
+        return "CacheRequest" ;
     }
 
     @Override

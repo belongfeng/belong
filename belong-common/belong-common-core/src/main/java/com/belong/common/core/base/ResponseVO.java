@@ -12,9 +12,7 @@ import java.io.Serializable;
  * @Description: 响应信息主体
  * @Author: fengyu
  * @CreateDate: 2019/11/20 15:25
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/20 15:25
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @ToString

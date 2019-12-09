@@ -42,21 +42,46 @@ eureka:
       #defaultZone: http://belongEureka13141.com:13141/eureka/,http://belongEureka13142.com:13142/eureka/,http://belongEureka13143.com:13143/eureka/
   instance:
     instance-id:  ${spring.application.name}:${server.port}
-    prefer-ip-address: true     #访问路径可以显示IP地址      
+    prefer-ip-address: true     #访问路径可以显示IP地址
 
 ribbon:
-  OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
-  ReadTimeout: 3000   #负载均衡超时时间，默认值5000
-  ConnectTimeout: 2500 #ribbon请求连接的超时时间，默认值2000
-  MaxAutoRetries: 0     #对当前实例的重试次数，默认0
-  MaxAutoRetriesNextServer: 1 #对切换实例的重试次数，默认1
+  eager-load:
+    enabled: true
+  #说明：同一台实例的最大自动重试次数，默认为1次，不包括首次
+  MaxAutoRetries: 0
+  #说明：要重试的下一个实例的最大数量，默认为1，不包括第一次被调用的实例
+  MaxAutoRetriesNextServer: 0
+  #说明：是否所有的操作都重试，默认为true
+  OkToRetryOnAllOperations: false
+  #说明：从注册中心刷新服务器列表信息的时间间隔，默认为2000毫秒，即2秒
+  ServerListRefreshInterval: 2000
+  #说明：使用Apache HttpClient连接超时时间，单位为毫秒
+  ConnectTimeout: 3000
+  #说明：使用Apache HttpClient读取的超时时间，单位为毫秒
+  ReadTimeout: 3000
+
 hystrix:
+  #全局默认配置
   command:
     default:  #default全局有效，service id指定应用有效
+      #线程隔离相关
       execution:
+        #是否给方法执行设置超时时间，默认为true。一般我们不要改。
         timeout:
           enabled: true
+        #配置请求隔离的方式，这里是默认的线程池方式。还有一种信号量的方式semaphore，使用比较少。
         isolation:
+          strategy: threadPool
           thread:
-            timeoutInMilliseconds: 6000 #断路器超时时间，默认1000ms
+            #方式执行的超时时间，默认为1000毫秒，在实际场景中需要根据情况设置
+            timeoutInMilliseconds: 10000
+            #发生超时时是否中断方法的执行，默认值为true。不要改。
+            interruptOnTimeout: true
+            #是否在方法执行被取消时中断方法，默认值为false。没有实际意义，默认就好！
+            interruptOnCancel: false
 
+  circuitBreaker:   #熔断器相关配置
+    enabled: true   #是否启动熔断器，默认为true，false表示不要引入Hystrix。
+    requestVolumeThreshold: 20     #启用熔断器功能窗口时间内的最小请求数，假设我们设置的窗口时间为10秒，
+    sleepWindowInMilliseconds: 5000    #所以此配置的作用是指定熔断器打开后多长时间内允许一次请求尝试执行，官方默认配置为5秒。
+    errorThresholdPercentage: 50   #窗口时间内超过50%的请求失败后就会打开熔断器将后续请求快速失败掉,默认配置为50

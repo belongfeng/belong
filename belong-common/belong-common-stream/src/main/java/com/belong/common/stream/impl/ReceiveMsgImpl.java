@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
  * @Description:
  * @Author: fengyu
  * @CreateDate: 2019/11/27 15:55
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 15:55
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

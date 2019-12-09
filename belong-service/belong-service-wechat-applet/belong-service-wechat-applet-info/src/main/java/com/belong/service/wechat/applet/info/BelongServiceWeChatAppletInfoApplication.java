@@ -11,9 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Description: 微信小程序个人中心服务以及扫码服务启动类
  * @Author: fengyu
  * @CreateDate: 2019/10/28 15:27
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/28 15:27
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}, scanBasePackages = {"com.belong"})

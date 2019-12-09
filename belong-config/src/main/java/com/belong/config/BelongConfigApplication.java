@@ -9,9 +9,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * @Description: 配置中心服务启动类
  * @Author: fengyu
  * @CreateDate: 2019/10/28 15:32
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/28 15:32
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @EnableDiscoveryClient

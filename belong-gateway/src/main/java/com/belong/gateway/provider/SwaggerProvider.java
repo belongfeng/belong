@@ -16,16 +16,14 @@ import java.util.List;
  * @Description: 获取swagger需要展示的服务信息
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:19
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:19
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component
 @Primary
 @AllArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
-    public static final String API_URI = "/v2/api-docs";
+    public static final String API_URI = "/v2/api-docs" ;
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
 

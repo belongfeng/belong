@@ -14,9 +14,7 @@ import java.util.Set;
  * @Description: 类型转换器
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:21
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:21
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class Convert {
@@ -830,20 +828,20 @@ public class Convert {
         String[] digit = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
         String[][] unit = {{"元", "万", "亿"}, {"", "拾", "佰", "仟"}};
 
-        String head = n < 0 ? "负" : "";
+        String head = n < 0 ? "负" : "" ;
         n = Math.abs(n);
 
-        String s = "";
+        String s = "" ;
         for (int i = 0; i < fraction.length; i++) {
             s += (digit[(int) (Math.floor(n * 10 * Math.pow(10, i)) % 10)] + fraction[i]).replaceAll("(零.)+", "");
         }
         if (s.length() < 1) {
-            s = "整";
+            s = "整" ;
         }
         int integerPart = (int) Math.floor(n);
 
         for (int i = 0; i < unit[0].length && integerPart > 0; i++) {
-            String p = "";
+            String p = "" ;
             for (int j = 0; j < unit[1].length && n > 0; j++) {
                 p = digit[integerPart % 10] + unit[1][j] + p;
                 integerPart = integerPart / 10;

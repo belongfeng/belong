@@ -8,9 +8,7 @@ import java.lang.annotation.*;
  * @Description: 自定义多数据源切换注解
  * @Author: fengyu
  * @CreateDate: 2019/11/20 14:31
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/20 14:31
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

@@ -13,9 +13,7 @@ import java.net.SocketAddress;
  * @Description: 网络工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:08
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:08
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @AllArgsConstructor
@@ -23,7 +21,7 @@ import java.net.SocketAddress;
 @Slf4j
 public class NetUtils {
 
-    private static final String LOCAL_IP = "127.0.0.1";
+    private static final String LOCAL_IP = "127.0.0.1" ;
 
     /**
      * 方法实现说明:检查远程端口是否可用

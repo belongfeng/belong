@@ -15,9 +15,7 @@ import java.util.Set;
  * @Description: dozer实现类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 14:35
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 14:35
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

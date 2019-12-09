@@ -22,9 +22,7 @@ import java.lang.reflect.Method;
  * @Description: redis切面
  * @Author: fengyu
  * @CreateDate: 2019/11/27 15:12
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 15:12
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

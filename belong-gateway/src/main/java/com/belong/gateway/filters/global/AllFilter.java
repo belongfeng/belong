@@ -24,9 +24,7 @@ import java.util.Objects;
  * @Description: 全局拦截
  * @Author: fengyu
  * @CreateDate: 2019/9/17 9:33
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/9/17 9:33
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j
@@ -60,7 +58,7 @@ public class AllFilter implements GlobalFilter, Ordered {
             Long startTime = exchange.getAttribute("startTime");
             if (startTime != null) {
                 long executeTime = (System.currentTimeMillis() - startTime);
-                log.info("网关转发耗时=======>{}ms,状态码=======>{}", executeTime,Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
+                log.info("网关转发耗时=======>{}ms,状态码=======>{}", executeTime, Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
             }
         }));
     }

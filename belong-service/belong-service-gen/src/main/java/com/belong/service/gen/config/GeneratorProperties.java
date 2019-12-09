@@ -7,15 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
-
-* @Description:    GeneratorProperties
-* @Author:         fengyu
-* @CreateDate:     2019/11/27 16:46
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/11/27 16:46
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: GeneratorProperties
+ * @Author: fengyu
+ * @CreateDate: 2019/11/27 16:46
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/11/27 16:46
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 @Component
 @ConfigurationProperties(prefix = "sys")
 @Data

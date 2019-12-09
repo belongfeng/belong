@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
  * @Description: 数据源切换处理
  * @Author: fengyu
  * @CreateDate: 2019/10/22 17:37
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/22 17:37
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j

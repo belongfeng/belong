@@ -8,9 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * @Description: 获取i18n资源文件
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:30
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:30
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class MessageUtils {

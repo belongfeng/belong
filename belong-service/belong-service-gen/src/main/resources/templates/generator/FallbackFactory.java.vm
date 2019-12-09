@@ -4,16 +4,14 @@ import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import com.belong.common.core.base.ResponseVO;
+
 /**
- * @Description:    ${comments}Feign服务层
- * @Author:         ${author}
+ * @Description:     ${comments}
+ * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:     ${author}
  * @UpdateDate:      ${datetime}
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
-
 @Slf4j
 @Component
 public class Remote${className}DOFallbackFactory implements FallbackFactory<Remote${className}DOFService> {

@@ -14,9 +14,7 @@ import java.util.Map;
  * @Description: 配置处理工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:24
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:24
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class YamlUtil {

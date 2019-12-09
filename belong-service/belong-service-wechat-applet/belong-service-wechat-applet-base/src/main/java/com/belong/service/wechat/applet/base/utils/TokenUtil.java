@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
  * @Description: The type Token util.
  * @Author: fengyu
  * @CreateDate: 2019/12/4 11:25
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 11:25
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

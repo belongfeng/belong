@@ -15,7 +15,7 @@ public class AuthUser extends AbstractAuthUser {
     /**
      * 用户默认角色
      */
-    private static final String TRIP_USER_ROLE = "ROLE_USER";
+    private static final String TRIP_USER_ROLE = "ROLE_USER" ;
     /**
      * id
      */

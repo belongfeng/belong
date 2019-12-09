@@ -21,9 +21,7 @@ import java.util.List;
  * @Description: 重写gateway异常处理
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:27
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:27
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration

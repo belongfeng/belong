@@ -13,9 +13,7 @@ import java.util.List;
  * @Description: PageDataInfo
  * @Author: fengyu
  * @CreateDate: 2019/11/28 14:35
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 14:35
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Data

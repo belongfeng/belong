@@ -16,9 +16,7 @@ import java.util.Map;
  * @Description: 将异常处理为json
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:27
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:27
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j
@@ -119,7 +117,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
         map.put("code", status);
         map.put("msg", errorMessage);
         map.put("data", null);
-        log.error(map.toString());
+        log.error("请求发生异常---->{}", map.toString());
         return map;
     }
 }

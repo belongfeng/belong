@@ -27,9 +27,7 @@ import java.util.zip.ZipOutputStream;
  * @Description: 代码生成器 工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 16:46
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 16:46
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class GenUtils {
@@ -284,15 +282,15 @@ public class GenUtils {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
         if (template.contains("FService.java.vm")) {
-            return "feign" + File.separator + "Remote"+className + "DOFService.java";
+            return "feign" + File.separator + "Remote" + className + "DOFService.java" ;
         }
         if (template.contains("Controller.java.vm")) {
             String packController = config.get("controller");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "Controller.java";
+                return packController + className + "Controller.java" ;
             } else {
-                return "controller" + File.separator + className + "Controller.java";
+                return "controller" + File.separator + className + "Controller.java" ;
             }
         }
 
@@ -301,36 +299,36 @@ public class GenUtils {
             String packController = config.get("service");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + "I" + className + "Service.java";
+                return packController + "I" + className + "Service.java" ;
             } else {
-                return "service" + File.separator + "I" + className + "Service.java";
+                return "service" + File.separator + "I" + className + "Service.java" ;
             }
         }
         if (template.contains("DO.java.vm")) {
             String packController = config.get("do");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "DO.java";
+                return packController + className + "DO.java" ;
             } else {
-                return "domain" + File.separator + className + "DO.java";
+                return "domain" + File.separator + className + "DO.java" ;
             }
         }
         if (template.contains("DTO.java.vm")) {
             String packController = config.get("dto");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "DTO.java";
+                return packController + className + "DTO.java" ;
             } else {
-                return "dto" + File.separator + className + "DTO.java";
+                return "dto" + File.separator + className + "DTO.java" ;
             }
         }
         if (template.contains("ListVO.java.vm")) {
             String packController = config.get("vo");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "ListVO.java";
+                return packController + className + "ListVO.java" ;
             } else {
-                return "vo" + File.separator + className + "ListVO.java";
+                return "vo" + File.separator + className + "ListVO.java" ;
             }
         }
 
@@ -338,9 +336,9 @@ public class GenUtils {
             String packController = config.get("vo");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "VO.java";
+                return packController + className + "VO.java" ;
             } else {
-                return "vo" + File.separator + className + "VO.java";
+                return "vo" + File.separator + className + "VO.java" ;
             }
         }
 
@@ -348,74 +346,74 @@ public class GenUtils {
             String packController = config.get("mapper");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "Mapper.java";
+                return packController + className + "Mapper.java" ;
             } else {
-                return "mapper" + File.separator + className + "Mapper.java";
+                return "mapper" + File.separator + className + "Mapper.java" ;
             }
         }
         if (template.contains("ServiceImpl.java.vm")) {
             String packController = config.get("serviceImpl");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "ServiceImpl.java";
+                return packController + className + "ServiceImpl.java" ;
             } else {
-                return "serviceImpl" + File.separator + className + "ServiceImpl.java";
+                return "serviceImpl" + File.separator + className + "ServiceImpl.java" ;
             }
         }
         if (template.contains("DO.java.vm")) {
             String packController = config.get("do");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "DO.java";
+                return packController + className + "DO.java" ;
             } else {
-                return "domain" + File.separator + className + "DO.java";
+                return "domain" + File.separator + className + "DO.java" ;
             }
         }
         if (template.contains("FallbackFactory.java.vm")) {
-            return "feign/factory" + File.separator + "Remote"+className + "DOFallbackFactory.java";
+            return "feign/factory" + File.separator + "Remote" + className + "DOFallbackFactory.java" ;
         }
 
         if (template.contains("Mapper.xml.vm")) {
             String packController = config.get("mapperXml");
             if (StringUtils.isNotBlank(packController)) {
                 packController += packController.replace(".", File.separator) + File.separator;
-                return packController + className + "Mapper.xml";
+                return packController + className + "Mapper.xml" ;
             } else {
-                return "mapperXml" + File.separator + className + "Mapper.xml";
+                return "mapperXml" + File.separator + className + "Mapper.xml" ;
             }
         }
         if (template.contains("menu.sql.vm")) {
-            return className.toLowerCase() + "_menu.sql";
+            return className.toLowerCase() + "_menu.sql" ;
         }
 
 
         if (template.contains("list.html.vm")) {
             return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + packageName
-                    + File.separator + classname + File.separator + classname + ".html";
+                    + File.separator + classname + File.separator + classname + ".html" ;
         }
         if (template.contains("add.html.vm")) {
             return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + packageName
-                    + File.separator + classname + File.separator + "add.html";
+                    + File.separator + classname + File.separator + "add.html" ;
         }
         if (template.contains("edit.html.vm")) {
             return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + packageName
-                    + File.separator + classname + File.separator + "edit.html";
+                    + File.separator + classname + File.separator + "edit.html" ;
         }
 
         if (template.contains("list.js.vm")) {
             return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js"
                     + File.separator + "appjs" + File.separator + packageName + File.separator + classname
-                    + File.separator + classname + ".js";
+                    + File.separator + classname + ".js" ;
         }
         if (template.contains("add.js.vm")) {
             return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js"
                     + File.separator + "appjs" + File.separator + packageName + File.separator + classname
-                    + File.separator + "add.js";
+                    + File.separator + "add.js" ;
         }
         if (template.contains("edit.js.vm")) {
             return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "js"
                     + File.separator + "appjs" + File.separator + packageName + File.separator + classname
-                    + File.separator + "edit.js";
+                    + File.separator + "edit.js" ;
         }
 
 
@@ -423,7 +421,7 @@ public class GenUtils {
     }
 
     public static void main(String[] args) {
-        String str = "表名:rf_train_trainee,备注:训练出席球员,描述:俱乐部----->训练课------>训练------->预期出席球员";
+        String str = "表名:rf_train_trainee,备注:训练出席球员,描述:俱乐部----->训练课------>训练------->预期出席球员" ;
         System.out.println(str.substring(str.indexOf("备注:") + 3, str.indexOf(",描述")));
     }
 }

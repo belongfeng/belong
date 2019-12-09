@@ -20,9 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @Description: spring-security配置
  * @Author: fengyu
  * @CreateDate: 2019/11/28 10:40
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 10:40
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @EnableWebSecurity

@@ -40,9 +40,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
      * @Description:
      * @Author: fengyu
      * @CreateDate: 2019/12/4 15:05
-     * @UpdateUser: fengyu
      * @UpdateDate: 2019/12/4 15:05
-     * @UpdateRemark: 修改内容
      * @Version: 1.0
      */
     @Override
@@ -66,9 +64,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
      * @Description:
      * @Author: fengyu
      * @CreateDate: 2019/12/4 15:23
-     * @UpdateUser: fengyu
      * @UpdateDate: 2019/12/4 15:23
-     * @UpdateRemark: 修改内容
      * @Version: 1.0
      */
     @Override

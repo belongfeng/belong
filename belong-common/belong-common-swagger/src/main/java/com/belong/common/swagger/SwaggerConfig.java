@@ -26,9 +26,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
  * @Description:
  * @Author: fengyu
  * @CreateDate: 2019/9/25 15:27
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/9/25 15:27
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration

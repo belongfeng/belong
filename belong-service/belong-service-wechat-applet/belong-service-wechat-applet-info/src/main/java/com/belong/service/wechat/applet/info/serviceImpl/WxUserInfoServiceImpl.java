@@ -11,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 /**
- * @Description:    微信用户信息表
- * @Author:          BelongFeng
- * @CreateDate:      2019-12-03 09:52:04
- * @UpdateUser:      BelongFeng
- * @UpdateDate:     2019-12-03 09:52:04
- * @UpdateRemark: 修改内容
+ * @Description: 微信用户信息表
+ * @Author: BelongFeng
+ * @CreateDate: 2019-12-03 09:52:04
+ * @UpdateUser: BelongFeng
+ * @UpdateDate: 2019-12-03 09:52:04
  * @Version: 1.0
  */
 @Service
@@ -29,7 +28,7 @@ public class WxUserInfoServiceImpl extends ServiceImpl<WxUserInfoMapper, WxUserI
      * @return WxUserInfoDO集合
      */
     @Override
-    public IPage<WxUserInfoDO> selectWxUserInfoDOList(IPage<WxUserInfoDO> page, QueryWrapper<WxUserInfoDO> queryWrapper){
+    public IPage<WxUserInfoDO> selectWxUserInfoDOList(IPage<WxUserInfoDO> page, QueryWrapper<WxUserInfoDO> queryWrapper) {
         return baseMapper.selectPage(page, queryWrapper);
     }
 }

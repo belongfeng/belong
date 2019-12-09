@@ -11,12 +11,10 @@ import java.util.Date;
 #if(${hasBigDecimal})
 #end
 /**
- * @Description:    ${comments}
+ * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:      ${author}
- * @UpdateDate:     ${datetime}
- * @UpdateRemark: 修改内容
+ * @UpdateDate:      ${datetime}
  * @Version: 1.0
  */
 @Data

@@ -9,9 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @Description: 网关服务启动类
  * @Author: fengyu
  * @CreateDate: 2019/10/28 15:31
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/28 15:31
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @EnableDiscoveryClient

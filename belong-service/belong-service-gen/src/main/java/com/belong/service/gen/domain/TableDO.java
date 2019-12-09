@@ -3,15 +3,14 @@ package com.belong.service.gen.domain;
 import java.util.List;
 
 /**
-
-* @Description:    表数据
-* @Author:         fengyu
-* @CreateDate:     2019/11/27 16:37
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/11/27 16:37
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: 表数据
+ * @Author: fengyu
+ * @CreateDate: 2019/11/27 16:37
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/11/27 16:37
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 public class TableDO {
     // 表的名称
     private String tableName;

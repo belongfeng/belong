@@ -7,14 +7,14 @@ import com.belong.common.core.constant.ServiceNameConstants;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.belong.common.core.page.PageDataInfo;
+
 import java.util.Map;
+
 /**
- * @Description:    ${comments}Feign服务层
- * @Author:         ${author}
+ * @Description:     ${comments}
+ * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:     ${author}
  * @UpdateDate:      ${datetime}
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = Remote${className}DOFallbackFactory.class)
@@ -26,9 +26,9 @@ public interface Remote${className}DOFService {
     public ResponseVO saveOrUpdate(@RequestBody ${className}VO ${classname}VO);
 
     @GetMapping("/v1/db/${classname}/get/{id}")
-    public ResponseVO<${className}VO> get(@RequestParam("id") String id);
+    public ResponseVO<${className}VO> get(@PathVariable("id") String id);
 
     @GetMapping("/v1/db/${classname}/remove/{id}")
-    public ResponseVO remove(@RequestParam("id") String id);
+    public ResponseVO remove(@PathVariable("id") String id);
 
 }

@@ -33,9 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: 微信小程序登录
  * @Author: fengyu
  * @CreateDate: 2019/12/4 14:27
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 14:27
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Api(tags = "微信用户登录")
@@ -80,6 +78,10 @@ public class WxUserAuthController extends AppletController {
         return ResponseVO.ok(weChatAppletLoginResultVO);
     }
 
+    /**
+     * @param registryUser
+     * @return
+     */
     @PostMapping(value = "/completeLogin", produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "敏感信息登录")
     public ResponseVO<WeChatAppletLoginResultVO> registryUser(@RequestBody WeChatRegistryUserVO registryUser) {
@@ -106,9 +108,7 @@ public class WxUserAuthController extends AppletController {
      * @Description: 获取用户信息接口
      * @Author: fengyu
      * @CreateDate: 2019/12/5 11:01
-     * @UpdateUser: fengyu
      * @UpdateDate: 2019/12/5 11:01
-     * @UpdateRemark: 修改内容
      * @Version: 1.0
      */
     @ApiOperation(value = "获取用户信息")

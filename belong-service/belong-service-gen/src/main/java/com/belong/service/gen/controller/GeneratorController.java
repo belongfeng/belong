@@ -19,9 +19,7 @@ import java.util.Map;
  * @Description: 代码生成
  * @Author: fengyu
  * @CreateDate: 2019/11/27 16:37
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 16:37
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @RequestMapping("/gen")
@@ -32,7 +30,7 @@ public class GeneratorController {
 
     @RequestMapping()
     String generator() {
-        return "generator/list";
+        return "generator/list" ;
     }
 
     @ResponseBody

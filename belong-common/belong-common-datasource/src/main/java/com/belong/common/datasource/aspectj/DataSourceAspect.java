@@ -18,9 +18,7 @@ import java.util.Optional;
  * @Description: 多数据源切换处理
  * @Author: fengyu
  * @CreateDate: 2019/10/22 15:56
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/22 15:56
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Aspect

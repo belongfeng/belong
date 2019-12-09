@@ -7,9 +7,7 @@ import com.belong.common.util.i18n.MessageUtils;
  * @Description: 基础异常, 用于区分不同模块异常
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:10
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:10
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class BaseException extends RuntimeException {

@@ -14,16 +14,14 @@ import java.util.Map;
  * @Description: 全局读取配置
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:21
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:21
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration
 @Slf4j
 public class GateWayGlobal {
 
-    private static String NAME = "application.yml";
+    private static String NAME = "application.yml" ;
 
     /**
      * 当前对象实例
@@ -67,7 +65,7 @@ public class GateWayGlobal {
             Map<?, ?> yamlMap = null;
             try {
                 if (StringUtils.isNotNull(env) && StringUtils.isNotEmpty(env)) {
-                    NAME = "application-" + env + ".yml";
+                    NAME = "application-" + env + ".yml" ;
                     log.debug("配置环境为：" + NAME);
                 }
                 yamlMap = YamlUtil.loadYaml(NAME);

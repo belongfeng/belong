@@ -20,9 +20,7 @@ import feign.RequestTemplate;
  * @Description: 加上该注解 ，则不需要FeignClient里面加属性configuration
  * @Author: fengyu
  * @CreateDate: 2019/12/4 16:07
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 16:07
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration

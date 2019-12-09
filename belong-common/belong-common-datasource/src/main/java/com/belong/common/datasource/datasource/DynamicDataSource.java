@@ -9,9 +9,7 @@ import java.util.Map;
  * @Description: 动态数据源
  * @Author: fengyu
  * @CreateDate: 2019/11/20 14:31
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/20 14:31
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {

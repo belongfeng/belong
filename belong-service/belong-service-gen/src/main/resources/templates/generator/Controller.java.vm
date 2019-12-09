@@ -18,12 +18,10 @@ import ${package}.vo.${className}VO;
 
 
 /**
- * @Description:    ${comments}
- * @Author:         ${author}
+ * @Description:     ${comments}
+ * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:     ${author}
- * @UpdateDate:     ${datetime}
- * @UpdateRemark:   ${className}
+ * @UpdateDate:      ${datetime}
  * @Version: 1.0
  */
 @Api(tags = "${tableComments}")
@@ -53,7 +51,7 @@ public class ${className}Controller extends BaseController {
     }
 
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:${classname}:edit")
-    @PostMapping(value = "")
+    @PostMapping(value = "/saveOrUpdate")
     ##@PreAuthorize("hasAuthority('sys:${classname}:edit')")
     public ResponseVO saveOrUpdate(@RequestBody ${className}VO ${classname}VO) {
             ${className}DO ${classname}DO = generator.convert(${classname}VO, ${className}DO.class);
@@ -66,8 +64,8 @@ public class ${className}Controller extends BaseController {
 
     @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:${classname}:view")
     ##@PreAuthorize("hasAuthority('sys:${classname}:view')")
-    @GetMapping(value = "/{id}")
-    public ResponseVO<${className}VO> get(@ApiParam(required = true, value = "id") @RequestParam("id") String id) {
+    @GetMapping(value = "/get/{id}")
+    public ResponseVO<${className}VO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
             throw new WxAppletParameterLossException(new String[]{"id"});
         }
@@ -76,8 +74,8 @@ public class ${className}Controller extends BaseController {
 
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:${classname}:remove")
     ##@PreAuthorize("hasAuthority('sys:${classname}:remove')")
-    @DeleteMapping(value = "/{id}")
-    public ResponseVO remove(@ApiParam(required = true, value = "id") @RequestParam("id") String id) {
+    @DeleteMapping(value = "/remove/{id}")
+    public ResponseVO remove(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (${classname}Service.removeById(id)) {
             return ResponseVO.ok();
         }

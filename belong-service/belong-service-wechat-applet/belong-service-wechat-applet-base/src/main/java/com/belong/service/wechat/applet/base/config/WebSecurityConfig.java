@@ -12,9 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
  * @Description: spring-security配置
  * @Author: fengyu
  * @CreateDate: 2019/12/4 16:03
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 16:03
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration
@@ -23,9 +21,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
      * @Description: 放过的资源接口请求路径，将不在验证关键字 Authorization
      * @Author: fengyu
      * @CreateDate: 2019/12/4 16:11
-     * @UpdateUser: fengyu
      * @UpdateDate: 2019/12/4 16:11
-     * @UpdateRemark: 修改内容
      * @Version: 1.0
      */
     @Override

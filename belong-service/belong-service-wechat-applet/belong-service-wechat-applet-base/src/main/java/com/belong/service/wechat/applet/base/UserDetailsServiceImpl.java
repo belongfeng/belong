@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
  * @Description: Security User Detail Service
  * @Author: fengyu
  * @CreateDate: 2019/12/4 11:44
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 11:44
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Service

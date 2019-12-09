@@ -18,9 +18,7 @@ import java.util.Arrays;
  * @Description: 微信小程序拦截器
  * @Author: fengyu
  * @CreateDate: 2019/12/5 10:07
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/5 10:07
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component
@@ -34,7 +32,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
     private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator"
             , "/test", "/v1/api/wxUserAuth/baseLogin"
             , "/v1/api/wxUserAuth/completeLogin"
-            ,"/v1/api/wxUserAuth/userInfo"
+            , "/v1/api/wxUserAuth/userInfo"
     };
 
     @Override

@@ -8,9 +8,7 @@ import java.util.Set;
  * @Description: doczer转换接口
  * @Author: fengyu
  * @CreateDate: 2019/11/27 14:37
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 14:37
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public interface IGenerator {

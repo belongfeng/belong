@@ -7,10 +7,7 @@ import com.belong.service.wechat.applet.info.api.feign.factory.RemoteWxUserInfoD
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,9 +15,7 @@ import java.util.Map;
  * @Description: 微信用户信息Feign服务层
  * @Author: fengyu
  * @CreateDate: 2019/12/4 11:12
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/4 11:12
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = RemoteWxUserInfoDOFallbackFactory.class)
@@ -32,11 +27,11 @@ public interface RemoteWxUserInfoDOFService {
     public ResponseVO saveOrUpdate(@RequestBody WxUserInfoVO wxUserInfoVO);
 
     @GetMapping("/v1/db/wxUserInfo/get/{id}")
-    public ResponseVO<WxUserInfoVO> get(@RequestParam("id") String id);
+    public ResponseVO<WxUserInfoVO> get(@PathVariable("id") String id);
 
     @GetMapping("/v1/db/wxUserInfo/remove/{id}")
-    public ResponseVO remove(@RequestParam("id") String id);
+    public ResponseVO remove(@PathVariable("id") String id);
 
     @GetMapping("/v1/db/wxUserInfo/getWxUserInfoByOpenId/{openId}")
-    public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@RequestParam("openId") String openId);
+    public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@PathVariable("openId") String openId);
 }

@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Description: Security User
  * @Author: fengyu
  * @CreateDate: 2019/11/28 10:24
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 10:24
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public abstract class AbstractAuthUser implements UserDetails {

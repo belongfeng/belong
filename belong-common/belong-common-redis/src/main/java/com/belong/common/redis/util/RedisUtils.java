@@ -12,9 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @Description: Redis工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 14:52
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 14:52
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

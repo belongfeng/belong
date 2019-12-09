@@ -6,12 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 import ${package}.domain.${className}DO;
 
 /**
- * @Description:    ${comments}
+ * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:      ${author}
- * @UpdateDate:     ${datetime}
- * @UpdateRemark: 修改内容
+ * @UpdateDate:      ${datetime}
  * @Version: 1.0
  */
 @Mapper

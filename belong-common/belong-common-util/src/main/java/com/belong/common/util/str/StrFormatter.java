@@ -6,13 +6,11 @@ import com.belong.common.util.StringUtils;
  * @Description: 字符串格式化
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:22
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:22
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class StrFormatter {
-    public static final String EMPTY_JSON = "{}";
+    public static final String EMPTY_JSON = "{}" ;
     public static final char C_BACKSLASH = '\\';
     public static final char C_DELIM_START = '{';
     public static final char C_DELIM_END = '}';

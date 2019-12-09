@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
  * @Description: spring工具类 方便在非spring管理环境中获取bean
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:21
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:21
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Component

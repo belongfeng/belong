@@ -17,9 +17,7 @@ import java.net.InetSocketAddress;
  * @Description: WebSocketUtil工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/19 10:42
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/19 10:42
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class WebSocketUtil {

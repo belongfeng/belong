@@ -5,12 +5,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 /**
- * @Description:    ${comments}
- * @Author:         ${author}
+ * @Description:     ${comments}
+ * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:     ${author}
  * @UpdateDate:      ${datetime}
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public interface I${className}Service extends IService<${className}DO> {

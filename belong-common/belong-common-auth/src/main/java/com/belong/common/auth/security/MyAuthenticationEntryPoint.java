@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
-
-* @Description:    The type My authentication entry point.
-* @Author:         fengyu
-* @CreateDate:     2019/12/3 15:04
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/12/3 15:04
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: The type My authentication entry point.
+ * @Author: fengyu
+ * @CreateDate: 2019/12/3 15:04
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/12/3 15:04
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

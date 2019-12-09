@@ -23,9 +23,7 @@ import java.util.Date;
  * @Description: web层通用数据处理
  * @Author: fengyu
  * @CreateDate: 2019/11/27 16:17
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 16:17
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j

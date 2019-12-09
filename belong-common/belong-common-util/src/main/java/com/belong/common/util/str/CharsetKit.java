@@ -9,24 +9,22 @@ import java.nio.charset.StandardCharsets;
  * @Description: 字符集工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/26 17:21
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/26 17:21
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class CharsetKit {
     /**
      * ISO-8859-1
      */
-    public static final String ISO_8859_1 = "ISO-8859-1";
+    public static final String ISO_8859_1 = "ISO-8859-1" ;
     /**
      * UTF-8
      */
-    public static final String UTF_8 = "UTF-8";
+    public static final String UTF_8 = "UTF-8" ;
     /**
      * GBK
      */
-    public static final String GBK = "GBK";
+    public static final String GBK = "GBK" ;
 
     /**
      * ISO-8859-1

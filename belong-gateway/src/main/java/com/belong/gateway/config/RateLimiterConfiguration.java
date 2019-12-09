@@ -11,9 +11,7 @@ import reactor.core.publisher.Mono;
  * @Description: 路由限流配置
  * @Author: fengyu
  * @CreateDate: 2019/9/19 13:53
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/9/19 13:53
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Configuration

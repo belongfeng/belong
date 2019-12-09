@@ -19,13 +19,11 @@ import reactor.core.publisher.Mono;
  * @Description: 解决跨域问题
  * @Author: fengyu
  * @CreateDate: 2019/10/29 15:15
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/10/29 15:15
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class Cors {
-    private static final String MAX_AGE = "18000L";
+    private static final String MAX_AGE = "18000L" ;
 
     @Bean
     public WebFilter corsFilter() {

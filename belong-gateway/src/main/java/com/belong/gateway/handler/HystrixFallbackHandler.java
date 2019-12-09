@@ -20,9 +20,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  * @Description: 服务降级处理
  * @Author: fengyu
  * @CreateDate: 2019/11/27 10:57
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 10:57
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j

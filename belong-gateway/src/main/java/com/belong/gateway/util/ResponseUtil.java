@@ -21,9 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @Description: ResponseUtil
  * @Author: fengyu
  * @CreateDate: 2019/11/27 15:13
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 15:13
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class ResponseUtil {

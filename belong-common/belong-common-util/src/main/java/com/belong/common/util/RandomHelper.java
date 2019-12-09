@@ -8,9 +8,7 @@ import java.util.UUID;
  * @Description: 封装各种生成唯一性ID算法的工具类.
  * @Author: fengyu
  * @CreateDate: 2019/11/28 15:38
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 15:38
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public final class RandomHelper {

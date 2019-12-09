@@ -14,12 +14,10 @@ import java.util.Date;
 
 
 /**
- * @Description:    ${comments}
+ * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:      ${author}
- * @UpdateDate:     ${datetime}
- * @UpdateRemark: 修改内容
+ * @UpdateDate:      ${datetime}
  * @Version: 1.0
  */
 @SuppressWarnings("serial")
@@ -31,7 +29,7 @@ import java.util.Date;
 public class ${className}DO extends #if(${hasCreateBy}) CrudEntity #end #if(!${hasCreateBy}) DataEntity  #end {
     private static final long serialVersionUID = -1L;
 
-    public static final String REDIS_KEY = "${tableName}:";
+    public static final String REDIS_KEY = "${tableName}:" ;
     /**
      * 实体编号（唯一标识）
      */

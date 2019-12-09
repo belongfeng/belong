@@ -7,9 +7,7 @@ import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
  * @Description: The type Auth user factory.
  * @Author: fengyu
  * @CreateDate: 2019/12/3 15:30
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/12/3 15:30
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public final class AuthUserFactory {

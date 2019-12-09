@@ -16,21 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
-
-* @Description:    Token 校验过滤器
-* @Author:         fengyu
-* @CreateDate:     2019/12/3 15:03
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/12/3 15:03
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: Token 校验过滤器
+ * @Author: fengyu
+ * @CreateDate: 2019/12/3 15:03
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/12/3 15:03
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
     /**
      * 携带Token的HTTP头
      */
-    public static final String TOKEN_HEADER = "Authorization";
+    public static final String TOKEN_HEADER = "Authorization" ;
 
     /**
      * Token工具类

@@ -10,12 +10,10 @@ import ${package}.service.I${className}Service;
 import org.springframework.stereotype.Service;
 
 /**
- * @Description:    ${comments}
+ * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateUser:      ${author}
- * @UpdateDate:     ${datetime}
- * @UpdateRemark: 修改内容
+ * @UpdateDate:      ${datetime}
  * @Version: 1.0
  */
 @Service
@@ -28,7 +26,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
      * @return ${className}DO集合
      */
     @Override
-    public IPage<${className}DO> select${className}DOList(IPage<${className}DO> page, QueryWrapper<${className}DO> queryWrapper){
+    public IPage<${className}DO> select${className}DOList(IPage<${className}DO> page, QueryWrapper<${className}DO> queryWrapper) {
         return baseMapper.selectPage(page, queryWrapper);
     }
 }

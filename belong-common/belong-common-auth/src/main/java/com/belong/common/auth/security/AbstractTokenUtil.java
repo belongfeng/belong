@@ -16,9 +16,7 @@ import java.util.Date;
  * @Description: Token 工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/28 10:25
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 10:25
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j
@@ -27,15 +25,15 @@ public abstract class AbstractTokenUtil {
     /**
      * Token 类型
      */
-    public static final String TOKEN_TYPE_BEARER = "Bearer";
+    public static final String TOKEN_TYPE_BEARER = "Bearer" ;
     /**
      * 权限缓存前缀
      */
-    private static final String REDIS_PREFIX_AUTH = "auth:";
+    private static final String REDIS_PREFIX_AUTH = "auth:" ;
     /**
      * 用户信息缓存前缀
      */
-    private static final String REDIS_PREFIX_USER = "user-details:";
+    private static final String REDIS_PREFIX_USER = "user-details:" ;
 
 
     @Autowired

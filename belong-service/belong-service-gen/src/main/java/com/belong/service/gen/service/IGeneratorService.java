@@ -7,9 +7,7 @@ import java.util.Map;
  * @Description: IGeneratorService
  * @Author: fengyu
  * @CreateDate: 2019/11/27 16:38
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/27 16:38
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public interface IGeneratorService {

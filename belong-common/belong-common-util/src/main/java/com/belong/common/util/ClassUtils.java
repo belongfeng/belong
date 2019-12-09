@@ -14,15 +14,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 /**
-
-* @Description:    类工具类
-* @Author:         fengyu
-* @CreateDate:     2019/11/28 10:39
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/11/28 10:39
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: 类工具类
+ * @Author: fengyu
+ * @CreateDate: 2019/11/28 10:39
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/11/28 10:39
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 @UtilityClass
 public class ClassUtils extends org.springframework.util.ClassUtils {
     private final ParameterNameDiscoverer PARAMETERNAMEDISCOVERER = new DefaultParameterNameDiscoverer();

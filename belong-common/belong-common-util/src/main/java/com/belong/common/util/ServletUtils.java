@@ -14,9 +14,7 @@ import java.io.IOException;
  * @Description: 客户端工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/28 14:48
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 14:48
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class ServletUtils {

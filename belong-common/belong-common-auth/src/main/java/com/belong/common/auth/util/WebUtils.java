@@ -25,23 +25,22 @@ import java.io.PrintWriter;
  * @Description: Web 工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/28 10:48
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 10:48
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Slf4j
 @UtilityClass
 public final class WebUtils extends org.springframework.web.util.WebUtils {
-    private final String UNKNOWN = "unknown";
+    private final String UNKNOWN = "unknown" ;
 
     /**
      * 方法实现说明:获取当前登录者对象
-     * @author      fengyu
+     *
      * @param
-     * @return      T
-     * @exception
-     * @date        2019/11/28 10:48
+     * @return T
+     * @throws
+     * @author fengyu
+     * @date 2019/11/28 10:48
      */
     @SuppressWarnings("unchecked")
     public static <T extends UserDetails> T getCurrentUser() {

@@ -7,15 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
-
-* @Description:    GeneratorConfiguration
-* @Author:         fengyu
-* @CreateDate:     2019/11/27 16:45
-* @UpdateUser:     fengyu
-* @UpdateDate:     2019/11/27 16:45
-* @UpdateRemark:   修改内容
-* @Version:        1.0
-*/
+ * @Description: GeneratorConfiguration
+ * @Author: fengyu
+ * @CreateDate: 2019/11/27 16:45
+ * @UpdateUser: fengyu
+ * @UpdateDate: 2019/11/27 16:45
+ * @UpdateRemark: 修改内容
+ * @Version: 1.0
+ */
 @Configuration
 @Slf4j
 public class GeneratorConfiguration {

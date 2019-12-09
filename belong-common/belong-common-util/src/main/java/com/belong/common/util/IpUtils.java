@@ -10,15 +10,13 @@ import java.net.UnknownHostException;
  * @Description: 获取IP方法
  * @Author: fengyu
  * @CreateDate: 2019/11/28 9:25
- * @UpdateUser: fengyu
  * @UpdateDate: 2019/11/28 9:25
- * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 public class IpUtils {
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {
-            return "unknown";
+            return "unknown" ;
         }
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -193,7 +191,7 @@ public class IpUtils {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
         }
-        return "127.0.0.1";
+        return "127.0.0.1" ;
     }
 
     public static String getHostName() {
@@ -201,6 +199,6 @@ public class IpUtils {
             return InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
         }
-        return "未知";
+        return "未知" ;
     }
 }
