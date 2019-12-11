@@ -25,9 +25,9 @@ spring:
       slave:
         #从数据源开关/默认关闭
         enabled: true
-        url: jdbc:mysql://localhost:3306/server?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-        username: root
-        password: 123456
+        url: jdbc:mysql://belongMysqlMaster.com:3306/getoffer_slave?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: panda
+        password: e10adc3949ba59abbe56e057f20f883e
       # 初始连接数
       initialSize: 5
       # 最小连接池数量

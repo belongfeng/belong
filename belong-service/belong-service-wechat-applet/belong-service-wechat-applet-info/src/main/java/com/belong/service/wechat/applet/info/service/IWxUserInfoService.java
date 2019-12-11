@@ -3,7 +3,10 @@ package com.belong.service.wechat.applet.info.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.belong.common.datasource.annotation.DataSource;
+import com.belong.common.datasource.config.DataSourceType;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 
 
 /**
@@ -23,4 +26,11 @@ public interface IWxUserInfoService extends IService<WxUserInfoDO> {
      */
 
     public IPage<WxUserInfoDO> selectWxUserInfoDOList(IPage<WxUserInfoDO> page, QueryWrapper<WxUserInfoDO> queryWrapper);
+
+
+    public int getMaster(String openId);
+
+
+
+    public int getSlave(String openId);
 }

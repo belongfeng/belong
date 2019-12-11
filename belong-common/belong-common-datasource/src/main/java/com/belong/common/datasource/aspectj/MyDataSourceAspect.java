@@ -22,10 +22,10 @@ import java.util.Optional;
  * @Version: 1.0
  */
 @Aspect
-@Order(1)
+//@Order(1)
 @Component
 @Slf4j
-public class DataSourceAspect {
+public class MyDataSourceAspect {
 
     @Pointcut("@annotation(com.belong.common.datasource.annotation.DataSource)"
             + "|| @within(com.belong.common.datasource.annotation.DataSource)")

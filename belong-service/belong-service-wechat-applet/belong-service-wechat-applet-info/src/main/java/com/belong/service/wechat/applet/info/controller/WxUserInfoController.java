@@ -18,8 +18,12 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -100,5 +104,19 @@ public class WxUserInfoController extends AppletController {
             throw new WxAppletParameterLossException(new String[]{"openId"});
         }
         return ResponseVO.ok(generator.convert(wxUserInfoService.getOne(new QueryWrapper<WxUserInfoDO>(WxUserInfoDO.builder().openId(openId).build())), WxUserInfoVO.class));
+    }
+
+    @Transactional(readOnly = false)
+    @ApiOperation(value = "多数据源事务切换", notes = "权限标识 sys:wxUserInfo:view")
+    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
+    @GetMapping(value = "/tran/{openId}")
+    public ResponseVO<Map<String,Object>> tran(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
+        if (StringUtils.isEmpty(openId)) {
+            throw new WxAppletParameterLossException(new String[]{"openId"});
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("1",wxUserInfoService.getMaster(openId));
+        map.put("2",wxUserInfoService.getSlave(openId));
+        return ResponseVO.ok(map);
     }
 }

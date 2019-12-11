@@ -51,6 +51,14 @@ mybatis-plus:
 
 
 
+#lcn配置
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
+  springcloud:
+    loadbalance:
+#      为保证性能开启TX-LCN重写的负载策略
+      enabled: true
 
 security:
   jwt:

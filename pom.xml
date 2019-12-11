@@ -50,6 +50,10 @@
         <!--weixin-java-->
         <weixin-java-miniapp.version>3.5.0</weixin-java-miniapp.version>
         <weixin-java-pay.version>3.5.0</weixin-java-pay.version>
+
+        <seata.version>0.8.0</seata.version>
+
+        <txlcn.version>5.0.2.RELEASE</txlcn.version>
     </properties>
     <!-- 依赖声明-->
     <dependencyManagement>
@@ -77,6 +81,43 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
                 <version>${spring-cloud-starter-stream-rabbit.version}</version>
+            </dependency>
+
+            <!--Seata依赖-->
+<!--            <dependency>-->
+<!--                <groupId>io.seata</groupId>-->
+<!--                <artifactId>seata-all</artifactId>-->
+<!--                <version>0.8.0</version>-->
+<!--            </dependency>-->
+<!--+-->
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-alibaba-seata</artifactId>-->
+<!--                <version>2.1.0.RELEASE</version>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tm</artifactId>
+                <version>${txlcn.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tc</artifactId>
+                <version>${txlcn.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-txmsg-netty</artifactId>
+                <version>${txlcn.version}</version>
             </dependency>
 
             <!--sercurity依赖配置-->
