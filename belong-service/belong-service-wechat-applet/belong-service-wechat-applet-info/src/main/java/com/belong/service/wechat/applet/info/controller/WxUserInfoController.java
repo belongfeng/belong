@@ -114,25 +114,32 @@ public class WxUserInfoController extends AppletController {
     @ApiOperation(value = "多数据源事务切换", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
     @GetMapping(value = "/tran/{openId}")
-    public ResponseVO<Map<String,Object>> tran(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
+    public ResponseVO<Map<String, Object>> tran(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
         if (StringUtils.isEmpty(openId)) {
             throw new WxAppletParameterLossException(new String[]{"openId"});
         }
-        Map<String,Object> map=new HashMap<>();
-        map.put("1",wxUserInfoService.getMaster(openId));
-        map.put("2",wxUserInfoService.getSlave(openId));
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", wxUserInfoService.getMaster(openId));
+        map.put("2", wxUserInfoService.getSlave(openId));
         return ResponseVO.ok(map);
     }
 
-    @LcnTransaction(propagation = DTXPropagation.REQUIRED)
-    @Transactional(readOnly = false)
+    @LcnTransaction
+    //@Transactional
     @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
     @GetMapping(value = "/txlcn/{oneId}/{twoId}")
-    public ResponseVO<Map<String,Object>> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId,@ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
-        Map<String,Object> map=new HashMap<>();
-        map.put("1",remoteWxUserInfoDOFService.remove(oneId));
-        map.put("2",remoteCopyWxUserInfoDOFService.remove(twoId));
+    public ResponseVO<Map<String, Object>> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId, @ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
+        Map<String, Object> map = new HashMap<>();
+        ResponseVO responseVO = null;
+        responseVO = remoteCopyWxUserInfoDOFService.remove(twoId);
+        ResponseVO responseVO1 = null;
+        if (responseVO.getCode().equals(200)) {
+            System.out.println("事务参与方执行完成了");
+            responseVO1 = remoteWxUserInfoDOFService.remove(oneId);
+        }
+        map.put("1", responseVO);
+        map.put("2", responseVO1);
         return ResponseVO.ok(map);
     }
 }

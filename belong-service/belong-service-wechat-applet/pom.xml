@@ -17,6 +17,6 @@
     <modules>
         <module>belong-service-wechat-applet-base</module>
         <module>belong-service-wechat-applet-info</module>
-        <module>belong-service-wechat-applet-case</module>
+        <module>belong-service-wechat-applet-casus</module>
     </modules>
 </project>

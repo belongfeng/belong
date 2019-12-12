@@ -3,7 +3,7 @@ package com.belong.service.wechat.applet.casus.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.casus.api.domain.CopyWxUserInfoDO;
 
 
 /**
@@ -14,7 +14,7 @@ import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
  * @UpdateDate: 2019-12-03 09:52:04
  * @Version: 1.0
  */
-public interface IWxUserInfoService extends IService<WxUserInfoDO> {
+public interface ICopyWxUserInfoService extends IService<CopyWxUserInfoDO> {
     /**
      * 查询WxUserInfoDO列表
      *
@@ -22,12 +22,7 @@ public interface IWxUserInfoService extends IService<WxUserInfoDO> {
      * @return WxUserInfoDO集合
      */
 
-    public IPage<WxUserInfoDO> selectWxUserInfoDOList(IPage<WxUserInfoDO> page, QueryWrapper<WxUserInfoDO> queryWrapper);
+    public IPage<CopyWxUserInfoDO> selectWxUserInfoDOList(IPage<CopyWxUserInfoDO> page, QueryWrapper<CopyWxUserInfoDO> queryWrapper);
 
 
-    public int getMaster(String openId);
-
-
-
-    public int getSlave(String openId);
 }

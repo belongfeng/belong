@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.group</groupId>
-    <artifactId>belong-service-wechat-applet-case</artifactId>
+    <artifactId>belong-service-wechat-applet-casus</artifactId>
     <packaging>jar</packaging>
     <dependencies>
         <!--配置中心客户端 -->
@@ -75,12 +75,6 @@
 
         <dependency>
             <groupId>com.group</groupId>
-            <artifactId>belong-service-wechat-applet-info-api</artifactId>
-            <version>${belong.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.group</groupId>
             <artifactId>belong-common-datasource</artifactId>
             <version>${belong.version}</version>
         </dependency>
@@ -132,6 +126,18 @@
             <artifactId>belong-service-wechat-applet-base</artifactId>
             <version>${belong.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-service-wechat-applet-casus-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-service-wechat-applet-info-api</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

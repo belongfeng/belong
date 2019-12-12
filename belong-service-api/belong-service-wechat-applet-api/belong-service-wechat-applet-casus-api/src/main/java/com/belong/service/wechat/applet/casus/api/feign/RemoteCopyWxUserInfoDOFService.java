@@ -20,18 +20,8 @@ import java.util.Map;
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_CASUS, fallbackFactory = RemoteCopyWxUserInfoDOFallbackFactory.class)
 public interface RemoteCopyWxUserInfoDOFService {
-    @GetMapping("/v1/db/copyWxUserInfo/list")
-    public ResponseVO<PageDataInfo<CopyWxUserInfoListVO>> list(@RequestParam Map<String, Object> map);
-
-    @PostMapping("/v1/db/copyWxUserInfo/saveOrUpdate")
-    public ResponseVO saveOrUpdate(@RequestBody CopyWxUserInfoVO copyWxUserInfoVO);
-
-    @GetMapping("/v1/db/copyWxUserInfo/get/{id}")
-    public ResponseVO<CopyWxUserInfoVO> get(@PathVariable("id") String id);
 
     @GetMapping("/v1/db/copyWxUserInfo/remove/{id}")
     public ResponseVO remove(@PathVariable("id") String id);
 
-    @GetMapping("/v1/db/copyWxUserInfo/getWxUserInfoByOpenId/{openId}")
-    public ResponseVO<CopyWxUserInfoVO> getWxUserInfoByOpenId(@PathVariable("openId") String openId);
 }

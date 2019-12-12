@@ -1,7 +1,7 @@
 package com.belong.service.wechat.applet.casus.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.casus.api.domain.CopyWxUserInfoDO;
 
 
 /**
@@ -12,5 +12,5 @@ import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
  * @UpdateDate: 2019-12-03 09:52:04
  * @Version: 1.0
  */
-public interface WxUserInfoMapper extends BaseMapper<WxUserInfoDO> {
+public interface CopyWxUserInfoMapper extends BaseMapper<CopyWxUserInfoDO> {
 }
