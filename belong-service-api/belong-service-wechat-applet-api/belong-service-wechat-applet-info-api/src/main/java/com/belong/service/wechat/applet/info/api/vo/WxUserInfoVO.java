@@ -59,7 +59,7 @@ public class WxUserInfoVO implements Serializable {
     @ApiModelProperty(value = "最近一次登录时间 最近一次登录时间")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm")
     private Date lastLoginTime;
-    @ApiModelProperty(value = "是否可用 是否可用 是否可用0：冻结1：可用")
+    @ApiModelProperty(value = "是否可用 是否可用 是否可用0：冻结，1：可用")
     private Boolean enabled;
     @ApiModelProperty(value = "备注 备注")
     private String remark;

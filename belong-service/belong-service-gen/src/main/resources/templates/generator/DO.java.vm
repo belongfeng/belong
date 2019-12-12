@@ -6,6 +6,8 @@ package ${package}.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+import static com.belong.common.core.constant.Constants.DEL_FLAG_DELETE;
+import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
 #if(${hasDatetime})
 import java.util.Date;
 #end
@@ -81,9 +83,9 @@ public class ${className}DO extends #if(${hasCreateBy}) CrudEntity #end #if(!${h
     /**
      * 删除标记(0:正常;1:删除;)
      */
-    @TableLogic(delval = DEL_FLAG_NORMAL, value = DEL_FLAG_NORMAL)
+    @TableLogic(delval = DEL_FLAG_DELETE, value = DEL_FLAG_NORMAL)
     @TableField("del_flag")
-    @ApiModelProperty(value = "逻辑删除 0:正常;1:删除;", required = false, hidden = true)
+    @ApiModelProperty(value = "逻辑删除 1:正常;0:删除;", required = false, hidden = true)
     private String delFlag;
 
     /**

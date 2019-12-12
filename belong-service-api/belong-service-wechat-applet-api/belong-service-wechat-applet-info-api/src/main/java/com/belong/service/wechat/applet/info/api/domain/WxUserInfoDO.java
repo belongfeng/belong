@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+import static com.belong.common.core.constant.Constants.DEL_FLAG_DELETE;
 import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
 
 
@@ -150,11 +151,11 @@ public class WxUserInfoDO {
     @ApiModelProperty(value = "修改时间", required = false, hidden = true)
     private Date updateDate;
     /**
-     * 删除标记(0:正常;1:删除;)
+     * 删除标记(1:正常;0:删除;)
      */
-    @TableLogic(delval = DEL_FLAG_NORMAL, value = DEL_FLAG_NORMAL)
+    @TableLogic(delval = DEL_FLAG_DELETE, value = DEL_FLAG_NORMAL)
     @TableField("del_flag")
-    @ApiModelProperty(value = "逻辑删除 0:正常;1:删除;", required = false, hidden = true)
+    @ApiModelProperty(value = "逻辑删除 1:正常;0:删除;", required = false, hidden = true)
     private String delFlag;
 
     /**

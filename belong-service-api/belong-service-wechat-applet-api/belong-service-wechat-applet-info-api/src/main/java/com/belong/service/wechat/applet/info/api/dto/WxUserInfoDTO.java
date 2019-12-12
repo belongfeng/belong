@@ -54,7 +54,7 @@ public class WxUserInfoDTO implements Serializable {
     private String city;
     @ApiModelProperty(value = "最近一次登录时间 最近一次登录时间", required = true)
     private Date lastLoginTime;
-    @ApiModelProperty(value = "是否可用 是否可用 是否可用0：冻结1：可用", required = true)
+    @ApiModelProperty(value = "是否可用 是否可用 是否可用0：冻结，1：可用", required = true)
     private Boolean enabled;
     @ApiModelProperty(value = "备注 备注", required = true)
     private String remark;

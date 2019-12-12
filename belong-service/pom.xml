@@ -20,8 +20,4 @@
         <module>belong-service-wechat-applet</module>
         <module>belong-service-txlcn</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>
