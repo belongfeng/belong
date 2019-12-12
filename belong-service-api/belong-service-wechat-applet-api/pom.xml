@@ -17,5 +17,6 @@
 
     <modules>
         <module>belong-service-wechat-applet-info-api</module>
+        <module>belong-service-wechat-applet-casus-api</module>
     </modules>
 </project>

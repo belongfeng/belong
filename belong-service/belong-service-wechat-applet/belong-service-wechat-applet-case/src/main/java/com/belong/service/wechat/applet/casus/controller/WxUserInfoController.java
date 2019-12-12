@@ -1,4 +1,4 @@
-package com.belong.service.wechat.applet.info.controller;
+package com.belong.service.wechat.applet.casus.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.belong.common.core.base.ResponseVO;
@@ -8,24 +8,24 @@ import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossExcep
 import com.belong.common.util.ServletUtils;
 import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
-import com.belong.service.wechat.applet.casus.api.feign.RemoteCopyWxUserInfoDOFService;
+import com.belong.service.wechat.applet.casus.service.IWxUserInfoService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
-import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
 import com.codingapi.txlcn.tc.annotation.DTXPropagation;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import io.swagger.annotations.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
+
+//import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -40,7 +40,7 @@ import java.util.Map;
 @Api(tags = "微信用户信息表")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/db/wxUserInfo")
+@RequestMapping("/v1/db/copyWxUserInfo")
 @Slf4j
 public class WxUserInfoController extends AppletController {
     @Autowired
@@ -49,8 +49,6 @@ public class WxUserInfoController extends AppletController {
     @Autowired
     private final RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
 
-    @Autowired
-    private final RemoteCopyWxUserInfoDOFService remoteCopyWxUserInfoDOFService;
 
     @ApiOperation(value = "获取分页数据", notes = "权限标识 sys:wxUserInfo:view")
     @ApiImplicitParams({
@@ -90,6 +88,8 @@ public class WxUserInfoController extends AppletController {
         return ResponseVO.ok(generator.convert(wxUserInfoService.getById(id), WxUserInfoVO.class));
     }
 
+    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @Transactional
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserInfo:remove")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:remove')")
     @GetMapping(value = "/remove/{id}")
@@ -121,18 +121,6 @@ public class WxUserInfoController extends AppletController {
         Map<String,Object> map=new HashMap<>();
         map.put("1",wxUserInfoService.getMaster(openId));
         map.put("2",wxUserInfoService.getSlave(openId));
-        return ResponseVO.ok(map);
-    }
-
-    @LcnTransaction(propagation = DTXPropagation.REQUIRED)
-    @Transactional(readOnly = false)
-    @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
-    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/txlcn/{oneId}/{twoId}")
-    public ResponseVO<Map<String,Object>> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId,@ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
-        Map<String,Object> map=new HashMap<>();
-        map.put("1",remoteWxUserInfoDOFService.remove(oneId));
-        map.put("2",remoteCopyWxUserInfoDOFService.remove(twoId));
         return ResponseVO.ok(map);
     }
 }

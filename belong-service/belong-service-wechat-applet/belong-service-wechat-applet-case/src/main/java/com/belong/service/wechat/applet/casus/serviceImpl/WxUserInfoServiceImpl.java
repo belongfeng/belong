@@ -1,4 +1,4 @@
-package com.belong.service.wechat.applet.info.serviceImpl;
+package com.belong.service.wechat.applet.casus.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -6,12 +6,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.belong.common.datasource.annotation.DataSource;
 import com.belong.common.datasource.config.DataSourceType;
 import com.belong.common.dozer.service.IGenerator;
+import com.belong.service.wechat.applet.casus.mapper.WxUserInfoMapper;
+import com.belong.service.wechat.applet.casus.service.IWxUserInfoService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
-import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
-import com.belong.service.wechat.applet.info.mapper.WxUserInfoMapper;
-import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 

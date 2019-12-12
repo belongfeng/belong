@@ -1,10 +1,13 @@
-package com.belong.service.wechat.applet.info.api.domain;
+package com.belong.service.wechat.applet.casus.api.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -27,7 +30,7 @@ import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WxUserInfoDO {
+public class CopyWxUserInfoDO {
     private static final long serialVersionUID = -1L;
 
     public static final String REDIS_KEY = "wx_user_info:" ;

@@ -11,9 +11,8 @@
     </parent>
 
     <groupId>com.group</groupId>
-    <artifactId>belong-service-wechat-applet-info</artifactId>
+    <artifactId>belong-service-wechat-applet-case</artifactId>
     <packaging>jar</packaging>
-
     <dependencies>
         <!--配置中心客户端 -->
         <dependency>
@@ -58,12 +57,12 @@
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
             <artifactId>txlcn-tc</artifactId>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>com.github.jsqlparser</groupId>-->
-<!--                    <artifactId>jsqlparser</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
+            <!--            <exclusions>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>com.github.jsqlparser</groupId>-->
+            <!--                    <artifactId>jsqlparser</artifactId>-->
+            <!--                </exclusion>-->
+            <!--            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>com.codingapi.txlcn</groupId>
@@ -77,12 +76,6 @@
         <dependency>
             <groupId>com.group</groupId>
             <artifactId>belong-service-wechat-applet-info-api</artifactId>
-            <version>${belong.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.group</groupId>
-            <artifactId>belong-service-wechat-applet-casus-api</artifactId>
             <version>${belong.version}</version>
         </dependency>
 
@@ -140,8 +133,6 @@
             <version>${belong.version}</version>
         </dependency>
     </dependencies>
-
-
     <build>
         <plugins>
             <plugin>
@@ -150,8 +141,7 @@
                 <configuration>
                     <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.belong.service.wechat.applet.info.BelongServiceWeChatAppletInfoApplication
-                    </mainClass>
+                    <mainClass>com.belong.service.wechat.applet.casus.BelongServiceWeChatAppletCasusApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>
