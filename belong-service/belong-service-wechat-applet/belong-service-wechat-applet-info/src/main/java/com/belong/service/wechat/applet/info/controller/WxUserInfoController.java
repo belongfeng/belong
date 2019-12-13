@@ -8,7 +8,7 @@ import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossExcep
 import com.belong.common.util.ServletUtils;
 import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
-import com.belong.service.wechat.applet.casus.api.feign.RemoteCopyWxUserInfoDOFService;
+import com.belong.service.wechat.applet.casus.api.feign.RemoteWxUserCasusDOFService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
@@ -50,7 +50,7 @@ public class WxUserInfoController extends AppletController {
     private final RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
 
     @Autowired
-    private final RemoteCopyWxUserInfoDOFService remoteCopyWxUserInfoDOFService;
+    private final RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
 
     @ApiOperation(value = "获取分页数据", notes = "权限标识 sys:wxUserInfo:view")
     @ApiImplicitParams({
@@ -68,6 +68,8 @@ public class WxUserInfoController extends AppletController {
         return ResponseVO.ok(Ipage2PageDataInfo(wxUserInfoService.page(startPage(pageNum, pageSize), new QueryWrapper<WxUserInfoDO>().orderByDesc("create_date")), WxUserInfoListVO.class));
     }
 
+    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserInfo:edit")
     @PostMapping(value = "/saveOrUpdate")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:edit')")
@@ -90,6 +92,8 @@ public class WxUserInfoController extends AppletController {
         return ResponseVO.ok(generator.convert(wxUserInfoService.getById(id), WxUserInfoVO.class));
     }
 
+    //@LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    //@Transactional(readOnly = false)
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserInfo:remove")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:remove')")
     @GetMapping(value = "/remove/{id}")
@@ -121,25 +125,6 @@ public class WxUserInfoController extends AppletController {
         Map<String, Object> map = new HashMap<>();
         map.put("1", wxUserInfoService.getMaster(openId));
         map.put("2", wxUserInfoService.getSlave(openId));
-        return ResponseVO.ok(map);
-    }
-
-    @LcnTransaction
-    //@Transactional
-    @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
-    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/txlcn/{oneId}/{twoId}")
-    public ResponseVO<Map<String, Object>> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId, @ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
-        Map<String, Object> map = new HashMap<>();
-        ResponseVO responseVO = null;
-        responseVO = remoteCopyWxUserInfoDOFService.remove(twoId);
-        ResponseVO responseVO1 = null;
-        if (responseVO.getCode().equals(200)) {
-            System.out.println("事务参与方执行完成了");
-            responseVO1 = remoteWxUserInfoDOFService.remove(oneId);
-        }
-        map.put("1", responseVO);
-        map.put("2", responseVO1);
         return ResponseVO.ok(map);
     }
 }

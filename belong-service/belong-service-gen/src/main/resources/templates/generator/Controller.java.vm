@@ -1,9 +1,14 @@
 package com.belong.service.gen.controller;
 
-import cn.lioncity.platform.admin.base.common.controller.BaseController;
-import cn.lioncity.platform.common.dto.MyPageInfo;
-import cn.lioncity.platform.common.dto.Result;
+import com.belong.common.core.base.BaseController;
 import com.belong.common.core.base.ResponseVO;
+import com.belong.common.core.page.PageDataInfo;
+import com.belong.common.exception.base.PageException;
+import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
+import com.belong.common.util.ServletUtils;
+import com.belong.common.util.StringUtils;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import org.springframework.transaction.annotation.Transactional;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +46,7 @@ public class ${className}Controller extends BaseController {
     })
     ##@PreAuthorize("hasAuthority('sys:${classname}:view')")
     @GetMapping(value = "/list")
-    public ResponseVO<PageDataInfo<${className}ListVO>> list() {
+    public ResponseVO<PageDataInfo<${className}ListVO>> list() throws PageException{
         Long pageNum = ServletUtils.getParameterToLong("pageNum");
         Long pageSize = ServletUtils.getParameterToLong("pageSize");
         if (StringUtils.isNull(pageNum) || StringUtils.isNull(pageSize)) {
@@ -50,6 +55,8 @@ public class ${className}Controller extends BaseController {
         return ResponseVO.ok(Ipage2PageDataInfo(${classname}Service.select${classname}DOList(startPage(pageNum, pageSize), new QueryWrapper<${classname}DO>().orderByDesc("create_date")), ${classname}ListVO.class));
     }
 
+    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:${classname}:edit")
     @PostMapping(value = "/saveOrUpdate")
     ##@PreAuthorize("hasAuthority('sys:${classname}:edit')")
@@ -72,9 +79,11 @@ public class ${className}Controller extends BaseController {
         return ResponseVO.ok(generator.convert(${classname}Service.getById(id), ${className}VO.class));
     }
 
+    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @Transactional(readOnly = false)
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:${classname}:remove")
     ##@PreAuthorize("hasAuthority('sys:${classname}:remove')")
-    @DeleteMapping(value = "/remove/{id}")
+    @GetMapping(value = "/remove/{id}")
     public ResponseVO remove(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (${classname}Service.removeById(id)) {
             return ResponseVO.ok();

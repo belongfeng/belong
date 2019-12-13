@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @Description: 微信小程序个人中心服务以及扫码服务启动类
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableEurekaClient
 @EnableFeignClients(basePackages = {"com.belong"})
 @MapperScan("com.belong.service.wechat.applet.info.mapper")
-@EnableTransactionManagement
 @EnableDistributedTransaction
 public class BelongServiceWeChatAppletInfoApplication {
     public static void main(String[] args) {

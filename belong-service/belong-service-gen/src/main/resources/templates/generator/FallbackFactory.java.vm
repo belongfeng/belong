@@ -4,7 +4,8 @@ import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import com.belong.common.core.base.ResponseVO;
-
+import com.belong.common.core.page.PageDataInfo;
+import java.util.Map;
 /**
  * @Description:     ${comments}
  * @Author:          ${author}
@@ -16,7 +17,7 @@ import com.belong.common.core.base.ResponseVO;
 @Component
 public class Remote${className}DOFallbackFactory implements FallbackFactory<Remote${className}DOFService> {
     @Override
-    public Remote${className}FService create(Throwable throwable) {
+    public Remote${className}DOFService create(Throwable throwable) {
         log.error("回退原因{}", throwable.getMessage());
         return new Remote${className}DOFService() {
             @Override

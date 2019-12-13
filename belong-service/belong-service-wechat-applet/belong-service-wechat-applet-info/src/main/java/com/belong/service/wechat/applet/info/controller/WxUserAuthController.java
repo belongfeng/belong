@@ -12,9 +12,12 @@ import com.belong.service.wechat.applet.info.api.vo.WeChatAppletLoginResultVO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.mysql.cj.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +27,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 微信小程序登录
@@ -111,12 +115,18 @@ public class WxUserAuthController extends AppletController {
      * @UpdateDate: 2019/12/5 11:01
      * @Version: 1.0
      */
-    @ApiOperation(value = "获取用户信息")
+    @ApiOperation(value = "测试txlcn事务")
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/userInfo")
     public ResponseVO<WxUserInfoVO> info() {
         return ResponseVO.ok(getUserInfo());
     }
 
+    @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
+    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
+    @GetMapping(value = "/txlcn/{oneId}/{twoId}")
+    public ResponseVO<Boolean> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId, @ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
 
+        return ResponseVO.ok(wxUserAuthService.tetLcn(oneId, twoId));
+    }
 }

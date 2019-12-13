@@ -153,7 +153,7 @@ public class WxUserInfoDO {
     /**
      * 删除标记(1:正常;0:删除;)
      */
-    @TableLogic
+    @TableLogic(delval = DEL_FLAG_DELETE, value = DEL_FLAG_NORMAL)
     @TableField("del_flag")
     @ApiModelProperty(value = "逻辑删除 1:正常;0:删除;", required = false, hidden = true)
     private String delFlag;

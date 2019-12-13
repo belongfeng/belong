@@ -28,49 +28,4 @@
         <result column="version" property="version"/>
         <result column="remark" property="remark"/>
     </resultMap>
-
-    <sql id="selectColumns">
-    SELECT
-                a.id as id,
-                            a.app_id as appId,
-                            a.open_id as openId,
-                            a.union_id as unionId,
-                            a.nick_name as nickName,
-                            a.real_name as realName,
-                            a.avatar_url as avatarUrl,
-                            a.addre as addre,
-                            a.integral as integral,
-                            a.sex as sex,
-                            a.mobile as mobile,
-                            a.country as country,
-                            a.province as province,
-                            a.city as city,
-                            a.last_login_time as lastLoginTime,
-                            a.enabled as enabled,
-                            a.create_by as createBy,
-                            a.update_by as updateBy,
-                            a.create_date as createDate,
-                            a.update_date as updateDate,
-                                    a.del_flag as delFlag
-                        a.version as version,
-                            a.remark as remark,
-                    FROM
-    wx_user_info a
-    </sql>
-
-<!--    &lt;!&ndash; 删除 &ndash;&gt;-->
-<!--    <update id="deleteById">-->
-<!--        UPDATE wx_user_info-->
-<!--        SET del_flag = '1'-->
-<!--        WHERE id = #{id}-->
-<!--    </update>-->
-<!--    &lt;!&ndash; 批量删除 &ndash;&gt;-->
-<!--    <delete id="deleteBatchIds">-->
-<!--        UPDATE wx_user_info-->
-<!--        SET del_flag = '1' where id in-->
-<!--        <foreach item="idList" collection="list" open="(" separator="," close=")">-->
-<!--            #{idList}-->
-<!--        </foreach>-->
-<!--    </delete>-->
-
 </mapper>

@@ -1,4 +1,5 @@
-package ${package}.domain;
+package com.belong.service.wechat.applet.casus.api.domain;
+
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,18 +8,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import static com.belong.common.core.constant.Constants.DEL_FLAG_DELETE;
 import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
-#if(${hasDatetime})
+
 import java.util.Date;
-#end
-#if(${hasBigDecimal})
-#end
 
 
 /**
- * @Description:     ${comments}
- * @Author:          ${author}
- * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
+ * @Description: 案列
+ * @Author: BelongFeng
+ * @CreateDate: 2019-12-13 10:42:09
+ * @UpdateDate: 2019-12-13 10:42:09
  * @Version: 1.0
  */
 @SuppressWarnings("serial")
@@ -26,28 +24,36 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TableName("${tableName}")
-public class ${className}DO {
+@TableName("wx_user_casus")
+public class WxUserCasusDO {
     private static final long serialVersionUID = -1L;
 
-    public static final String REDIS_KEY = "${tableName}:" ;
+    public static final String REDIS_KEY = "wx_user_casus:" ;
     /**
      * 实体编号（唯一标识）
      */
     @TableId
     private String id;
-    #foreach ($column in $columns)#if($column.attrname!="createBy"&&$column.attrname!="updateBy")
-        /** $column.comments */
-        #if ($column.attrType=="Date")
-            @TableField("$column.columnName")
-            private $column.attrType $column.attrname;
-        #end
-        #if ($column.attrType!="Date")
-            @TableField("$column.columnName")
-            private $column.attrType $column.attrname;
-        #end
-    #end
-    #end
+    /**
+     * 微信用户主键
+     */
+    @TableField("wx_user_id")
+    private String wxUserId;
+    /**
+     * 申请主键
+     */
+    @TableField("apply_id")
+    private String applyId;
+    /**
+     * 案列介绍
+     */
+    @TableField("introduced")
+    private String introduced;
+    /**
+     * 备注 备注
+     */
+    @TableField("remark")
+    private String remark;
 
     /**
      * 创建者
@@ -64,8 +70,8 @@ public class ${className}DO {
     private String updateBy;
 
     /**
- * 创建日期
- */
+     * 创建日期
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField("create_date")

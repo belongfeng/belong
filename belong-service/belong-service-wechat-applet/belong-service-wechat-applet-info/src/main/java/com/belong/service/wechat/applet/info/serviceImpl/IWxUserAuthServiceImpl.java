@@ -6,18 +6,23 @@ import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterIllegalException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
+import com.belong.service.wechat.applet.casus.api.feign.RemoteWxUserCasusDOFService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -35,6 +40,8 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     private WxMaService wxMaService;
     @Autowired
     private IWxUserInfoService wxUserInfoService;
+    @Autowired
+    private RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
 
     /**
      * @Description:
@@ -126,5 +133,16 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     @Override
     public void sendWxMaTemplateMessage(String appid, WxMaTemplateMessage wxMaTemplateMessage) throws WxErrorException {
         wxMaService.getMsgService().sendTemplateMsg(wxMaTemplateMessage);
+    }
+
+    @LcnTransaction(propagation = DTXPropagation.REQUIRED)
+    @Transactional
+    @Override
+    public Boolean tetLcn(String oneId, String twoId) {
+        ResponseVO re = remoteWxUserCasusDOFService.remove(twoId);
+        if (re.getCode() == 200) {
+            return wxUserInfoService.removeById(oneId);
+        }
+        return false;
     }
 }

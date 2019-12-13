@@ -1,6 +1,5 @@
 package com.belong.service.wechat.applet.info.serviceImpl;
 
-import cn.lioncity.platform.admin.rf.mapper.${className}Mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
  * @Version: 1.0
  */
 @Service
-@Transactional(readOnly = true)
 public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}DO> implements I${className}Service {
     /**
      * 查询${className}DO列表

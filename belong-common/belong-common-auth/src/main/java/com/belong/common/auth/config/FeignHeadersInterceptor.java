@@ -1,5 +1,6 @@
 package com.belong.common.auth.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,10 +25,12 @@ import feign.RequestTemplate;
  * @Version: 1.0
  */
 @Configuration
+@Slf4j
 public class FeignHeadersInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
+        log.info("开始添加feign请求头");
         HttpServletRequest request = getHttpServletRequest();
 
         if (Objects.isNull(request)) {
@@ -35,12 +38,14 @@ public class FeignHeadersInterceptor implements RequestInterceptor {
         }
 
         Map<String, String> headers = getHeaders(request);
+
         if (headers.size() > 0) {
             Iterator<Entry<String, String>> iterator = headers.entrySet().iterator();
             while (iterator.hasNext()) {
                 Entry<String, String> entry = iterator.next();
                 // 把请求过来的header请求头 原样设置到feign请求头中
                 // 包括token
+                log.info("header得key为{}，header得Value为{}，",entry.getKey(), entry.getValue());
                 template.header(entry.getKey(), entry.getValue());
             }
         }

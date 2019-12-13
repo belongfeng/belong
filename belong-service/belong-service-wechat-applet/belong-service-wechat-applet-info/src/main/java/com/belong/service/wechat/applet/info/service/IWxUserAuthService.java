@@ -62,4 +62,12 @@ public interface IWxUserAuthService {
      * @return
      */
     void sendWxMaTemplateMessage(String appid, WxMaTemplateMessage wxMaTemplateMessage) throws WxErrorException;
+
+    /**
+     * 测试lcn事务
+     *
+     * @return
+     */
+    Boolean tetLcn(String oneId,String twoId);
+
 }
