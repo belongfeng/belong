@@ -54,20 +54,20 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-tc</artifactId>
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>com.github.jsqlparser</groupId>-->
-            <!--                    <artifactId>jsqlparser</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
-        </dependency>
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-txmsg-netty</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.codingapi.txlcn</groupId>-->
+<!--            <artifactId>txlcn-tc</artifactId>-->
+<!--            &lt;!&ndash;            <exclusions>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <exclusion>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <groupId>com.github.jsqlparser</groupId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <artifactId>jsqlparser</artifactId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </exclusion>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </exclusions>&ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.codingapi.txlcn</groupId>-->
+<!--            <artifactId>txlcn-txmsg-netty</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
@@ -123,13 +123,19 @@
 
         <dependency>
             <groupId>com.group</groupId>
+            <artifactId>belong-common-transaction</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
             <artifactId>belong-service-wechat-applet-base</artifactId>
             <version>${belong.version}</version>
         </dependency>
         <dependency>
             <groupId>com.group</groupId>
             <artifactId>belong-service-wechat-applet-casus-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${belong.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

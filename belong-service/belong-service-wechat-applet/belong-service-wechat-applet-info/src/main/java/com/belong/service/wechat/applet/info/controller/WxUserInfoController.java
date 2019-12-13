@@ -14,8 +14,6 @@ import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFServic
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
-import com.codingapi.txlcn.tc.annotation.DTXPropagation;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +66,6 @@ public class WxUserInfoController extends AppletController {
         return ResponseVO.ok(Ipage2PageDataInfo(wxUserInfoService.page(startPage(pageNum, pageSize), new QueryWrapper<WxUserInfoDO>().orderByDesc("create_date")), WxUserInfoListVO.class));
     }
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
     @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserInfo:edit")
     @PostMapping(value = "/saveOrUpdate")

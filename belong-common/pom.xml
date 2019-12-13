@@ -28,5 +28,6 @@
         <module>belong-common-log</module>
         <module>belong-common-mongodb</module>
         <module>belong-common-dozer</module>
+        <module>belong-common-transaction</module>
     </modules>
 </project>

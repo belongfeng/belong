@@ -54,6 +54,7 @@
         <seata.version>0.8.0</seata.version>
 
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
+        <lcn.version>4.1.0</lcn.version>
     </properties>
     <!-- 依赖声明-->
     <dependencyManagement>

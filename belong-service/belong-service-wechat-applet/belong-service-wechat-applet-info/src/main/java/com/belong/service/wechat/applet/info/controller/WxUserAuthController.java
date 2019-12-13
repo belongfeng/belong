@@ -1,19 +1,15 @@
 package com.belong.service.wechat.applet.info.controller;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import com.belong.common.auth.util.WebUtils;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.service.wechat.applet.base.controller.AppletController;
-import com.belong.service.wechat.applet.base.model.AuthUser;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatAppletLoginResultVO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
-import com.codingapi.txlcn.tc.annotation.DTXPropagation;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.mysql.cj.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -15,8 +15,7 @@ import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
-import com.codingapi.txlcn.tc.annotation.DTXPropagation;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.codingapi.tx.annotation.TxTransaction;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
@@ -135,13 +134,15 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         wxMaService.getMsgService().sendTemplateMsg(wxMaTemplateMessage);
     }
 
-    @LcnTransaction(propagation = DTXPropagation.REQUIRED)
+    @TxTransaction(isStart = true)
     @Transactional
     @Override
     public Boolean tetLcn(String oneId, String twoId) {
         ResponseVO re = remoteWxUserCasusDOFService.remove(twoId);
         if (re.getCode() == 200) {
-            return wxUserInfoService.removeById(oneId);
+            wxUserInfoService.removeById(oneId);
+            throw new RuntimeException("error runtime");
+            //return wxUserInfoService.removeById(oneId);
         }
         return false;
     }

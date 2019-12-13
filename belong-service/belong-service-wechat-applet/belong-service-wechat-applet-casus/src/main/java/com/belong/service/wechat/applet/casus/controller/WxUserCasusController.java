@@ -12,8 +12,7 @@ import com.belong.service.wechat.applet.casus.api.domain.WxUserCasusDO;
 import com.belong.service.wechat.applet.casus.api.vo.WxUserCasusListVO;
 import com.belong.service.wechat.applet.casus.api.vo.WxUserCasusVO;
 import com.belong.service.wechat.applet.casus.service.IWxUserCasusService;
-import com.codingapi.txlcn.tc.annotation.DTXPropagation;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.codingapi.tx.annotation.TxTransaction;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,6 @@ public class WxUserCasusController extends BaseController {
         return ResponseVO.ok(Ipage2PageDataInfo(wxUserCasusService.page(startPage(pageNum, pageSize), new QueryWrapper<WxUserCasusDO>().orderByDesc("create_date")), WxUserCasusListVO.class));
     }
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
     @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserCasus:edit")
     @PostMapping(value = "/saveOrUpdate")
@@ -76,11 +74,12 @@ public class WxUserCasusController extends BaseController {
         return ResponseVO.ok(generator.convert(wxUserCasusService.getById(id), WxUserCasusVO.class));
     }
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @TxTransaction
     @Transactional(readOnly = false)
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserCasus:remove")
     @GetMapping(value = "/remove/{id}")
     public ResponseVO remove(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
+
         if (wxUserCasusService.removeById(id)) {
             return ResponseVO.ok();
         }

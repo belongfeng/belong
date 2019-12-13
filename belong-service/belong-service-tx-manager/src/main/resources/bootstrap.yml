@@ -1,0 +1,81 @@
+server:
+  port: 5004
+
+spring:
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: 123456     # 密码（默认为空）
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+  application:
+    name: belong-service-tx-manager
+  cloud:
+    config:
+      uri: http://127.0.0.1:520
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: belong-config
+  profiles:
+    active: dev
+  devtools:
+    restart:
+      enabled: true
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+
+feign:
+  hystrix:
+    #    开启断路器
+    enabled: true
+    command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 4000
+  client:
+    config:
+      default:
+        connectTimeout: 4000
+        readTimeout: 4000
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://fy:123456@belongEureka13141.com:13141/eureka
+      #defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true     #访问路径可以显示IP地址
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# LCN 配置
+tm:
+  transaction:
+    netty:
+      delaytime: 5 # 客户端链接最大通讯时间 （秒）
+      hearttime: 15 # 客户端心跳时间 （秒）
+  redis:
+    savemaxtime: 30 # redis 保存时间 （秒）
+  socket:
+    port: 9998 # 通讯端口
+    maxconnection: 1000 #最大链接数
+  compensate:
+    auto: false #是否自动补偿
+    notifyUrl: http://ip:port/path #补偿结果通知（配消息总线里面）
+    tryTime: 30 # z再次重试时间间隔
+    maxWaitTime: 5000 # 请求超时的最大时间 (毫秒)

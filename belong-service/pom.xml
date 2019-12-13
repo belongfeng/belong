@@ -18,6 +18,6 @@
         <!-- 代码生成，单独使用-->
         <module>belong-service-gen</module>
         <module>belong-service-wechat-applet</module>
-        <module>belong-service-txlcn</module>
+        <module>belong-service-tx-manager</module>
     </modules>
 </project>

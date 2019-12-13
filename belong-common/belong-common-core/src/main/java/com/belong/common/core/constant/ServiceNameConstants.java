@@ -12,4 +12,9 @@ public interface ServiceNameConstants {
      * 微信小程序案例服务
      */
     String BELONG_SERVICE_WECHAT_APPLET_CASUS = "belong-service-wechat-applet-casus" ;
+
+    /**
+     * 分布式事务协调
+     */
+    String BELONG_TX_MANAGER = "belong-tx-manager" ;
 }
