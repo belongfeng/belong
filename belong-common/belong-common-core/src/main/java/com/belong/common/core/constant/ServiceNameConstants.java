@@ -16,5 +16,5 @@ public interface ServiceNameConstants {
     /**
      * 分布式事务协调
      */
-    String BELONG_TX_MANAGER = "belong-tx-manager" ;
+    String BELONG_SERVICE_TX_MANAGER = "belong-service-tx-manager" ;
 }

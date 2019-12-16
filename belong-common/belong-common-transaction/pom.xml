@@ -43,6 +43,14 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <optional>true</optional>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-core</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     
 </project>

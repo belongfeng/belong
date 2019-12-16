@@ -111,9 +111,9 @@ public class WxUserAuthController extends AppletController {
      * @UpdateDate: 2019/12/5 11:01
      * @Version: 1.0
      */
-    @ApiOperation(value = "测试txlcn事务")
+    @ApiOperation(value = "获取用户信息接口")
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/userInfo")
+    @GetMapping("/userInfo")
     public ResponseVO<WxUserInfoVO> info() {
         return ResponseVO.ok(getUserInfo());
     }

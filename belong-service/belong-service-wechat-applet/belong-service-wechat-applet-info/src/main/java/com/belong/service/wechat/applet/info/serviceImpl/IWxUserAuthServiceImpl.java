@@ -140,9 +140,9 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     public Boolean tetLcn(String oneId, String twoId) {
         ResponseVO re = remoteWxUserCasusDOFService.remove(twoId);
         if (re.getCode() == 200) {
-            wxUserInfoService.removeById(oneId);
-            throw new RuntimeException("error runtime");
-            //return wxUserInfoService.removeById(oneId);
+            //wxUserInfoService.removeById(oneId);
+            //throw new RuntimeException("事务失败");
+            return wxUserInfoService.removeById(oneId);
         }
         return false;
     }
