@@ -9,15 +9,15 @@ import java.util.Collection;
 * @Author:         fengyu
 * @CreateDate:     2019/12/16 15:16
 */
-public class OpenIdAuthenticationToken extends MyAuthenticationToken {
+public class CodeAuthenticationToken extends MyAuthenticationToken {
 
     private static final long serialVersionUID = 420L;
 
-    public OpenIdAuthenticationToken(Object principal, Object credentials) {
+    public CodeAuthenticationToken(Object principal, Object credentials) {
         super(principal, credentials);
     }
 
-    public OpenIdAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+    public CodeAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(principal, credentials, authorities);
     }
 

@@ -3,7 +3,7 @@ package com.belong.service.wechat.applet.base.auth.filter;
 import com.belong.common.auth.security.LoginConstants;
 import com.belong.common.util.HttpServletRequestReader;
 import com.belong.common.util.json.JSONUtils;
-import com.belong.service.wechat.applet.base.auth.token.OpenIdAuthenticationToken;
+import com.belong.service.wechat.applet.base.auth.token.CodeAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -37,7 +37,7 @@ public class CodeLoginAuthenticationFilter extends AbstractAuthenticationProcess
         String principal = obtainParameter(request, LoginConstants.SPRING_SECURITY_RESTFUL_CODE_KEY);
         String credentials = "";
         principal = principal.trim();
-        authRequest = new OpenIdAuthenticationToken(principal, credentials);
+        authRequest = new CodeAuthenticationToken(principal, credentials);
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
         return this.getAuthenticationManager().authenticate(authRequest);

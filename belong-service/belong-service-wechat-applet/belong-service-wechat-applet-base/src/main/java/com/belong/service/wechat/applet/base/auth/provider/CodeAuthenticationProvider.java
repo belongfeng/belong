@@ -2,7 +2,7 @@ package com.belong.service.wechat.applet.base.auth.provider;
 
 
 import com.belong.service.wechat.applet.base.service.MyUserDetailsService;
-import com.belong.service.wechat.applet.base.auth.token.OpenIdAuthenticationToken;
+import com.belong.service.wechat.applet.base.auth.token.CodeAuthenticationToken;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -24,7 +24,7 @@ public class CodeAuthenticationProvider extends MyAbstractUserDetailsAuthenticat
 
     @Override
     protected Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user) {
-        OpenIdAuthenticationToken result = new OpenIdAuthenticationToken(principal, authentication.getCredentials(), user.getAuthorities());
+        CodeAuthenticationToken result = new CodeAuthenticationToken(principal, authentication.getCredentials(), user.getAuthorities());
         result.setDetails(authentication.getDetails());
         return result;
     }
@@ -49,7 +49,7 @@ public class CodeAuthenticationProvider extends MyAbstractUserDetailsAuthenticat
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return OpenIdAuthenticationToken.class.isAssignableFrom(authentication);
+        return CodeAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
 

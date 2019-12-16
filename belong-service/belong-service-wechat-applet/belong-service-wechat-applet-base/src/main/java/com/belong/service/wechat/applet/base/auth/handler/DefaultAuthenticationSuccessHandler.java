@@ -38,7 +38,7 @@ public class DefaultAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         if (!type.contains("text/html" )) {
             final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             final String token = tokenUtil.generateToken(userDetails); //生成Token
-            Map map = new HashMap();
+            Map map = new HashMap(3);
             map.put("access_token", token);
             map.put("expires_in", tokenUtil.getExpiration());
             map.put("token_type", TokenUtil.TOKEN_TYPE_BEARER);

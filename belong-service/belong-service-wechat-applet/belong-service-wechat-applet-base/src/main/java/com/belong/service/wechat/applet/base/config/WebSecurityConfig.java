@@ -55,8 +55,8 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
                 .addFilterBefore(getOpenIdAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(getMyLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(PermitAllUrl.permitAllUrl()).permitAll()
-                .antMatchers(HttpMethod.POST, LoginConstants.MINI_APP_LOGIN,"/**/wxUserAuth/**","/**/db/**").permitAll();
+                .antMatchers("/**/wxUserAuth/**","/**/db/**").permitAll()
+                .antMatchers(HttpMethod.POST, LoginConstants.MINI_APP_LOGIN).permitAll();
         super.configure(security);
     }
 
