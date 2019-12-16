@@ -34,7 +34,7 @@ public class ${className}DO {
     /**
      * 实体编号（唯一标识）
      */
-    @TableId
+    @TableId(value = "id",type=IdType.UUID)
     private String id;
     #foreach ($column in $columns)#if($column.attrname!="createBy"&&$column.attrname!="updateBy")
         /** $column.comments */
