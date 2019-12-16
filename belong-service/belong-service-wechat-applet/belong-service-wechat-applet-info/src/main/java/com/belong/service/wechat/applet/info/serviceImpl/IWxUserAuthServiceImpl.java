@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.belong.common.core.base.ResponseVO;
+import com.belong.common.exception.wxapplet.login.MiniAppLoginException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterIllegalException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +43,8 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     private IWxUserInfoService wxUserInfoService;
     @Autowired
     private RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
-
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     /**
      * @Description:
      * @Author: fengyu
@@ -75,17 +78,27 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
      */
     @Override
     public WxUserInfoDO baseUserInfo(WxMaJscode2SessionResult wxMaJscode2SessionResult) {
-        Date now = new Date();
-        WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(wxMaJscode2SessionResult.getOpenid()).build()));
-        if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
-            wxUserInfoDO = new WxUserInfoDO();
+        if (com.belong.common.util.StringUtils.isNull(wxMaJscode2SessionResult)) {
+            throw new MiniAppLoginException("用户信息校验失败");
         }
-        wxUserInfoDO.setLastLoginTime(now);
-        wxUserInfoDO.setEnabled(true);
-        wxUserInfoDO.setDelFlag("0");
-        wxUserInfoDO.setOpenId(wxMaJscode2SessionResult.getOpenid());
-        wxUserInfoService.saveOrUpdate(wxUserInfoDO);
-        return wxUserInfoDO;
+        try {
+            WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(wxMaJscode2SessionResult.getOpenid()).build()));
+            //判断用户是否登录过
+            if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
+                wxUserInfoDO = new WxUserInfoDO();
+                wxUserInfoDO.setAppId(wxMaService.getWxMaConfig().getAppid());
+                wxUserInfoDO.setEnabled(true);
+                wxUserInfoDO.setUnionId(wxMaJscode2SessionResult.getUnionid());
+                wxUserInfoDO.setOpenId(wxMaJscode2SessionResult.getOpenid());
+            }
+            wxUserInfoDO.setLastLoginTime(new Date());
+            wxUserInfoService.saveOrUpdate(wxUserInfoDO);
+            redisTemplate.opsForValue().set(WxUserInfoDO.SESSION_KEY + wxMaJscode2SessionResult.getOpenid(), wxMaJscode2SessionResult.getSessionKey());
+            return wxUserInfoDO;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new MiniAppLoginException("用户信息校验失败");
+        }
     }
 
     @Override

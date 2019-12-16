@@ -10,6 +10,7 @@ import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.casus.api.feign.RemoteWxUserCasusDOFService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserAuthFService;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoListVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
@@ -49,6 +50,9 @@ public class WxUserInfoController extends AppletController {
 
     @Autowired
     private final RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
+
+    @Autowired
+    private final RemoteWxUserAuthFService remoteWxUserAuthFService;
 
     @ApiOperation(value = "获取分页数据", notes = "权限标识 sys:wxUserInfo:view")
     @ApiImplicitParams({
@@ -123,5 +127,16 @@ public class WxUserInfoController extends AppletController {
         map.put("1", wxUserInfoService.getMaster(openId));
         map.put("2", wxUserInfoService.getSlave(openId));
         return ResponseVO.ok(map);
+    }
+
+
+    @ApiOperation(value = "测试远程调用", notes = "权限标识 sys:wxUserInfo:view")
+    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
+    @GetMapping(value = "/lgin/{code}")
+    public ResponseVO lgin(@ApiParam(required = true, value = "code") @PathVariable("code") String code) {
+        if (StringUtils.isEmpty(code)) {
+            throw new WxAppletParameterLossException(new String[]{"code"});
+        }
+        return remoteWxUserAuthFService.baseLogin(code);
     }
 }

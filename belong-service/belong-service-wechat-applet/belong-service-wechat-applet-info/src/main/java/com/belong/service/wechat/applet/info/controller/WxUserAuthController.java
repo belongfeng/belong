@@ -6,6 +6,7 @@ import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossExcep
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
+import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserAuthFService;
 import com.belong.service.wechat.applet.info.api.vo.WeChatAppletLoginResultVO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
@@ -45,12 +46,6 @@ public class WxUserAuthController extends AppletController {
     @Autowired
     private final IWxUserAuthService wxUserAuthService;
     /**
-     * 权限管理
-     */
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    /**
      * 方法实现说明:当仅获取code时得登录
      *
      * @param code
@@ -61,48 +56,51 @@ public class WxUserAuthController extends AppletController {
      */
     @PostMapping(value = "/baseLogin", produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "code码登录")
-    public ResponseVO<WeChatAppletLoginResultVO> baseLogin(@RequestBody String code) {
+    public ResponseVO<WxUserInfoVO> baseLogin(@RequestBody String code) {
         if (StringUtils.isNullOrEmpty(code)) {
             throw new WxAppletParameterLossException(new String[]{"code"});
         }
         WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(code);
         WxUserInfoDO wxUserInfoDO = wxUserAuthService.baseUserInfo(result);
-        //生成令牌完成授权
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String token = tokenUtil.generateToken(userDetails);
-        WeChatAppletLoginResultVO weChatAppletLoginResultVO = WeChatAppletLoginResultVO.builder().access_token(token).expires_in(tokenUtil.getExpiration()).token_type(TokenUtil.TOKEN_TYPE_BEARER).userInfo(generator.convert(wxUserInfoDO, WxUserInfoVO.class)).build();
-        return ResponseVO.ok(weChatAppletLoginResultVO);
+        return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
     }
 
-    /**
-     * @param registryUser
-     * @return
-     */
-    @PostMapping(value = "/completeLogin", produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "敏感信息登录")
-    public ResponseVO<WeChatAppletLoginResultVO> registryUser(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (com.belong.common.util.StringUtils.isNull(registryUser)) {
-            throw new WxAppletParameterLossException();
-        }
-        if (StringUtils.isNullOrEmpty(registryUser.getCode())) {
+
+    @PostMapping(value = "/test", produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "远程调用code码登录")
+    public ResponseVO<WxUserInfoVO> test(@RequestBody String code) {
+        if (StringUtils.isNullOrEmpty(code)) {
             throw new WxAppletParameterLossException(new String[]{"code"});
         }
-        WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
-        WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
-        //生成令牌
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String token = tokenUtil.generateToken(userDetails);
-        WeChatAppletLoginResultVO weChatAppletLoginResultVO = WeChatAppletLoginResultVO.builder().access_token(token).expires_in(tokenUtil.getExpiration()).token_type(TokenUtil.TOKEN_TYPE_BEARER).userInfo(generator.convert(wxUserInfoDO, WxUserInfoVO.class)).build();
-        return ResponseVO.ok(weChatAppletLoginResultVO);
+        WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(code);
+        WxUserInfoDO wxUserInfoDO = wxUserAuthService.baseUserInfo(result);
+        return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
     }
+    ///**
+    // * @param registryUser
+    // * @return
+    // */
+    //@PostMapping(value = "/completeLogin", produces = "application/json;charset=UTF-8")
+    //@ApiOperation(value = "敏感信息登录")
+    //public ResponseVO<WeChatAppletLoginResultVO> registryUser(@RequestBody WeChatRegistryUserVO registryUser) {
+    //    if (com.belong.common.util.StringUtils.isNull(registryUser)) {
+    //        throw new WxAppletParameterLossException();
+    //    }
+    //    if (StringUtils.isNullOrEmpty(registryUser.getCode())) {
+    //        throw new WxAppletParameterLossException(new String[]{"code"});
+    //    }
+    //    WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
+    //    WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
+    //    //生成令牌
+    //    final Authentication authentication = authenticationManager.authenticate(
+    //            new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
+    //    );
+    //    SecurityContextHolder.getContext().setAuthentication(authentication);
+    //    final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    //    final String token = tokenUtil.generateToken(userDetails);
+    //    WeChatAppletLoginResultVO weChatAppletLoginResultVO = WeChatAppletLoginResultVO.builder().access_token(token).expires_in(tokenUtil.getExpiration()).token_type(TokenUtil.TOKEN_TYPE_BEARER).userInfo(generator.convert(wxUserInfoDO, WxUserInfoVO.class)).build();
+    //    return ResponseVO.ok(weChatAppletLoginResultVO);
+    //}
 
     /**
      * @Description: 获取用户信息接口

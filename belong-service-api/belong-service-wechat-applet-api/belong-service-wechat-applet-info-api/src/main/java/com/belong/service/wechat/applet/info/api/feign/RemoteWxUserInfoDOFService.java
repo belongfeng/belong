@@ -15,8 +15,6 @@ import java.util.Map;
  * @Description: 微信用户信息Feign服务层
  * @Author: fengyu
  * @CreateDate: 2019/12/4 11:12
- * @UpdateDate: 2019/12/4 11:12
- * @Version: 1.0
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = RemoteWxUserInfoDOFallbackFactory.class)
 public interface RemoteWxUserInfoDOFService {

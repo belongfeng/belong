@@ -17,14 +17,13 @@ project:
   wx:
     applet:
       configs:
-        appid: 123
-        secret: 456
+        appid: wx2eae3ecf7e7c4ccd
+        secret: c509967e6fbf0c625f513cdd74e68131
     pay:
-      appId: 123
-      mchId: 123
-      mchKey: 123
+      appId: wx74161f797b46c1ad
+      mchId: 1530459401
+      mchKey: 2f64407894d42842a4389503096d8fa1
       keyPath: 123
-
 
 mybatis-plus:
   # 搜索指定包别名

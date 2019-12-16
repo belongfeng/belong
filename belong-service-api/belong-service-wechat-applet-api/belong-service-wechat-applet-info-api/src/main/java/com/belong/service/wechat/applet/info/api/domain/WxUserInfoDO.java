@@ -30,12 +30,14 @@ import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
 public class WxUserInfoDO {
     private static final long serialVersionUID = -1L;
 
-    public static final String REDIS_KEY = "wx_user_info:" ;
+    public static final String REDIS_KEY = "wx_user_info:";
+    public static final String SESSION_KEY = REDIS_KEY + "session_key:";
+    public static final String OPEN_ID = REDIS_KEY + "open_id:";
 
     /**
      * 实体编号（唯一标识）
      */
-    @TableId
+    @TableId(value = "id",type=IdType.UUID)
     private String id;
 
     /**

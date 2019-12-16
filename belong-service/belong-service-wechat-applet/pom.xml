@@ -15,8 +15,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!--微信小程序公共模块-->
         <module>belong-service-wechat-applet-base</module>
+        <!--微信小程序个人中心模块，包含（登录，资料，模板消息推送，支付等功能）-->
         <module>belong-service-wechat-applet-info</module>
+        <!--微信小程序案列模块-->
         <module>belong-service-wechat-applet-casus</module>
     </modules>
 </project>

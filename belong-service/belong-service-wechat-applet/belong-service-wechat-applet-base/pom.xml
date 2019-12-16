@@ -56,6 +56,12 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-exception</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
 
         <!-- fastjson-->
         <dependency>
