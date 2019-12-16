@@ -15,6 +15,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 
+/**
+* @Description:    微信平台信息初始化
+* @Author:         fengyu
+* @CreateDate:     2019/12/16 10:54
+*/
 @Configuration
 @ConditionalOnClass(WxPayService.class)
 @Slf4j

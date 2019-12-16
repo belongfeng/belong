@@ -16,18 +16,33 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!--redis通用模块-->
         <module>belong-common-redis</module>
+        <!--springcloud——rabbitmq——stream通用模块-->
         <module>belong-common-stream</module>
+        <!--mybatisplus3.0通用模块-->
         <module>belong-common-mybatisplus</module>
+        <!--datasource通用模块-->
         <module>belong-common-datasource</module>
+        <!--swagger通用模块-->
         <module>belong-common-swagger</module>
+        <!--security通用模块-->
         <module>belong-common-auth</module>
+        <!--工具类通用模块-->
         <module>belong-common-util</module>
+        <!--异常管理通用模块-->
         <module>belong-common-exception</module>
+        <!--常量配置等通用模块-->
         <module>belong-common-core</module>
+        <!--日志通用模块-->
         <module>belong-common-log</module>
+        <!--mongodb通用模块-->
         <module>belong-common-mongodb</module>
+        <!--类转换工具类通用模块-->
         <module>belong-common-dozer</module>
+        <!--分布式事务通用模块-->
         <module>belong-common-transaction</module>
+        <!--脱敏工具类通用模块-->
+        <module>belong-common-sensitive</module>
     </modules>
 </project>

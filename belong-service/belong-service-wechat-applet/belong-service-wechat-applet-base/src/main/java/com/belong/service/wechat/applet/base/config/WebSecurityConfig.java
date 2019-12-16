@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
  * @Description: spring-security配置
  * @Author: fengyu
  * @CreateDate: 2019/12/4 16:03
- * @UpdateDate: 2019/12/4 16:03
- * @Version: 1.0
  */
 @Configuration
 public class WebSecurityConfig extends AbstractWebSecurityConfig {
