@@ -8,8 +8,8 @@ package com.belong.common.auth.security;
 public interface LoginConstants {
 
     /**
-     * 微信小程序登录
+     * 微信小程序code登录
      */
-    String MINI_APP_LOGIN = "/v1/api/wx/user/login";
+    String MINI_APP_LOGIN = "/v1/api/baseLogin";
     String SPRING_SECURITY_RESTFUL_CODE_KEY = "code" ;
 }

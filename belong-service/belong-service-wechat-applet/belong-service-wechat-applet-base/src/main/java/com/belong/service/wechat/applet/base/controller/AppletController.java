@@ -1,7 +1,9 @@
 package com.belong.service.wechat.applet.base.controller;
 
 import com.belong.common.auth.security.AuthenticationTokenFilter;
+import com.belong.common.auth.util.WebUtils;
 import com.belong.common.core.base.BaseController;
+import com.belong.service.wechat.applet.base.model.AuthUser;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserInfoDOFService;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
@@ -26,8 +28,15 @@ public class AppletController extends BaseController {
     protected RemoteWxUserInfoDOFService remoteWxUserInfoDOFService;
 
     public String getUserId() {
-        return getUserInfo().getId();
+        AuthUser authUser = WebUtils.getCurrentUser();
+        return authUser.getId();
     }
+
+    public String getOpenId() {
+        AuthUser authUser = WebUtils.getCurrentUser();
+        return authUser.getOpenId();
+    }
+
 
     public WxUserInfoVO getUserInfo() {
         String tokenHeader = getRequest().getHeader(AuthenticationTokenFilter.TOKEN_HEADER);

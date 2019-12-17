@@ -12,7 +12,9 @@ import com.belong.common.exception.base.BaseException;
  */
 public class WxAppletException extends BaseException {
     private static final long serialVersionUID = 1L;
-
+    public WxAppletException(String msg) {
+        super(msg);
+    }
     public WxAppletException(String code, Object[] args) {
         super("wxapplet", code, args, null);
     }

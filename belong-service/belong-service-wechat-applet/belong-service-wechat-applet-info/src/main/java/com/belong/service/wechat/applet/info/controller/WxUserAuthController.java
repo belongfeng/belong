@@ -4,10 +4,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.service.wechat.applet.base.controller.AppletController;
-import com.belong.service.wechat.applet.base.utils.TokenUtil;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
-import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserAuthFService;
-import com.belong.service.wechat.applet.info.api.vo.WeChatAppletLoginResultVO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
@@ -18,17 +15,10 @@ import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Description: 微信小程序登录
@@ -45,6 +35,9 @@ import java.util.Map;
 public class WxUserAuthController extends AppletController {
     @Autowired
     private final IWxUserAuthService wxUserAuthService;
+    @Autowired
+    private final RedisTemplate redisTemplate;
+
     /**
      * 方法实现说明:当仅获取code时得登录
      *
@@ -65,42 +58,32 @@ public class WxUserAuthController extends AppletController {
         return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
     }
 
-
-    @PostMapping(value = "/test", produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "远程调用code码登录")
-    public ResponseVO<WxUserInfoVO> test(@RequestBody String code) {
-        if (StringUtils.isNullOrEmpty(code)) {
-            throw new WxAppletParameterLossException(new String[]{"code"});
+    /**
+     * @param registryUser
+     * @return
+     */
+    @PostMapping(value = "/getUserInfo", produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "获取微信用户信息")
+    public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
+        if (com.belong.common.util.StringUtils.isNull(registryUser)) {
+            throw new WxAppletParameterLossException();
         }
-        WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(code);
-        WxUserInfoDO wxUserInfoDO = wxUserAuthService.baseUserInfo(result);
-        return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
+        if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
+            throw new WxAppletParameterLossException(new String[]{"encryptedData"});
+        }
+        if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
+            throw new WxAppletParameterLossException(new String[]{"iv"});
+        }
+        String session_key = (String) redisTemplate.opsForValue().get(WxUserInfoDO.SESSION_KEY + getOpenId());
+        if ("".equals(session_key)) {
+            throw new WxAppletParameterLossException(new String[]{"session_key"});
+        }
+        WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(session_key, registryUser);
+        if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
+            return ResponseVO.failed("获取用户信息失败！");
+        }
+        return ResponseVO.ok("获取用户信息成功！");
     }
-    ///**
-    // * @param registryUser
-    // * @return
-    // */
-    //@PostMapping(value = "/completeLogin", produces = "application/json;charset=UTF-8")
-    //@ApiOperation(value = "敏感信息登录")
-    //public ResponseVO<WeChatAppletLoginResultVO> registryUser(@RequestBody WeChatRegistryUserVO registryUser) {
-    //    if (com.belong.common.util.StringUtils.isNull(registryUser)) {
-    //        throw new WxAppletParameterLossException();
-    //    }
-    //    if (StringUtils.isNullOrEmpty(registryUser.getCode())) {
-    //        throw new WxAppletParameterLossException(new String[]{"code"});
-    //    }
-    //    WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(registryUser.getCode());
-    //    WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(result.getSessionKey(), registryUser);
-    //    //生成令牌
-    //    final Authentication authentication = authenticationManager.authenticate(
-    //            new UsernamePasswordAuthenticationToken(wxUserInfoDO.getOpenId(), wxUserInfoDO.getOpenId())
-    //    );
-    //    SecurityContextHolder.getContext().setAuthentication(authentication);
-    //    final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    //    final String token = tokenUtil.generateToken(userDetails);
-    //    WeChatAppletLoginResultVO weChatAppletLoginResultVO = WeChatAppletLoginResultVO.builder().access_token(token).expires_in(tokenUtil.getExpiration()).token_type(TokenUtil.TOKEN_TYPE_BEARER).userInfo(generator.convert(wxUserInfoDO, WxUserInfoVO.class)).build();
-    //    return ResponseVO.ok(weChatAppletLoginResultVO);
-    //}
 
     /**
      * @Description: 获取用户信息接口

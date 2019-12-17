@@ -16,11 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 
+/**
+* @Description:    微信小程序登录拦截
+* @Author:         fengyu
+* @CreateDate:     2019/12/17 15:31
+*/
 public class CodeLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-
-    /**
-     * 微信小程序登录
-     */
     private boolean postOnly = true;
 
     public CodeLoginAuthenticationFilter() {
@@ -35,7 +36,7 @@ public class CodeLoginAuthenticationFilter extends AbstractAuthenticationProcess
         }
         AbstractAuthenticationToken authRequest;
         String principal = obtainParameter(request, LoginConstants.SPRING_SECURITY_RESTFUL_CODE_KEY);
-        String credentials = "";
+        String credentials = "" ;
         principal = principal.trim();
         authRequest = new CodeAuthenticationToken(principal, credentials);
         // Allow subclasses to set the "details" property

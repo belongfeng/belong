@@ -20,8 +20,9 @@ import org.springframework.security.core.userdetails.cache.NullUserCache;
 import org.springframework.util.Assert;
 
 /**
- * Created by fp295 on 2018/6/16.
- * 自定义 AuthenticationProvider， 以使用自定义的 MyAuthenticationToken
+ * @Description: 自定义 AuthenticationProvider， 以使用自定义的 MyAuthenticationToken
+ * @Author: fengyu
+ * @CreateDate: 2019/12/17 15:09
  */
 public abstract class MyAbstractUserDetailsAuthenticationProvider implements AuthenticationProvider, InitializingBean, MessageSourceAware {
 
@@ -39,8 +40,8 @@ public abstract class MyAbstractUserDetailsAuthenticationProvider implements Aut
 
     @Override
     public final void afterPropertiesSet() throws Exception {
-        Assert.notNull(this.userCache, "A user cache must be set" );
-        Assert.notNull(this.messages, "A message source must be set" );
+        Assert.notNull(this.userCache, "A user cache must be set");
+        Assert.notNull(this.messages, "A message source must be set");
         this.doAfterPropertiesSet();
     }
 
@@ -51,45 +52,38 @@ public abstract class MyAbstractUserDetailsAuthenticationProvider implements Aut
         UserDetails user = this.userCache.getUserFromCache(username);
         if (user == null) {
             cacheWasUsed = false;
-
             try {
                 user = this.retrieveUser(username, authentication);
             } catch (UsernameNotFoundException var6) {
-                this.logger.debug("User \'" + username + "\' not found" );
+                this.logger.debug("User \'" + username + "\' not found");
                 if (this.hideUserNotFoundExceptions) {
-                    throw new BadCredentialsException(this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "密码错误" ));
+                    throw new BadCredentialsException(this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "密码错误,请重新输入密码！"));
                 }
-
                 throw var6;
             }
-
-            Assert.notNull(user, "retrieveUser returned null - a violation of the interface contract" );
+            Assert.notNull(user, "retrieveUser returned null - a violation of the interface contract");
         }
-
         try {
+            //验证帐号是否锁定\是否禁用\帐号是否到期
             this.preAuthenticationChecks.check(user);
             this.additionalAuthenticationChecks(user, authentication);
         } catch (AuthenticationException var7) {
             if (!cacheWasUsed) {
                 throw var7;
             }
-
             cacheWasUsed = false;
             user = this.retrieveUser(username, authentication);
             this.preAuthenticationChecks.check(user);
             this.additionalAuthenticationChecks(user, authentication);
         }
-
         this.postAuthenticationChecks.check(user);
         if (!cacheWasUsed) {
             this.userCache.putUserInCache(user);
         }
-
         Object principalToReturn = user;
         if (this.forcePrincipalAsString) {
             principalToReturn = user.getUsername();
         }
-
         return this.createSuccessAuthentication(principalToReturn, authentication, user);
     }
 
@@ -157,8 +151,8 @@ public abstract class MyAbstractUserDetailsAuthenticationProvider implements Aut
         @Override
         public void check(UserDetails user) {
             if (!user.isCredentialsNonExpired()) {
-                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account credentials have expired" );
-                throw new CredentialsExpiredException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("LdapAuthenticationProvider.credentialsExpired", "用户凭证已过期" ));
+                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account credentials have expired");
+                throw new CredentialsExpiredException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("LdapAuthenticationProvider.credentialsExpired", "用户凭证已过期"));
             }
         }
     }
@@ -170,14 +164,14 @@ public abstract class MyAbstractUserDetailsAuthenticationProvider implements Aut
         @Override
         public void check(UserDetails user) {
             if (!user.isAccountNonLocked()) {
-                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is locked" );
-                throw new LockedException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.locked", "用户帐户已锁定" ));
+                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is locked");
+                throw new LockedException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.locked", "用户帐户已锁定，请联系客服处理！"));
             } else if (!user.isEnabled()) {
-                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is disabled" );
-                throw new DisabledException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.disabled", "用户被禁用" ));
+                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is disabled");
+                throw new DisabledException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.disabled", "您的账号存在异常,现已被禁用登录，请联系客服处理！"));
             } else if (!user.isAccountNonExpired()) {
-                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is expired" );
-                throw new AccountExpiredException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.expired", "用户帐户已过期" ));
+                MyAbstractUserDetailsAuthenticationProvider.this.logger.debug("User account is expired");
+                throw new AccountExpiredException(MyAbstractUserDetailsAuthenticationProvider.this.messages.getMessage("AccountStatusUserDetailsChecker.expired", "用户帐户已过期,请重新登录！"));
             }
         }
     }

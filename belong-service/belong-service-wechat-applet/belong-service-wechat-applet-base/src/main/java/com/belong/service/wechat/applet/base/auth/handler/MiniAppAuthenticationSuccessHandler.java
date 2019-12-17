@@ -35,7 +35,7 @@ public class MiniAppAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         final AuthUser userDetails = (AuthUser) authentication.getPrincipal();
-        log.info("小程序用户登录成功！用户数据为----->{}",userDetails);
+        log.info("小程序用户登录成功！用户为----->{}", userDetails.getOpenId());
         final String token = tokenUtil.generateToken(userDetails);
         Map map = new HashMap(3);
         map.put("access_token", token);

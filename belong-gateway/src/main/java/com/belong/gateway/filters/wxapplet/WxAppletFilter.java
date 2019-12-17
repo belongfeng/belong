@@ -28,7 +28,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
     /**
      * 白名单
      */
-    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator", "/test", "/v1/api/wx/user/login"
+    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator", "/test", "/v1/api/baseLogin"
     };
 
     @Override

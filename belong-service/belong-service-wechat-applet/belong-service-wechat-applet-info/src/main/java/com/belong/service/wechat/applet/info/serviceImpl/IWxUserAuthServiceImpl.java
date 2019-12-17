@@ -45,6 +45,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     private RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
     @Autowired
     private StringRedisTemplate redisTemplate;
+
     /**
      * @Description:
      * @Author: fengyu
@@ -102,32 +103,39 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     @Override
     public WxUserInfoDO userInfo(String sessionKey, WeChatRegistryUserVO registryUser) {
         // 用户信息校验
-        if (!wxMaService.getUserService().checkUserInfo(sessionKey, registryUser.getRawData(), registryUser.getSignature())) {
+        if (!wxMaService.getUserService().checkUserInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv())) {
             throw new WxAppletParameterLossException();
         }
         // 解密用户信息
         WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
         WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(userInfo.getOpenId()).build()));
         if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
-            wxUserInfoDO = new WxUserInfoDO();
+            throw new WxappletrequestException("请先登录以后再获取用户信息!");
         }
-        wxUserInfoDO.setLastLoginTime(new Date());
-        wxUserInfoDO.setEnabled(true);
-        wxUserInfoDO.setDelFlag("0");
         wxUserInfoDO.setNickName(userInfo.getNickName());
-        wxUserInfoDO.setOpenId(userInfo.getOpenId());
-        wxUserInfoService.saveOrUpdate(wxUserInfoDO);
+        wxUserInfoDO.setAvatarUrl(userInfo.getAvatarUrl());
+        wxUserInfoDO.setCity(userInfo.getCity());
+        wxUserInfoDO.setCountry(userInfo.getCountry());
+        wxUserInfoDO.setProvince(userInfo.getProvince());
+        wxUserInfoDO.setSex(Integer.valueOf(userInfo.getGender()));
         return wxUserInfoDO;
     }
 
     @Override
-    public WxMaPhoneNumberInfo userPhone(String appid, String sessionKey, WeChatRegistryUserVO registryUser) {
-        // 用户信息校验
-        if (!wxMaService.getUserService().checkUserInfo(sessionKey, registryUser.getRawData(), registryUser.getSignature())) {
-            throw new WxAppletParameterIllegalException();
+    public WxMaPhoneNumberInfo userPhone(String openId, String sessionKey, WeChatRegistryUserVO registryUser) {
+        WxMaPhoneNumberInfo phoneNoInfo = null;
+        try {
+            phoneNoInfo = wxMaService.getUserService().getPhoneNoInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
+            WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(openId).build()));
+            if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
+                throw new WxappletrequestException("请先登录以后再获取用户信息!");
+            }
+            wxUserInfoDO.setMobile(phoneNoInfo.getPhoneNumber());
+            wxUserInfoService.updateById(wxUserInfoDO);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new WxappletrequestException("用户信息校验失败");
         }
-        // 解密
-        WxMaPhoneNumberInfo phoneNoInfo = wxMaService.getUserService().getPhoneNoInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
         return phoneNoInfo;
     }
 

@@ -47,7 +47,7 @@ public interface IWxUserAuthService {
      * @param registryUser
      * @return
      */
-    WxMaPhoneNumberInfo userPhone(String appid, String sessionKey, WeChatRegistryUserVO registryUser);
+    WxMaPhoneNumberInfo userPhone(String openId,String sessionKey, WeChatRegistryUserVO registryUser);
 
     /**
      * 获取微信小程序接口调用凭证
