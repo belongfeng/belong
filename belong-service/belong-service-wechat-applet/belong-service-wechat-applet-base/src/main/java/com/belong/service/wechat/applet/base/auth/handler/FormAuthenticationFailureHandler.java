@@ -35,7 +35,7 @@ public class FormAuthenticationFailureHandler implements AuthenticationFailureHa
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
         log.error("登录失败:{}", exception);
         Integer code = -1;
-        Map map = new HashMap();
+        Map map = new HashMap(3);
         if (exception instanceof DisabledException) {
             code = EnumErrorCode.DISABLED_USER.getCode();
         } else if (exception instanceof LockedException) {

@@ -59,8 +59,6 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         }
         try {
             WxMaJscode2SessionResult session = wxMaService.getUserService().getSessionInfo(code);
-            log.info(session.getSessionKey());
-            log.info(session.getOpenid());
             return session;
             //TODO 可以增加自己的逻辑，关联业务相关数据
         } catch (WxErrorException e) {

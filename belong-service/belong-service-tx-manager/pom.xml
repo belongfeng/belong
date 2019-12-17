@@ -12,7 +12,7 @@
 
     <groupId>com.group</groupId>
     <artifactId>belong-service-tx-manager</artifactId>
-
+    <packaging>jar</packaging>
     <dependencies>
         <!--web 模块-->
         <dependency>

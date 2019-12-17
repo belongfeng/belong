@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
-* @Description:    手机验证码登陆
+* @Description:    code登录验证
 * @Author:         fengyu
 * @CreateDate:     2019/12/16 15:25
 */

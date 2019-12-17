@@ -43,6 +43,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     /**
      * http请求
      *
@@ -52,10 +53,10 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security
-                .addFilterBefore(getOpenIdAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(getCodeLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(getMyLoginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/**/wxUserAuth/**","/**/db/**").permitAll()
+                .antMatchers("/**/wxUserAuth/**", "/**/db/**").permitAll()
                 .antMatchers(HttpMethod.POST, LoginConstants.MINI_APP_LOGIN).permitAll();
         super.configure(security);
     }
@@ -81,7 +82,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
-        auth.authenticationProvider(openIdAuthenticationProvider());
+        auth.authenticationProvider(codeAuthenticationProvider());
     }
 
     @Bean
@@ -102,7 +103,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     }
 
     @Bean
-    public CodeAuthenticationProvider openIdAuthenticationProvider() {
+    public CodeAuthenticationProvider codeAuthenticationProvider() {
         CodeAuthenticationProvider provider = new CodeAuthenticationProvider();
         // 设置userDetailsService
         provider.setUserDetailsService(myUserDetailsService);
@@ -111,6 +112,14 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         return provider;
     }
 
+    /**
+     * 方法实现说明:通过账号密码登录拦截器
+     *
+     * @param
+     * @return com.belong.service.wechat.applet.base.auth.filter.PassWordLoginAuthenticationFilter
+     * @throws
+     * @author belongfeng
+     */
     @Bean
     public PassWordLoginAuthenticationFilter getMyLoginAuthenticationFilter() {
         PassWordLoginAuthenticationFilter filter = new PassWordLoginAuthenticationFilter();
@@ -119,13 +128,23 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //设置成功处理响应
         filter.setAuthenticationSuccessHandler(defaultAuthenticationSuccessHandler);
+        //设置失败处理响应
         filter.setAuthenticationFailureHandler(formAuthenticationFailureHandler);
         return filter;
     }
 
+    /**
+     * 方法实现说明: 小程序通过code登录拦截器
+     *
+     * @param
+     * @return com.belong.service.wechat.applet.base.auth.filter.CodeLoginAuthenticationFilter
+     * @throws
+     * @author belongfeng
+     */
     @Bean
-    public CodeLoginAuthenticationFilter getOpenIdAuthenticationFilter() {
+    public CodeLoginAuthenticationFilter getCodeLoginAuthenticationFilter() {
         CodeLoginAuthenticationFilter filter = new CodeLoginAuthenticationFilter();
         try {
             filter.setAuthenticationManager(this.authenticationManagerBean());

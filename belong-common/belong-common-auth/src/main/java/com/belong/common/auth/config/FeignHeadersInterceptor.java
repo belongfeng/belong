@@ -30,24 +30,24 @@ public class FeignHeadersInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        log.info("开始添加feign请求头");
         HttpServletRequest request = getHttpServletRequest();
-
         if (Objects.isNull(request)) {
             return;
         }
-
+        log.info("开始清洗feign调用参数");
         Map<String, String> headers = getHeaders(request);
-
         if (headers.size() > 0) {
+            log.info("检测到header含有请求数据,将设置到header请求头");
             Iterator<Entry<String, String>> iterator = headers.entrySet().iterator();
             while (iterator.hasNext()) {
                 Entry<String, String> entry = iterator.next();
                 // 把请求过来的header请求头 原样设置到feign请求头中
                 // 包括token
-                log.info("header得key为{}，header得Value为{}，",entry.getKey(), entry.getValue());
+                log.info("header得key为{}，header得Value为{}，", entry.getKey(), entry.getValue());
                 template.header(entry.getKey(), entry.getValue());
             }
+        } else {
+            log.info("未检测到header含有请求数据");
         }
     }
 
@@ -63,16 +63,13 @@ public class FeignHeadersInterceptor implements RequestInterceptor {
     }
 
     private Map<String, String> getHeaders(HttpServletRequest request) {
-
         Map<String, String> map = new LinkedHashMap<>();
-
         Enumeration<String> enums = request.getHeaderNames();
         while (enums.hasMoreElements()) {
             String key = enums.nextElement();
             String value = request.getHeader(key);
             map.put(key, value);
         }
-
         return map;
     }
 }

@@ -15,13 +15,12 @@ public class TransactionRestTemplateInterceptor implements RequestInterceptor {
 
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
-
+		log.info("开始检查是否有分布式事务参与，如果有将记录--->groupId");
 		TxTransactionLocal txTransactionLocal = TxTransactionLocal.current();
 		String groupId = txTransactionLocal == null ? null : txTransactionLocal.getGroupId();
-
 		log.info("LCN-SpringCloud TxGroup info -> groupId:" + groupId);
-
 		if (txTransactionLocal != null) {
+			log.info("sssss");
 			requestTemplate.header("tx-group", groupId);
 		}
 	}

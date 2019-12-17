@@ -1,5 +1,6 @@
 package com.belong.service.wechat.applet.base.service;//package com.belong.service.wechat.base.security;
 
+import com.belong.common.exception.wxapplet.login.MiniAppLoginException;
 import com.belong.service.wechat.applet.base.model.AuthUser;
 import com.belong.service.wechat.applet.base.model.AuthUserFactory;
 import com.belong.service.wechat.applet.info.api.feign.RemoteWxUserAuthFService;
