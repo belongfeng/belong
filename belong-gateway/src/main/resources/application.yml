@@ -1,3 +1,5 @@
+server:
+  port: 9527
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -9,6 +11,14 @@ spring:
   profiles:
     active: dev
   cloud:
+    config:
+      uri: http://127.0.0.1:520
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: belong-config
     gateway:
       discovery:
         locator:
@@ -19,6 +29,26 @@ spring:
           uri: lb://belong-service-wechat-applet-info
           predicates:
             - Path=/wechat/applet/info/**
+          filters:
+            # 限流配置
+            - CacheRequest
+            - StripPrefix=3
+            - WxAppletFilter
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+              # 降级配置
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: 'forward:/fallback'
+        #微信小程序个人中心模块
+        - id: belong-service-wechat-applet-casus
+          uri: lb://belong-service-wechat-applet-casus
+          predicates:
+            - Path=/wechat/applet/casus/**
           filters:
             # 限流配置
             - CacheRequest

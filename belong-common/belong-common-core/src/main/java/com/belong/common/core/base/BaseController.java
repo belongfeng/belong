@@ -5,12 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.belong.common.core.page.PageDataInfo;
 import com.belong.common.dozer.service.IGenerator;
-import com.belong.common.util.ServletUtils;
-import com.belong.common.util.StringUtils;
 import com.belong.common.util.date.DateUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -29,7 +25,7 @@ import java.util.Date;
 @Slf4j
 public class BaseController {
 
-    @Resource
+    @Autowired
     protected IGenerator generator;
 
     /**
