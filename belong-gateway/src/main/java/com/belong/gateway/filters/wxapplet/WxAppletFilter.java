@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
@@ -29,10 +28,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
     /**
      * 白名单
      */
-    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator"
-            , "/test", "/v1/api/wxUserAuth/baseLogin"
-            , "/v1/api/wxUserAuth/completeLogin"
-            , "/v1/api/wxUserAuth/userInfo"
+    private static final String[] WHITE_LIST = {"/v2/api-docs", "/v2/api-docs-ext", "/actuator", "/test", "/v1/api/wx/user/login"
     };
 
     @Override
