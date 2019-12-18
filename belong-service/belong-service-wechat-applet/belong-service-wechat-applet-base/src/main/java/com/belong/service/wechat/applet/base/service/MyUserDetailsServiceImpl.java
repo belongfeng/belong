@@ -27,8 +27,6 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RemoteWxUserAuthFService remoteWxUserAuthFService;
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String openid) {
@@ -42,6 +40,9 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     @Override
     public UserDetails loadUserByCode(String code) {
         WxUserInfoVO wxUserInfoVO = remoteWxUserAuthFService.baseLogin(code).getData();
+        if(wxUserInfoVO==null){
+            throw new MiniAppLoginException("调用用户信息服务失败，请稍后再试！");
+        }
         return AuthUserFactory.create(wxUserInfoVO);
     }
 

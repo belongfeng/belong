@@ -1,13 +1,18 @@
 package com.belong.service.wechat.applet.info.controller;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
+import com.belong.common.exception.wxapplet.request.WxappletrequestException;
+import com.belong.common.sensitive.DesensitizedUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
+import com.belong.service.wechat.applet.info.api.vo.WxUserPhoneVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
+import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
 import com.mysql.cj.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,8 +21,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 /**
@@ -37,6 +43,8 @@ public class WxUserAuthController extends AppletController {
     private final IWxUserAuthService wxUserAuthService;
     @Autowired
     private final RedisTemplate redisTemplate;
+    @Autowired
+    private final IWxUserInfoService iWxUserInfoService;
 
     /**
      * 方法实现说明:当仅获取code时得登录
@@ -47,7 +55,7 @@ public class WxUserAuthController extends AppletController {
      * @author fengyu
      * @date 2019/12/4 17:02
      */
-    @PostMapping(value = "/baseLogin", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/baseLogin",consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "code码登录")
     public ResponseVO<WxUserInfoVO> baseLogin(@RequestBody String code) {
         if (StringUtils.isNullOrEmpty(code)) {
@@ -59,15 +67,16 @@ public class WxUserAuthController extends AppletController {
     }
 
     /**
+     * 方法实现说明:
+     *
      * @param registryUser
-     * @return
+     * @return com.belong.common.core.base.ResponseVO
+     * @throws
+     * @author belongfeng
      */
-    @PostMapping(value = "/getUserInfo", produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "获取微信用户信息")
+    @PostMapping(value = "/accessUserInfo",consumes = "application/json", produces = "application/json")
+    @ApiOperation(value = "上传微信用户信息")
     public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (com.belong.common.util.StringUtils.isNull(registryUser)) {
-            throw new WxAppletParameterLossException();
-        }
         if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
             throw new WxAppletParameterLossException(new String[]{"encryptedData"});
         }
@@ -76,13 +85,39 @@ public class WxUserAuthController extends AppletController {
         }
         String session_key = (String) redisTemplate.opsForValue().get(WxUserInfoDO.SESSION_KEY + getOpenId());
         if ("".equals(session_key)) {
-            throw new WxAppletParameterLossException(new String[]{"session_key"});
+            throw new WxappletrequestException("请先登录再获取用户信息！");
         }
         WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(session_key, registryUser);
         if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
-            return ResponseVO.failed("获取用户信息失败！");
+            return ResponseVO.failed("信息录入失败！");
         }
-        return ResponseVO.ok("获取用户信息成功！");
+        return ResponseVO.ok("信息录入成功！");
+    }
+
+    /**
+     * 方法实现说明:
+     *
+     * @param registryUser
+     * @return com.belong.common.core.base.ResponseVO
+     * @throws
+     * @author belongfeng
+     */
+    @PostMapping(value = "/accessUserPhoneNumber",consumes = "application/json",produces = "application/json")
+    @ApiOperation(value = "绑定手机号")
+    public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
+        if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
+            throw new WxAppletParameterLossException(new String[]{"encryptedData"});
+        }
+        if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
+            throw new WxAppletParameterLossException(new String[]{"iv"});
+        }
+        String session_key = (String) redisTemplate.opsForValue().get(WxUserInfoDO.SESSION_KEY + getOpenId());
+        if ("".equals(session_key)) {
+            throw new WxappletrequestException("请先登录再绑定手机号！");
+        }
+        WxMaPhoneNumberInfo wxMaPhoneNumberInfo=wxUserAuthService.userPhone(getOpenId(), session_key, registryUser);
+        WxUserPhoneVO wxUserPhoneVO=WxUserPhoneVO.builder().phoneNumber(wxMaPhoneNumberInfo.getPhoneNumber()).senPhoneNumber(DesensitizedUtils.mobilePhone(wxMaPhoneNumberInfo.getPhoneNumber())).build();
+        return ResponseVO.ok(wxUserPhoneVO);
     }
 
     /**
@@ -93,10 +128,14 @@ public class WxUserAuthController extends AppletController {
      * @Version: 1.0
      */
     @ApiOperation(value = "获取用户信息接口")
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/userInfo")
+    @GetMapping(value = "/getUserInfo")
     public ResponseVO<WxUserInfoVO> info() {
-        return ResponseVO.ok(getUserInfo());
+        //先从redis获取用户信息
+        WxUserInfoDO wxUserInfoDO = (WxUserInfoDO) redisTemplate.opsForValue().get(WxUserInfoDO.REDIS_KEY + getUserId());
+        wxUserInfoDO = Optional.ofNullable(wxUserInfoDO).orElseGet(() -> {
+            return iWxUserInfoService.getById(getUserId());
+        });
+        return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
     }
 
     @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")

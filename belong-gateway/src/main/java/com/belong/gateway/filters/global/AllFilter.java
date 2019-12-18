@@ -58,7 +58,7 @@ public class AllFilter implements GlobalFilter, Ordered {
             Long startTime = exchange.getAttribute("startTime");
             if (startTime != null) {
                 long executeTime = (System.currentTimeMillis() - startTime);
-                log.info("网关转发耗时=======>{}ms,状态码=======>{}", executeTime, Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
+                log.info("网关转发耗时=======>{}ms,转发状态=======>{}", executeTime, Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
             }
         }));
     }

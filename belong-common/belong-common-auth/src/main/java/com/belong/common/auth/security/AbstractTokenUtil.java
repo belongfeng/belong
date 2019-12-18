@@ -7,7 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
@@ -25,19 +25,19 @@ public abstract class AbstractTokenUtil {
     /**
      * Token 类型
      */
-    public static final String TOKEN_TYPE_BEARER = "Bearer" ;
+    public static final String TOKEN_TYPE_BEARER = "Bearer";
     /**
      * 权限缓存前缀
      */
-    private static final String REDIS_PREFIX_AUTH = "auth:" ;
+    private static final String REDIS_PREFIX_AUTH = "auth:";
     /**
      * 用户信息缓存前缀
      */
-    private static final String REDIS_PREFIX_USER = "user-details:" ;
+    private static final String REDIS_PREFIX_USER = "user-details:";
 
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
     /**
      * secret
      */
@@ -121,9 +121,9 @@ public abstract class AbstractTokenUtil {
                 .setExpiration(generateExpired())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-
         String key = REDIS_PREFIX_AUTH + userDetails.getUsername();
         redisTemplate.opsForValue().set(key, token, expiration);
+        log.info("存入的key======>{},token为======>{},token类型为======>{}", key, token,TOKEN_TYPE_BEARER);
         putUserDetails(userDetails);
         return token;
     }
@@ -137,7 +137,7 @@ public abstract class AbstractTokenUtil {
     public Boolean validateToken(String token) {
         final String username = getUsernameFromToken(token);
         String key = REDIS_PREFIX_AUTH + username;
-        String redisToken = redisTemplate.opsForValue().get(key);
+        String redisToken = (String) redisTemplate.opsForValue().get(key);
         return StringUtils.isNotEmpty(token) && !isTokenExpired(token) && token.equals(redisToken);
     }
 
@@ -159,10 +159,10 @@ public abstract class AbstractTokenUtil {
      * @param token Token
      * @return String
      */
-    protected String getUserDetailsString(String token) {
+    public String getUserDetailsString(String token) {
         final String username = getUsernameFromToken(token);
         String key = REDIS_PREFIX_USER + username;
-        return redisTemplate.opsForValue().get(key);
+        return (String) redisTemplate.opsForValue().get(key);
     }
 
     /**

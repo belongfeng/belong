@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +44,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     @Autowired
     private RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * @Description:
@@ -118,6 +118,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         wxUserInfoDO.setCountry(userInfo.getCountry());
         wxUserInfoDO.setProvince(userInfo.getProvince());
         wxUserInfoDO.setSex(Integer.valueOf(userInfo.getGender()));
+        wxUserInfoService.updateById(wxUserInfoDO);
         return wxUserInfoDO;
     }
 
@@ -126,15 +127,18 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
         WxMaPhoneNumberInfo phoneNoInfo = null;
         try {
             phoneNoInfo = wxMaService.getUserService().getPhoneNoInfo(sessionKey, registryUser.getEncryptedData(), registryUser.getIv());
+            if (com.belong.common.util.StringUtils.isNull(phoneNoInfo)){
+                throw new WxappletrequestException("请先登录再绑定手机号!");
+            }
             WxUserInfoDO wxUserInfoDO = wxUserInfoService.getOne(new QueryWrapper<>(WxUserInfoDO.builder().openId(openId).build()));
             if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
-                throw new WxappletrequestException("请先登录以后再获取用户信息!");
+                throw new WxappletrequestException("请先登录再绑定手机号!");
             }
             wxUserInfoDO.setMobile(phoneNoInfo.getPhoneNumber());
             wxUserInfoService.updateById(wxUserInfoDO);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new WxappletrequestException("用户信息校验失败");
+            throw new WxappletrequestException("请先登录再绑定手机号！");
         }
         return phoneNoInfo;
     }

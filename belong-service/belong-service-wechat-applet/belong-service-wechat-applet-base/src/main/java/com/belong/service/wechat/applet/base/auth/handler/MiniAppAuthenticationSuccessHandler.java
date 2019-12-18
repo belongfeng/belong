@@ -1,5 +1,6 @@
 package com.belong.service.wechat.applet.base.auth.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.service.wechat.applet.base.model.AuthUser;
 import com.belong.service.wechat.applet.base.utils.TokenUtil;
@@ -35,7 +36,7 @@ public class MiniAppAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         final AuthUser userDetails = (AuthUser) authentication.getPrincipal();
-        log.info("小程序用户登录成功！用户为----->{}", userDetails.getOpenId());
+        log.info("小程序用户登录成功！用户为----->{}", JSONObject.toJSONString(userDetails));
         final String token = tokenUtil.generateToken(userDetails);
         Map map = new HashMap(3);
         map.put("access_token", token);
