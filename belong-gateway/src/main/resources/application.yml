@@ -86,9 +86,9 @@ ribbon:
   #说明：从注册中心刷新服务器列表信息的时间间隔，默认为2000毫秒，即2秒
   ServerListRefreshInterval: 2000
   #说明：使用Apache HttpClient连接超时时间，单位为毫秒
-  ConnectTimeout: 3000
+  ConnectTimeout: 6000
   #说明：使用Apache HttpClient读取的超时时间，单位为毫秒
-  ReadTimeout: 3000
+  ReadTimeout: 10000
 
 hystrix:
   #全局默认配置

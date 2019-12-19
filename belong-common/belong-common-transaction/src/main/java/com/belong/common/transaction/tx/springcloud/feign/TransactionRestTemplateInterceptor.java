@@ -20,7 +20,6 @@ public class TransactionRestTemplateInterceptor implements RequestInterceptor {
 		String groupId = txTransactionLocal == null ? null : txTransactionLocal.getGroupId();
 		log.info("LCN-SpringCloud TxGroup info -> groupId:" + groupId);
 		if (txTransactionLocal != null) {
-			log.info("sssss");
 			requestTemplate.header("tx-group", groupId);
 		}
 	}

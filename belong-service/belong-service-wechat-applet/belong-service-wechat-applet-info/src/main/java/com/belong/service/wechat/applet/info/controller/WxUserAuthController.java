@@ -2,6 +2,7 @@ package com.belong.service.wechat.applet.info.controller;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import com.belong.common.auth.annotation.AccessLimit;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
@@ -30,8 +31,6 @@ import java.util.Optional;
  * @Description: 微信小程序登录
  * @Author: fengyu
  * @CreateDate: 2019/12/4 14:27
- * @UpdateDate: 2019/12/4 14:27
- * @Version: 1.0
  */
 @Api(tags = "微信用户登录")
 @RestController
@@ -55,7 +54,7 @@ public class WxUserAuthController extends AppletController {
      * @author fengyu
      * @date 2019/12/4 17:02
      */
-    @PostMapping(value = "/baseLogin",consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/baseLogin", consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "code码登录")
     public ResponseVO<WxUserInfoVO> baseLogin(@RequestBody String code) {
         if (StringUtils.isNullOrEmpty(code)) {
@@ -74,7 +73,8 @@ public class WxUserAuthController extends AppletController {
      * @throws
      * @author belongfeng
      */
-    @PostMapping(value = "/accessUserInfo",consumes = "application/json", produces = "application/json")
+    @AccessLimit
+    @PostMapping(value = "/accessUserInfo", produces = "application/json")
     @ApiOperation(value = "上传微信用户信息")
     public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
         if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
@@ -102,7 +102,7 @@ public class WxUserAuthController extends AppletController {
      * @throws
      * @author belongfeng
      */
-    @PostMapping(value = "/accessUserPhoneNumber",consumes = "application/json",produces = "application/json")
+    @PostMapping(value = "/accessUserPhoneNumber",produces = "application/json")
     @ApiOperation(value = "绑定手机号")
     public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
         if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {

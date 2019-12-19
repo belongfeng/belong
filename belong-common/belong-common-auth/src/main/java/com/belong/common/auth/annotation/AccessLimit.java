@@ -14,10 +14,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface AccessLimit {
-    int seconds();
+    //请求的时间范围
+    int seconds() default 5;
+    //时间范围里面具体可以访问的次数
+    int maxCount() default 8;
 
-    int maxCount();
-
-    boolean needToken() default true;
+    boolean isLogin() default true;
 }
 

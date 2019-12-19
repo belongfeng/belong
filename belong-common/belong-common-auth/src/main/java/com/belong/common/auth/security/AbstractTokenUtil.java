@@ -16,8 +16,6 @@ import java.util.Date;
  * @Description: Token 工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/28 10:25
- * @UpdateDate: 2019/11/28 10:25
- * @Version: 1.0
  */
 @Slf4j
 public abstract class AbstractTokenUtil {
