@@ -102,6 +102,7 @@ public class WxUserAuthController extends AppletController {
      * @throws
      * @author belongfeng
      */
+    @AccessLimit
     @PostMapping(value = "/accessUserPhoneNumber",produces = "application/json")
     @ApiOperation(value = "绑定手机号")
     public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
@@ -127,6 +128,7 @@ public class WxUserAuthController extends AppletController {
      * @UpdateDate: 2019/12/5 11:01
      * @Version: 1.0
      */
+    @AccessLimit
     @ApiOperation(value = "获取用户信息接口")
     @GetMapping(value = "/getUserInfo")
     public ResponseVO<WxUserInfoVO> info() {
