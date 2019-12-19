@@ -22,7 +22,7 @@ import static com.belong.common.auth.security.AuthenticationTokenFilter.TOKEN_HE
 
 /**
  * @Classname AccessLimitInterceptor
- * @Description 接口防刷
+ * @Description 接口防止恶意请求
  * @Date 2019/12/6 17:31
  * @Created by FengYu
  */
@@ -69,7 +69,6 @@ public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
                     //第一次访问
                     redisTemplate.opsForValue().set(key, 1, seconds, TimeUnit.SECONDS);
                 } else if (count < maxCount) {
-                    //加1
                     count = count + 1;
                     redisTemplate.opsForValue().increment(key, count);
                 } else {
