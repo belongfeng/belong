@@ -6,6 +6,7 @@ import com.belong.common.auth.annotation.AccessLimit;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
+import com.belong.common.redis.util.RedisUtils;
 import com.belong.common.sensitive.DesensitizedUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
@@ -41,7 +42,7 @@ public class WxUserAuthController extends AppletController {
     @Autowired
     private final IWxUserAuthService wxUserAuthService;
     @Autowired
-    private final RedisTemplate redisTemplate;
+    private final RedisUtils redisUtils;
     @Autowired
     private final IWxUserInfoService iWxUserInfoService;
 
@@ -83,7 +84,7 @@ public class WxUserAuthController extends AppletController {
         if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
             throw new WxAppletParameterLossException(new String[]{"iv"});
         }
-        String session_key = (String) redisTemplate.opsForValue().get(WxUserInfoDO.SESSION_KEY + getOpenId());
+        String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
         if ("".equals(session_key)) {
             throw new WxappletrequestException("请先登录再获取用户信息！");
         }
@@ -112,7 +113,7 @@ public class WxUserAuthController extends AppletController {
         if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
             throw new WxAppletParameterLossException(new String[]{"iv"});
         }
-        String session_key = (String) redisTemplate.opsForValue().get(WxUserInfoDO.SESSION_KEY + getOpenId());
+        String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
         if ("".equals(session_key)) {
             throw new WxappletrequestException("请先登录再绑定手机号！");
         }
@@ -133,7 +134,7 @@ public class WxUserAuthController extends AppletController {
     @GetMapping(value = "/getUserInfo")
     public ResponseVO<WxUserInfoVO> info() {
         //先从redis获取用户信息
-        WxUserInfoDO wxUserInfoDO = (WxUserInfoDO) redisTemplate.opsForValue().get(WxUserInfoDO.REDIS_KEY + getUserId());
+        WxUserInfoDO wxUserInfoDO = redisUtils.get(WxUserInfoDO.REDIS_KEY + getUserId(),WxUserInfoDO.class);
         wxUserInfoDO = Optional.ofNullable(wxUserInfoDO).orElseGet(() -> {
             return iWxUserInfoService.getById(getUserId());
         });

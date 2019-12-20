@@ -11,6 +11,7 @@ import com.belong.common.exception.wxapplet.login.MiniAppLoginException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterIllegalException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
+import com.belong.common.redis.util.RedisUtils;
 import com.belong.service.wechat.applet.casus.api.feign.RemoteWxUserCasusDOFService;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
@@ -44,7 +45,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
     @Autowired
     private RemoteWxUserCasusDOFService remoteWxUserCasusDOFService;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     /**
      * @Description:
@@ -92,7 +93,7 @@ public class IWxUserAuthServiceImpl implements IWxUserAuthService {
             }
             wxUserInfoDO.setLastLoginTime(new Date());
             wxUserInfoService.saveOrUpdate(wxUserInfoDO);
-            redisTemplate.opsForValue().set(WxUserInfoDO.SESSION_KEY + wxMaJscode2SessionResult.getOpenid(), wxMaJscode2SessionResult.getSessionKey());
+            redisUtils.set(WxUserInfoDO.SESSION_KEY + wxMaJscode2SessionResult.getOpenid(), wxMaJscode2SessionResult.getSessionKey());
             return wxUserInfoDO;
         } catch (Exception e) {
             log.error(e.getMessage(), e);

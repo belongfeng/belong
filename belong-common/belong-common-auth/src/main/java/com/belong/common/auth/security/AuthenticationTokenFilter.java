@@ -27,6 +27,10 @@ import java.io.IOException;
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
     /**
+     * 标识符
+     */
+    private static final String FILTER_APPLIED = AuthenticationTokenFilter.class.getName() + ".FILTERED";
+    /**
      * 携带Token的HTTP头
      */
     public static final String TOKEN_HEADER = "Authorization" ;
@@ -39,7 +43,11 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        if (request.getAttribute(FILTER_APPLIED) != null) {
+            chain.doFilter(request, response);
+            return;
+        }
+        request.setAttribute(FILTER_APPLIED, true);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authHeader = httpRequest.getHeader(TOKEN_HEADER);
         if (authHeader == null || !authHeader.startsWith(AbstractTokenUtil.TOKEN_TYPE_BEARER)) {

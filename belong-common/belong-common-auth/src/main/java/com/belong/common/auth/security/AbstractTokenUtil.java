@@ -1,6 +1,7 @@
 package com.belong.common.auth.security;
 
 import com.alibaba.fastjson.JSONObject;
+import com.belong.common.redis.util.RedisUtils;
 import com.belong.common.util.StringUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,7 +36,7 @@ public abstract class AbstractTokenUtil {
 
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
     /**
      * secret
      */
@@ -120,7 +121,7 @@ public abstract class AbstractTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         String key = REDIS_PREFIX_AUTH + userDetails.getUsername();
-        redisTemplate.opsForValue().set(key, token, expiration);
+        redisUtils.set(key, token, expiration);
         log.info("存入的key======>{},token为======>{},token类型为======>{}", key, token,TOKEN_TYPE_BEARER);
         putUserDetails(userDetails);
         return token;
@@ -135,7 +136,7 @@ public abstract class AbstractTokenUtil {
     public Boolean validateToken(String token) {
         final String username = getUsernameFromToken(token);
         String key = REDIS_PREFIX_AUTH + username;
-        String redisToken = (String) redisTemplate.opsForValue().get(key);
+        String redisToken = redisUtils.get(key);
         return StringUtils.isNotEmpty(token) && !isTokenExpired(token) && token.equals(redisToken);
     }
 
@@ -147,7 +148,7 @@ public abstract class AbstractTokenUtil {
     public void removeToken(String token) {
         final String username = getUsernameFromToken(token);
         String key = REDIS_PREFIX_AUTH + username;
-        redisTemplate.delete(key);
+        redisUtils.delete(key);
         delUserDetails(username);
     }
 
@@ -160,7 +161,7 @@ public abstract class AbstractTokenUtil {
     public String getUserDetailsString(String token) {
         final String username = getUsernameFromToken(token);
         String key = REDIS_PREFIX_USER + username;
-        return (String) redisTemplate.opsForValue().get(key);
+        return redisUtils.get(key);
     }
 
     /**
@@ -178,7 +179,7 @@ public abstract class AbstractTokenUtil {
      */
     private void putUserDetails(UserDetails userDetails) {
         String key = REDIS_PREFIX_USER + userDetails.getUsername();
-        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(userDetails), expiration);
+        redisUtils.set(key, JSONObject.toJSONString(userDetails), expiration);
     }
 
     /**
@@ -188,7 +189,7 @@ public abstract class AbstractTokenUtil {
      */
     private void delUserDetails(String username) {
         String key = REDIS_PREFIX_USER + username;
-        redisTemplate.delete(key);
+        redisUtils.delete(key);
     }
 
     public String getSecret() {

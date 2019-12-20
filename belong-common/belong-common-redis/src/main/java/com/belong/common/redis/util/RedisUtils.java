@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
  * @Description: Redis工具类
  * @Author: fengyu
  * @CreateDate: 2019/11/27 14:52
- * @UpdateDate: 2019/11/27 14:52
- * @Version: 1.0
  */
 @Component
 public class RedisUtils {
@@ -29,14 +27,14 @@ public class RedisUtils {
     private RedisTemplate<String, Object> redisTemplate;
     @Resource(name = "redisTemplate")
     private ValueOperations<String, String> valueOperations;
-    @Resource(name = "redisTemplate")
-    private HashOperations<String, String, Object> hashOperations;
-    @Resource(name = "redisTemplate")
-    private ListOperations<String, Object> listOperations;
-    @Resource(name = "redisTemplate")
-    private SetOperations<String, Object> setOperations;
-    @Resource(name = "redisTemplate")
-    private ZSetOperations<String, Object> zSetOperations;
+    //@Resource(name = "redisTemplate")
+    //private HashOperations<String, String, Object> hashOperations;
+    //@Resource(name = "redisTemplate")
+    //private ListOperations<String, Object> listOperations;
+    //@Resource(name = "redisTemplate")
+    //private SetOperations<String, Object> setOperations;
+    //@Resource(name = "redisTemplate")
+    //private ZSetOperations<String, Object> zSetOperations;
 
     /**
      * 插入缓存默认时间
@@ -94,6 +92,16 @@ public class RedisUtils {
      */
     public void delete(String key) {
         redisTemplate.delete(key);
+    }
+
+    /**
+     * 删除缓存
+     *
+     * @param key 键
+     * @author fengyu
+     */
+    public Long increment(String key,long delta) {
+        return valueOperations.increment(key,delta);
     }
 
     /**
