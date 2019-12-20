@@ -14,8 +14,6 @@ import java.util.Date;
  * @Description: 案列
  * @Author: BelongFeng
  * @CreateDate: 2019-12-13 10:42:09
- * @UpdateDate: 2019-12-13 10:42:09
- * @Version: 1.0
  */
 @Data
 @Builder

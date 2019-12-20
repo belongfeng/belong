@@ -15,8 +15,6 @@ import java.util.Map;
  * @Description:     案列
  * @Author:          BelongFeng
  * @CreateDate:      2019-12-13 10:42:09
- * @UpdateDate:      2019-12-13 10:42:09
- * @Version: 1.0
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_CASUS, fallbackFactory = RemoteWxUserCasusDOFallbackFactory.class)
 public interface RemoteWxUserCasusDOFService {

@@ -11,9 +11,6 @@ import java.util.Date;
  * @Description: 微信用户信息表
  * @Author: BelongFeng
  * @CreateDate: 2019-12-03 09:52:04
- * @UpdateUser: BelongFeng
- * @UpdateDate: 2019-12-03 09:52:04
- * @Version: 1.0
  */
 @Data
 @Builder

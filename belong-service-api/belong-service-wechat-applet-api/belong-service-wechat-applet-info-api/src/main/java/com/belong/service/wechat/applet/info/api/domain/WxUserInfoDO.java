@@ -17,9 +17,6 @@ import static com.belong.common.core.constant.Constants.DEL_FLAG_NORMAL;
  * @Description: 微信用户信息表
  * @Author: BelongFeng
  * @CreateDate: 2019-12-03 09:52:04
- * @UpdateUser: BelongFeng
- * @UpdateDate: 2019-12-03 09:52:04
- * @Version: 1.0
  */
 @TableName("wx_user_info")
 @SuppressWarnings("serial")
