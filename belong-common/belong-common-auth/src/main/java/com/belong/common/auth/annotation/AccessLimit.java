@@ -17,7 +17,7 @@ public @interface AccessLimit {
     //请求的时间范围
     int seconds() default 5;
     //时间范围里面具体可以访问的次数
-    int maxCount() default 8;
+    int maxCount() default 12;
 
     boolean isLogin() default true;
 }

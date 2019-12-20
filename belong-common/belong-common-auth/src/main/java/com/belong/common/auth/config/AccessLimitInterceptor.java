@@ -7,7 +7,7 @@ import com.belong.common.core.base.ResponseVO;
 import com.belong.common.util.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DigestUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -31,7 +31,7 @@ import static com.belong.common.auth.security.AuthenticationTokenFilter.TOKEN_HE
 public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -64,16 +64,13 @@ public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
                     key = key + ":" + ip;
                 }
                 //根据key获取已请求次数
-                Integer count = (Integer) redisTemplate.opsForValue().get(key);
-                if (count == null) {
-                    //第一次访问
-                    redisTemplate.opsForValue().set(key, 1, seconds, TimeUnit.SECONDS);
-                } else if (count < maxCount) {
-                    count = count + 1;
-                    redisTemplate.opsForValue().increment(key, count);
-                } else {
-                    //超出访问次数
-                    render(response, "请不要频繁请求！再次频繁请求将封号！");
+                Long count = redisTemplate.opsForValue().increment(key, 1);
+                log.info("访问次数为：{}", count == null || "".equals(count.longValue()) ? 1 : count);
+                if (count == 1) {
+                    redisTemplate.opsForValue().set(key, "1", seconds, TimeUnit.SECONDS);
+                }
+                if (count > maxCount) {
+                    render(response, "请不要频繁请求！多次频繁将会进入黑名单！");
                     return false;
                 }
             }
