@@ -1,0 +1,16 @@
+#基础镜像
+FROM anapsix/alpine-java:8_server-jre_unlimited
+#维护者信息
+MAINTAINER belongfeng@gmail.com
+#构建镜像时执行的命令，指定软连接
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#创建目录
+RUN mkdir -p /belong-eureka
+
+WORKDIR /belong-eureka
+#暴露的端口
+EXPOSE 13141
+#将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
+ADD /target/belong-eureka.jar ./
+
+CMD sleep 30;java -Djava.security.egd=file:/dev/./urandom -jarbelong-eureka.jar

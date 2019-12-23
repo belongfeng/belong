@@ -11,9 +11,15 @@
     </parent>
     <groupId>com.group</groupId>
     <artifactId>belong-eureka</artifactId>
-
     <packaging>jar</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <docker.image.prefix>belong-eureka</docker.image.prefix>
+    </properties>
     <dependencies>
         <!--服务中心 -->
         <dependency>
@@ -58,6 +64,23 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warName>${artifactId}</warName>
+                </configuration>
+            </plugin>
+            <!--docker打包插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.3</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>
