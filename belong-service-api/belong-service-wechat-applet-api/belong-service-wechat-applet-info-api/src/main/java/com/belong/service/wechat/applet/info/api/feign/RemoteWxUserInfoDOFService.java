@@ -18,18 +18,18 @@ import java.util.Map;
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = RemoteWxUserInfoDOFallbackFactory.class)
 public interface RemoteWxUserInfoDOFService {
-    @GetMapping("/v1/db/wxUserInfo/list")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/wxUserInfo/list",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO<PageDataInfo<WxUserInfoListVO>> list(@RequestParam Map<String, Object> map);
 
-    @PostMapping("/v1/db/wxUserInfo/saveOrUpdate")
+    @RequestMapping(method = RequestMethod.POST,value ="/v1/db/wxUserInfo/saveOrUpdate",headers = {"Content-Type=application/json;charset=UTF-8"})
     public ResponseVO saveOrUpdate(@RequestBody WxUserInfoVO wxUserInfoVO);
 
-    @GetMapping("/v1/db/wxUserInfo/get/{id}")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/wxUserInfo/get/{id}",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO<WxUserInfoVO> get(@PathVariable("id") String id);
 
-    @GetMapping("/v1/db/wxUserInfo/remove/{id}")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/wxUserInfo/remove/{id}",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO remove(@PathVariable("id") String id);
 
-    @GetMapping("/v1/db/wxUserInfo/getWxUserInfoByOpenId/{openId}")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/wxUserInfo/getWxUserInfoByOpenId/{openId}",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@PathVariable("openId") String openId);
 }

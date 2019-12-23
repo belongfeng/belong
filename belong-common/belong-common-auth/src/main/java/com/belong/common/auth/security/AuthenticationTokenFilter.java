@@ -27,7 +27,7 @@ import java.io.IOException;
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
     /**
-     * 标识符
+     * 标识符防止二次请求
      */
     private static final String FILTER_APPLIED = AuthenticationTokenFilter.class.getName() + ".FILTERED";
     /**

@@ -75,7 +75,7 @@ public class WxUserAuthController extends AppletController {
      * @author belongfeng
      */
     @AccessLimit
-    @PostMapping(value = "/accessUserInfo", produces = "application/json")
+    @PostMapping(value = "/accessUserInfo",consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "上传微信用户信息")
     public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
         if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
@@ -104,7 +104,7 @@ public class WxUserAuthController extends AppletController {
      * @author belongfeng
      */
     @AccessLimit
-    @PostMapping(value = "/accessUserPhoneNumber",produces = "application/json")
+    @PostMapping(value = "/accessUserPhoneNumber",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "绑定手机号")
     public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
         if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
@@ -131,7 +131,7 @@ public class WxUserAuthController extends AppletController {
      */
     @AccessLimit
     @ApiOperation(value = "获取用户信息接口")
-    @GetMapping(value = "/getUserInfo")
+    @GetMapping(value = "/getUserInfo",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<WxUserInfoVO> info() {
         //先从redis获取用户信息
         WxUserInfoDO wxUserInfoDO = redisUtils.get(WxUserInfoDO.REDIS_KEY + getUserId(),WxUserInfoDO.class);

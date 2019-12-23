@@ -7,7 +7,7 @@ import com.belong.common.exception.base.PageException;
 import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossException;
 import com.belong.common.util.ServletUtils;
 import com.belong.common.util.StringUtils;
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.codingapi.tx.annotation.TxTransaction;
 import org.springframework.transaction.annotation.Transactional;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class ${className}Controller extends BaseController {
             @ApiImplicitParam(name = "pageSize", value = "条数", dataType = "Integer", paramType = "query")
     })
     ##@PreAuthorize("hasAuthority('sys:${classname}:view')")
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/list",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<PageDataInfo<${className}ListVO>> list() throws PageException{
         Long pageNum = ServletUtils.getParameterToLong("pageNum");
         Long pageSize = ServletUtils.getParameterToLong("pageSize");
@@ -55,10 +55,10 @@ public class ${className}Controller extends BaseController {
         return ResponseVO.ok(Ipage2PageDataInfo(${classname}Service.select${classname}DOList(startPage(pageNum, pageSize), new QueryWrapper<${classname}DO>().orderByDesc("create_date")), ${classname}ListVO.class));
     }
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @TxTransaction
     @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:${classname}:edit")
-    @PostMapping(value = "/saveOrUpdate")
+    @PostMapping(value = "/saveOrUpdate",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
     ##@PreAuthorize("hasAuthority('sys:${classname}:edit')")
     public ResponseVO saveOrUpdate(@RequestBody ${className}VO ${classname}VO) {
             ${className}DO ${classname}DO = generator.convert(${classname}VO, ${className}DO.class);
@@ -71,7 +71,7 @@ public class ${className}Controller extends BaseController {
 
     @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:${classname}:view")
     ##@PreAuthorize("hasAuthority('sys:${classname}:view')")
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/get/{id}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<${className}VO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
             throw new WxAppletParameterLossException(new String[]{"id"});
@@ -79,11 +79,11 @@ public class ${className}Controller extends BaseController {
         return ResponseVO.ok(generator.convert(${classname}Service.getById(id), ${className}VO.class));
     }
 
-    @LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+    @TxTransaction
     @Transactional(readOnly = false)
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:${classname}:remove")
     ##@PreAuthorize("hasAuthority('sys:${classname}:remove')")
-    @GetMapping(value = "/remove/{id}")
+    @GetMapping(value = "/remove/{id}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO remove(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (${classname}Service.removeById(id)) {
             return ResponseVO.ok();

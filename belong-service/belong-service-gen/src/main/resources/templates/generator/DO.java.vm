@@ -18,8 +18,6 @@ import java.util.Date;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 @SuppressWarnings("serial")
 @Data

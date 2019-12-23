@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 @Service
 public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}DO> implements I${className}Service {

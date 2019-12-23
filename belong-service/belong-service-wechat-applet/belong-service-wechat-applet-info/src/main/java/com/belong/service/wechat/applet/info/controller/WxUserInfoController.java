@@ -60,7 +60,7 @@ public class WxUserInfoController extends AppletController {
             @ApiImplicitParam(name = "pageSize", value = "条数", dataType = "Integer", paramType = "query")
     })
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/list",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<PageDataInfo<WxUserInfoListVO>> list() throws PageException {
         Long pageNum = ServletUtils.getParameterToLong("pageNum");
         Long pageSize = ServletUtils.getParameterToLong("pageSize");
@@ -72,7 +72,7 @@ public class WxUserInfoController extends AppletController {
 
     @Transactional(readOnly = false)
     @ApiOperation(value = "保存或修改数据", notes = "权限标识 sys:wxUserInfo:edit")
-    @PostMapping(value = "/saveOrUpdate")
+    @PostMapping(value = "/saveOrUpdate",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:edit')")
     public ResponseVO saveOrUpdate(@RequestBody WxUserInfoVO wxUserInfoVO) {
         WxUserInfoDO wxUserInfoDO = generator.convert(wxUserInfoVO, WxUserInfoDO.class);
@@ -85,7 +85,7 @@ public class WxUserInfoController extends AppletController {
 
     @ApiOperation(value = "根据ID获取详情", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/get/{id}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<WxUserInfoVO> get(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (StringUtils.isEmpty(id)) {
             throw new WxAppletParameterLossException(new String[]{"id"});
@@ -97,7 +97,7 @@ public class WxUserInfoController extends AppletController {
     //@Transactional(readOnly = false)
     @ApiOperation(value = "根据ID删除数据", notes = "权限标识 sys:wxUserInfo:remove")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:remove')")
-    @GetMapping(value = "/remove/{id}")
+    @GetMapping(value = "/remove/{id}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO remove(@ApiParam(required = true, value = "id") @PathVariable("id") String id) {
         if (wxUserInfoService.removeById(id)) {
             return ResponseVO.ok();
@@ -107,7 +107,7 @@ public class WxUserInfoController extends AppletController {
 
     @ApiOperation(value = "根据openId获取用户信息", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/getWxUserInfoByOpenId/{openId}")
+    @GetMapping(value = "/getWxUserInfoByOpenId/{openId}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<WxUserInfoVO> getWxUserInfoByOpenId(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
         if (StringUtils.isEmpty(openId)) {
             throw new WxAppletParameterLossException(new String[]{"openId"});
@@ -118,7 +118,7 @@ public class WxUserInfoController extends AppletController {
     @Transactional(readOnly = false)
     @ApiOperation(value = "多数据源事务切换", notes = "权限标识 sys:wxUserInfo:view")
     //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/tran/{openId}")
+    @GetMapping(value = "/tran/{openId}",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
     public ResponseVO<Map<String, Object>> tran(@ApiParam(required = true, value = "openId") @PathVariable("openId") String openId) {
         if (StringUtils.isEmpty(openId)) {
             throw new WxAppletParameterLossException(new String[]{"openId"});

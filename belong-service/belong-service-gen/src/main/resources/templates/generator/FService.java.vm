@@ -14,21 +14,19 @@ import java.util.Map;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 @FeignClient(name = ServiceNameConstants.BELONG_SERVICE_WECHAT_APPLET_INFO, fallbackFactory = Remote${className}DOFallbackFactory.class)
 public interface Remote${className}DOFService {
-    @GetMapping("/v1/db/${classname}/list")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/${classname}/list",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO<PageDataInfo<${className}ListVO>> list(@RequestParam Map<String, Object> map);
 
-    @PostMapping("/v1/db/${classname}/saveOrUpdate")
+    @RequestMapping(method = RequestMethod.POST,value ="/v1/db/${classname}/saveOrUpdate",headers = {"Content-Type=application/json;charset=UTF-8"})
     public ResponseVO saveOrUpdate(@RequestBody ${className}VO ${classname}VO);
 
-    @GetMapping("/v1/db/${classname}/get/{id}")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/${classname}/get/{id}",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO<${className}VO> get(@PathVariable("id") String id);
 
-    @GetMapping("/v1/db/${classname}/remove/{id}")
+    @RequestMapping(method = RequestMethod.GET,value ="/v1/db/${classname}/remove/{id}",headers = {"Content-Type=application/x-www-form-urlencoded"})
     public ResponseVO remove(@PathVariable("id") String id);
 
 }

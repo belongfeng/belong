@@ -10,8 +10,6 @@ import java.util.Map;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 @Slf4j
 @Component

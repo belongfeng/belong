@@ -9,8 +9,6 @@ import ${package}.domain.${className}DO;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 @Mapper
 public interface ${className}Mapper extends BaseMapper<${className}DO> {

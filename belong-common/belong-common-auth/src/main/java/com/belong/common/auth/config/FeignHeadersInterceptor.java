@@ -52,7 +52,6 @@ public class FeignHeadersInterceptor implements RequestInterceptor {
     }
 
     private HttpServletRequest getHttpServletRequest() {
-
         try {
             // 这种方式获取的HttpServletRequest是线程安全的
             return ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();

@@ -8,8 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Description:     ${comments}
  * @Author:          ${author}
  * @CreateDate:      ${datetime}
- * @UpdateDate:      ${datetime}
- * @Version: 1.0
  */
 public interface I${className}Service extends IService<${className}DO> {
     /**
