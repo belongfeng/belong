@@ -126,8 +126,6 @@ public class WxUserAuthController extends AppletController {
      * @Description: 获取用户信息接口
      * @Author: fengyu
      * @CreateDate: 2019/12/5 11:01
-     * @UpdateDate: 2019/12/5 11:01
-     * @Version: 1.0
      */
     @AccessLimit
     @ApiOperation(value = "获取用户信息接口")
