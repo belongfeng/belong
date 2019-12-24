@@ -1,0 +1,15 @@
+#基础镜像
+FROM java:8
+#维护者信息
+MAINTAINER belongfeng@gmail.com
+# 设置时区
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#在容器根目录创建文件夹
+RUN mkdir -p /belong
+WORKDIR /belong
+#将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
+ADD ./belong-eureka/target/belong-eureka.jar  /belong/belong-eureka.jar
+#暴露的端口
+EXPOSE 13141
+#指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
+ENTRYPOINT ["java","-jar","/belong/belong-eureka.jar"]
