@@ -4,6 +4,8 @@ server:
 eureka:
   instance:
     hostname: belongEureka13143.com #eureka服务端的实例名称
+    # 表示将当前应用实例：belong-eureka 不使用当前主机的主机名hostName，而是直接使用 ip地址。
+    prefer-ip-address: true
   client:
     register-with-eureka: false     #false表示不向注册中心注册自己。
     fetch-registry: false     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务

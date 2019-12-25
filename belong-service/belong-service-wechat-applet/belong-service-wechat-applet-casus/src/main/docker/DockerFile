@@ -5,11 +5,11 @@ MAINTAINER belongfeng@gmail.com
 # 设置时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #在容器根目录创建文件夹
-RUN mkdir -p /belong-eureka
-WORKDIR /belong-eureka
+RUN mkdir -p /belong-service-wechat-applet-casus
+WORKDIR /belong-service-wechat-applet-casus
 #将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
-ADD ./belong-eureka/target/belong-eureka.jar  ./
+ADD ./belong-service/belong-service-wechat-applet/belong-service-wechat-applet-casus/target/belong-service-wechat-applet-casus.jar  ./
 #暴露的端口
-EXPOSE 13141
+EXPOSE 10002
 #指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","belong-eureka.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","belong-service-wechat-applet-casus.jar"]
