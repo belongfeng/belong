@@ -1,13 +1,17 @@
 package com.belong.gateway.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
+import org.springframework.cloud.gateway.support.NotFoundException;
+import org.springframework.cloud.gateway.support.TimeoutException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +47,10 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
         int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
         Throwable error = super.getError(request);
+        log.error(
+                "请求发生异常，请求URI：{}，请求方法：{}，异常信息：{}",
+                request.path(), request.methodName(), error.getMessage()
+        );
         if (error instanceof org.springframework.cloud.gateway.support.NotFoundException) {
             code = HttpStatus.NOT_FOUND.value();
         }
@@ -83,23 +91,29 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
      * 方法实现说明:构建异常信息
      *
      * @param request
-     * @param ex
+     * @param error
      * @return java.lang.String
      * @throws
      * @author fengyu
      * @date 2019/11/27 10:28
      */
-    private String buildMessage(ServerRequest request, Throwable ex) {
-        StringBuilder message = new StringBuilder("请求超时，请刷新网络重试,[");
-        message.append(request.methodName());
-        message.append(" ");
-        message.append(request.uri());
-        message.append("]");
-        if (ex != null) {
-            message.append(": ");
-            message.append(ex.getMessage());
+    private String buildMessage(ServerRequest request, Throwable error) {
+        String errorMessage = "网关转发异常";
+        if (error instanceof NotFoundException) {
+            String serverId = StringUtils.substringAfterLast(error.getMessage(), "Unable to find instance for ");
+            serverId = StringUtils.replace(serverId, "\"", StringUtils.EMPTY);
+            errorMessage = String.format("无法找到%s服务", serverId);
+        } else if (StringUtils.containsIgnoreCase(error.getMessage(), "connection refused")) {
+            errorMessage = "目标服务拒绝连接";
+        } else if (error instanceof TimeoutException) {
+            errorMessage = "访问服务超时";
+        } else if (error instanceof ResponseStatusException
+                && StringUtils.containsIgnoreCase(error.getMessage(), HttpStatus.NOT_FOUND.toString())) {
+            errorMessage = "未找到该资源";
+        } else {
+            errorMessage = "网关转发异常";
         }
-        return message.toString();
+        return errorMessage;
     }
 
     /**
