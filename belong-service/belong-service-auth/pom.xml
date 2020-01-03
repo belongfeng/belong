@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.group</groupId>
+        <artifactId>belong-service</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.group</groupId>
+    <artifactId>belong-service-auth</artifactId>
+    <description>授权服务</description>
+
+    <properties>
+        <docker.image.prefix>belong-service-auth</docker.image.prefix>
+    </properties>
+    <dependencies>
+        <!--配置中心客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <!--eureka 客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--web 模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <!--排除tomcat依赖 -->
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--undertow容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-swagger</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-mybatisplus</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-exception</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-redis</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-auth</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-core</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-util</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-datasource</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-service-wechat-applet-info-api</artifactId>
+            <version>${belong.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>com.belong.eureka.BelongEurekaApplication</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--可以把依赖的包都打包到生成的Jar包中-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${artifactId}</warName>
+                </configuration>
+            </plugin>
+            <!--docker打包插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.3</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>${artifactId}</finalName>
+    </build>
+</project>

@@ -8,6 +8,7 @@ import com.belong.common.exception.wxapplet.parameter.WxAppletParameterLossExcep
 import com.belong.common.exception.wxapplet.request.WxappletrequestException;
 import com.belong.common.redis.util.RedisUtils;
 import com.belong.common.sensitive.DesensitizedUtils;
+import com.belong.common.util.StringUtils;
 import com.belong.service.wechat.applet.base.controller.AppletController;
 import com.belong.service.wechat.applet.info.api.domain.WxUserInfoDO;
 import com.belong.service.wechat.applet.info.api.vo.WeChatRegistryUserVO;
@@ -15,7 +16,6 @@ import com.belong.service.wechat.applet.info.api.vo.WxUserInfoVO;
 import com.belong.service.wechat.applet.info.api.vo.WxUserPhoneVO;
 import com.belong.service.wechat.applet.info.service.IWxUserAuthService;
 import com.belong.service.wechat.applet.info.service.IWxUserInfoService;
-import com.mysql.cj.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -57,7 +57,7 @@ public class WxUserAuthController extends AppletController {
     @PostMapping(value = "/baseLogin", consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "code码登录")
     public ResponseVO<WxUserInfoVO> baseLogin(@RequestBody String code) {
-        if (StringUtils.isNullOrEmpty(code)) {
+        if (StringUtils.isEmpty(code)) {
             throw new WxAppletParameterLossException(new String[]{"code"});
         }
         WxMaJscode2SessionResult result = wxUserAuthService.wxUserLoginByCode(code);
@@ -77,10 +77,10 @@ public class WxUserAuthController extends AppletController {
     @PostMapping(value = "/accessUserInfo",consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "上传微信用户信息")
     public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
+        if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
             throw new WxAppletParameterLossException(new String[]{"encryptedData"});
         }
-        if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
+        if (StringUtils.isEmpty(registryUser.getIv())) {
             throw new WxAppletParameterLossException(new String[]{"iv"});
         }
         String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
@@ -106,10 +106,10 @@ public class WxUserAuthController extends AppletController {
     @PostMapping(value = "/accessUserPhoneNumber",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "绑定手机号")
     public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (StringUtils.isNullOrEmpty(registryUser.getEncryptedData())) {
+        if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
             throw new WxAppletParameterLossException(new String[]{"encryptedData"});
         }
-        if (StringUtils.isNullOrEmpty(registryUser.getIv())) {
+        if (StringUtils.isEmpty(registryUser.getIv())) {
             throw new WxAppletParameterLossException(new String[]{"iv"});
         }
         String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());

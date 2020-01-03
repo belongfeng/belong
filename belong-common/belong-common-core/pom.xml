@@ -49,7 +49,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-
         <!--公共模块-->
         <dependency>
             <groupId>com.group</groupId>

@@ -2,8 +2,8 @@ package com.belong.common.auth.config;
 
 import com.alibaba.fastjson.JSON;
 import com.belong.common.auth.annotation.AccessLimit;
-import com.belong.common.auth.util.WebUtils;
 import com.belong.common.core.base.ResponseVO;
+import com.belong.common.core.constant.Constants;
 import com.belong.common.util.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
-import static com.belong.common.auth.security.AuthenticationTokenFilter.TOKEN_HEADER;
 
 /**
  * @Classname AccessLimitInterceptor
@@ -52,7 +51,7 @@ public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
                 //根据是否需要登录进行token或者ip限流
                 if (isLogin) {
                     //将根据token进行限流
-                    String token = request.getHeader(TOKEN_HEADER);
+                    String token = request.getHeader(Constants.AUTHORIZATION);
                     if (token == null || "".equals(token)) {
                         render(response, "请携带token！");
                         return false;

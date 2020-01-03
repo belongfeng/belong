@@ -1,0 +1,15 @@
+#基础镜像
+FROM anapsix/alpine-java:8_server-jre_unlimited
+#维护者信息
+MAINTAINER belongfeng@gmail.com
+# 设置时区
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#在容器根目录创建文件夹
+RUN mkdir -p /belong-service-wechat-applet-info
+WORKDIR /belong-service-wechat-applet-info
+#将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
+ADD ./belong-service/belong-service-wechat-applet/belong-service-wechat-applet-info/target/belong-service-wechat-applet-info.jar  ./
+#暴露的端口
+EXPOSE 10001
+#指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","belong-service-wechat-applet-info.jar"]

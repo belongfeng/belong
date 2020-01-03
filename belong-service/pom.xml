@@ -19,5 +19,6 @@
         <module>belong-service-gen</module>
         <module>belong-service-wechat-applet</module>
         <module>belong-service-tx-manager</module>
+        <module>belong-service-auth</module>
     </modules>
 </project>

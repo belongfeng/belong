@@ -1,0 +1,115 @@
+server:
+  port: 20001
+# 日志配置
+logging:
+  level:
+    com.server: debug
+    org.springframework: warn
+spring:
+  application:
+    name: belong-service-auth
+  cloud:
+    config:
+      uri: http://127.0.0.1:520
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: belong-config
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+
+
+
+feign:
+  hystrix:
+    #    开启断路器
+    enabled: true
+    command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 50000
+  client:
+    config:
+      default:
+        connectTimeout: 50000
+        readTimeout: 50000
+
+ribbon:
+  eager-load:
+    enabled: true
+  #说明：同一台实例的最大自动重试次数，默认为1次，不包括首次
+  MaxAutoRetries: 0
+  #说明：要重试的下一个实例的最大数量，默认为1，不包括第一次被调用的实例
+  MaxAutoRetriesNextServer: 0
+  #说明：是否所有的操作都重试，默认为true
+  OkToRetryOnAllOperations: false
+  #说明：从注册中心刷新服务器列表信息的时间间隔，默认为2000毫秒，即2秒
+  ServerListRefreshInterval: 2000
+  #说明：使用Apache HttpClient连接超时时间，单位为毫秒
+  ConnectTimeout: 6000
+  #说明：使用Apache HttpClient读取的超时时间，单位为毫秒
+  ReadTimeout: 50000
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://fy:123456@belongEureka13141.com:13141/eureka
+      #defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true     #访问路径可以显示IP地址
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+belong:
+  auth:
+    anonUrl: /actuator/**
+    enableJwt: true
+    ## 1天刷新  60 * 60 * 24 * 1
+    refreshTokenSeconds: 86400
+    ## 2小时过期  60 * 60 * 2
+    accessTokenSeconds: 7200
+    jwtAccessKey: ak-web
+
+
+mybatis-plus:
+  # 搜索指定包别名
+  typeAliasesPackage: com.belong
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    #刷新mapper 调试神器
+    db-config:
+      id-type: UUID
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #    日志打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#lcn配置
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:9998
+  springcloud:
+    loadbalance:
+      #      为保证性能开启TX-LCN重写的负载策略
+      enabled: true

@@ -9,7 +9,6 @@
     <description>基于springcloud的分布式解决方案</description>
 
     <packaging>pom</packaging>
-
     <properties>
         <belong.version>0.0.1-SNAPSHOT</belong.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,7 +53,6 @@
 
         <seata.version>0.8.0</seata.version>
 
-        <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <lcn.version>4.1.0</lcn.version>
     </properties>
     <!-- 依赖声明-->
@@ -98,29 +96,6 @@
 <!--                <version>2.1.0.RELEASE</version>-->
 <!--            </dependency>-->
 
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tm</artifactId>
-                <version>${txlcn.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tc</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-txmsg-netty</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
 
             <!--sercurity依赖配置-->
             <dependency>
@@ -328,6 +303,17 @@
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
                 <version>${weixin-java-pay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>2.2.0.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-security</artifactId>
+                <version>2.2.0.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
