@@ -83,27 +83,6 @@
                 <version>${spring-cloud-starter-stream-rabbit.version}</version>
             </dependency>
 
-            <!--Seata依赖-->
-<!--            <dependency>-->
-<!--                <groupId>io.seata</groupId>-->
-<!--                <artifactId>seata-all</artifactId>-->
-<!--                <version>0.8.0</version>-->
-<!--            </dependency>-->
-<!--+-->
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-alibaba-seata</artifactId>-->
-<!--                <version>2.1.0.RELEASE</version>-->
-<!--            </dependency>-->
-
-
-            <!--sercurity依赖配置-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>${spring-security.version}</version>
-            </dependency>
-
             <!--springcloud Rabbitmq stream-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

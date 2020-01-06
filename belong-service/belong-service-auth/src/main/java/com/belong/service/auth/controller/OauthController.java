@@ -37,8 +37,12 @@ public class OauthController {
     //定制申请返回实体
     private ResponseVO custom(OAuth2AccessToken accessToken) {
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
-        Map<String, Object> data = new LinkedHashMap(token.getAdditionalInformation());
+        //Map<String, Object> data = new LinkedHashMap(token.getAdditionalInformation());
+        Map<String, Object> data = new LinkedHashMap(5);
         data.put("accessToken", token.getValue());
+        data.put("expires_in", token.getExpiresIn());
+        data.put("tokenType", token.getTokenType());
+        data.put("scope", token.getScope());
         if (token.getRefreshToken() != null) {
             data.put("refreshToken", token.getRefreshToken().getValue());
         }

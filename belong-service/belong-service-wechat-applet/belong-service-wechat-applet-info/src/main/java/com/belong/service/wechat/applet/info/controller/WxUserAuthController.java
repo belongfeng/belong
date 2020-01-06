@@ -65,84 +65,84 @@ public class WxUserAuthController extends AppletController {
         return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
     }
 
-    /**
-     * 方法实现说明:
-     *
-     * @param registryUser
-     * @return com.belong.common.core.base.ResponseVO
-     * @throws
-     * @author belongfeng
-     */
-    @AccessLimit
-    @PostMapping(value = "/accessUserInfo",consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "上传微信用户信息")
-    public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
-            throw new WxAppletParameterLossException(new String[]{"encryptedData"});
-        }
-        if (StringUtils.isEmpty(registryUser.getIv())) {
-            throw new WxAppletParameterLossException(new String[]{"iv"});
-        }
-        String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
-        if ("".equals(session_key)) {
-            throw new WxappletrequestException("请先登录再获取用户信息！");
-        }
-        WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(session_key, registryUser);
-        if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
-            return ResponseVO.failed("信息录入失败！");
-        }
-        return ResponseVO.ok("信息录入成功！");
-    }
+    ///**
+    // * 方法实现说明:
+    // *
+    // * @param registryUser
+    // * @return com.belong.common.core.base.ResponseVO
+    // * @throws
+    // * @author belongfeng
+    // */
+    //@AccessLimit
+    //@PostMapping(value = "/accessUserInfo",consumes = {"application/json;charset=UTF-8"}, produces = "application/json;charset=UTF-8")
+    //@ApiOperation(value = "上传微信用户信息")
+    //public ResponseVO getUserInfo(@RequestBody WeChatRegistryUserVO registryUser) {
+    //    if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
+    //        throw new WxAppletParameterLossException(new String[]{"encryptedData"});
+    //    }
+    //    if (StringUtils.isEmpty(registryUser.getIv())) {
+    //        throw new WxAppletParameterLossException(new String[]{"iv"});
+    //    }
+    //    String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
+    //    if ("".equals(session_key)) {
+    //        throw new WxappletrequestException("请先登录再获取用户信息！");
+    //    }
+    //    WxUserInfoDO wxUserInfoDO = wxUserAuthService.userInfo(session_key, reg istryUser);
+    //    if (com.belong.common.util.StringUtils.isNull(wxUserInfoDO)) {
+    //        return ResponseVO.failed("信息录入失败！");
+    //    }
+    //    return ResponseVO.ok("信息录入成功！");
+    //}
 
-    /**
-     * 方法实现说明:
-     *
-     * @param registryUser
-     * @return com.belong.common.core.base.ResponseVO
-     * @throws
-     * @author belongfeng
-     */
-    @AccessLimit
-    @PostMapping(value = "/accessUserPhoneNumber",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
-    @ApiOperation(value = "绑定手机号")
-    public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
-        if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
-            throw new WxAppletParameterLossException(new String[]{"encryptedData"});
-        }
-        if (StringUtils.isEmpty(registryUser.getIv())) {
-            throw new WxAppletParameterLossException(new String[]{"iv"});
-        }
-        String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
-        if ("".equals(session_key)) {
-            throw new WxappletrequestException("请先登录再绑定手机号！");
-        }
-        WxMaPhoneNumberInfo wxMaPhoneNumberInfo=wxUserAuthService.userPhone(getOpenId(), session_key, registryUser);
-        WxUserPhoneVO wxUserPhoneVO=WxUserPhoneVO.builder().phoneNumber(wxMaPhoneNumberInfo.getPhoneNumber()).senPhoneNumber(DesensitizedUtils.mobilePhone(wxMaPhoneNumberInfo.getPhoneNumber())).build();
-        return ResponseVO.ok(wxUserPhoneVO);
-    }
+    ///**
+    // * 方法实现说明:
+    // *
+    // * @param registryUser
+    // * @return com.belong.common.core.base.ResponseVO
+    // * @throws
+    // * @author belongfeng
+    // */
+    //@AccessLimit
+    //@PostMapping(value = "/accessUserPhoneNumber",consumes = {"application/json;charset=UTF-8"},produces = "application/json;charset=UTF-8")
+    //@ApiOperation(value = "绑定手机号")
+    //public ResponseVO<WxUserPhoneVO> getUserPhoneNumber(@RequestBody WeChatRegistryUserVO registryUser) {
+    //    if (StringUtils.isEmpty(registryUser.getEncryptedData())) {
+    //        throw new WxAppletParameterLossException(new String[]{"encryptedData"});
+    //    }
+    //    if (StringUtils.isEmpty(registryUser.getIv())) {
+    //        throw new WxAppletParameterLossException(new String[]{"iv"});
+    //    }
+    //    String session_key = redisUtils.get(WxUserInfoDO.SESSION_KEY + getOpenId());
+    //    if ("".equals(session_key)) {
+    //        throw new WxappletrequestException("请先登录再绑定手机号！");
+    //    }
+    //    WxMaPhoneNumberInfo wxMaPhoneNumberInfo=wxUserAuthService.userPhone(getOpenId(), session_key, registryUser);
+    //    WxUserPhoneVO wxUserPhoneVO=WxUserPhoneVO.builder().phoneNumber(wxMaPhoneNumberInfo.getPhoneNumber()).senPhoneNumber(DesensitizedUtils.mobilePhone(wxMaPhoneNumberInfo.getPhoneNumber())).build();
+    //    return ResponseVO.ok(wxUserPhoneVO);
+    //}
 
-    /**
-     * @Description: 获取用户信息接口
-     * @Author: fengyu
-     * @CreateDate: 2019/12/5 11:01
-     */
-    @AccessLimit
-    @ApiOperation(value = "获取用户信息接口")
-    @GetMapping(value = "/getUserInfo",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
-    public ResponseVO<WxUserInfoVO> info() {
-        //先从redis获取用户信息
-        WxUserInfoDO wxUserInfoDO = redisUtils.get(WxUserInfoDO.REDIS_KEY + getUserId(),WxUserInfoDO.class);
-        wxUserInfoDO = Optional.ofNullable(wxUserInfoDO).orElseGet(() -> {
-            return iWxUserInfoService.getById(getUserId());
-        });
-        return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
-    }
-
-    @ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
-    //@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
-    @GetMapping(value = "/txlcn/{oneId}/{twoId}")
-    public ResponseVO<Boolean> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId, @ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
-
-        return ResponseVO.ok(wxUserAuthService.tetLcn(oneId, twoId));
-    }
+    ///**
+    // * @Description: 获取用户信息接口
+    // * @Author: fengyu
+    // * @CreateDate: 2019/12/5 11:01
+    // */
+    //@AccessLimit
+    //@ApiOperation(value = "获取用户信息接口")
+    //@GetMapping(value = "/getUserInfo",consumes = {"application/x-www-form-urlencoded"},produces = "application/json;charset=UTF-8")
+    //public ResponseVO<WxUserInfoVO> info() {
+    //    //先从redis获取用户信息
+    //    WxUserInfoDO wxUserInfoDO = redisUtils.get(WxUserInfoDO.REDIS_KEY + getUserId(),WxUserInfoDO.class);
+    //    wxUserInfoDO = Optional.ofNullable(wxUserInfoDO).orElseGet(() -> {
+    //        return iWxUserInfoService.getById(getUserId());
+    //    });
+    //    return ResponseVO.ok(generator.convert(wxUserInfoDO, WxUserInfoVO.class));
+    //}
+    //
+    //@ApiOperation(value = "测试txlcn事务", notes = "权限标识 sys:wxUserInfo:view")
+    ////@PreAuthorize("hasAuthority('sys:wxUserInfo:view')")
+    //@GetMapping(value = "/txlcn/{oneId}/{twoId}")
+    //public ResponseVO<Boolean> tran(@ApiParam(required = true, value = "oneId") @PathVariable("oneId") String oneId, @ApiParam(required = true, value = "twoId") @PathVariable("twoId") String twoId) {
+    //
+    //    return ResponseVO.ok(wxUserAuthService.tetLcn(oneId, twoId));
+    //}
 }

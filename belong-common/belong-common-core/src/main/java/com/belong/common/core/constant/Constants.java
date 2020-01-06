@@ -16,4 +16,6 @@ public class Constants {
      * 删除标记0：删除
      */
     public static final String DEL_FLAG_DELETE = "0" ;
+
+    public static final String UTF8 = "utf-8" ;
 }

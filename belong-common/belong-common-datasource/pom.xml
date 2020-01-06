@@ -40,11 +40,7 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-tc</artifactId>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>

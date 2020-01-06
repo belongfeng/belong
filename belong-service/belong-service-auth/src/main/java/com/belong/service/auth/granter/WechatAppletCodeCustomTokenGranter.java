@@ -18,7 +18,7 @@ public class WechatAppletCodeCustomTokenGranter extends AbstractCustomTokenGrant
     protected UserDetailService userDetailsService;
 
     public WechatAppletCodeCustomTokenGranter(UserDetailService userDetailsService, AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
-        super(tokenServices, clientDetailsService, requestFactory, "pwd");
+        super(tokenServices, clientDetailsService, requestFactory, "wacode");
         this.userDetailsService = userDetailsService;
     }
 

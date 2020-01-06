@@ -11,13 +11,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.*;
@@ -25,6 +29,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -40,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
     @Autowired
     private BelongWebResponseExceptionTranslator<?> belongWebResponseExceptionTranslator;
-    @Autowired
+    @Resource
     private RedisConnectionFactory redisConnectionFactory;
     @Autowired
     private RedisClientDetailsService redisClientDetailsService;
@@ -52,9 +57,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        //redis获取客户端方式
         clients.withClientDetails(redisClientDetailsService);
+        //内存配置客户端方式
+        //System.out.println("加密的se："+passwordEncoder().encode("xiliangmen666"));
+        //clients.inMemory()
+        //        .withClient("belong-service-wechat-wxapplet")
+        //        .secret(passwordEncoder().encode("xiliangmen666"))
+        //        .scopes("all")
+        //        .authorizedGrantTypes("wacode", "sms", "refresh_token");
     }
 
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.allowFormAuthenticationForClients()
+                // 开启/oauth/check_token验证端口认证权限访问
+                .tokenKeyAccess("isAuthenticated()")
+                // 开启/oauth/token_key验证端口无权限访问
+                .checkTokenAccess("permitAll()");
+    }
 
     /**
      * 配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)
@@ -62,8 +84,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @SuppressWarnings("unchecked")
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(tokenStore()).userDetailsService(userDetailService)
-                .authenticationManager(authenticationManager).exceptionTranslator(belongWebResponseExceptionTranslator);
+        //TokenEnhancerChain enhancerChain=new TokenEnhancerChain();
+        //enhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(),jwtAccessTokenConverter()));
+        //
+        //endpoints.tokenStore(tokenStore()).userDetailsService(userDetailService)
+        //        .authenticationManager(authenticationManager).exceptionTranslator(belongWebResponseExceptionTranslator).tokenEnhancer(enhancerChain);
+
+        endpoints
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
+                .reuseRefreshTokens(false)
+                .tokenStore(tokenStore())
+                .userDetailsService(userDetailService)
+                .authenticationManager(authenticationManager)
+                .exceptionTranslator(belongWebResponseExceptionTranslator);
         if (properties.getEnableJwt()) {
             endpoints.accessTokenConverter(jwtAccessTokenConverter());
         }
@@ -75,12 +108,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenStore tokenStore() {
         if (properties.getEnableJwt()) {
-            return new JwtTokenStore(jwtAccessTokenConverter());
-        } else {
             RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+            redisTokenStore.setPrefix("belong_" + "oauth:");
             //增加uuid是为了防止每次生成的token一样
             redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
             return redisTokenStore;
+        } else {
+            return new JwtTokenStore(jwtAccessTokenConverter());
         }
     }
 
@@ -133,9 +167,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             }
             DefaultOAuth2AccessToken oAuth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
             BelongAuthUser belongAuthUser = (BelongAuthUser) authentication.getDetails();
-            Map<String, Object> map = new LinkedHashMap<>();
+            Map<String, Object> map = new LinkedHashMap<>(4);
             map.put("userId", belongAuthUser.getUserId());
-            map.put("nickname", belongAuthUser.getNickname());
+            map.put("username", belongAuthUser.getUsername());
             map.put("mobile", belongAuthUser.getMobile());
             map.put("avatar", belongAuthUser.getAvatar());
             oAuth2AccessToken.setAdditionalInformation(map);
@@ -143,4 +177,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         };
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

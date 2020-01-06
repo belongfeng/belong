@@ -21,10 +21,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-    @Autowired
-    private BelongAccessDeniedHandler belongAccessDeniedHandler;
-    @Autowired
-    private BelongAuthExceptionEntryPoint belongAuthExceptionEntryPoint;
+    //@Autowired
+    //private BelongAccessDeniedHandler belongAccessDeniedHandler;
+    //@Autowired
+    //private BelongAuthExceptionEntryPoint belongAuthExceptionEntryPoint;
     @Autowired
     private AuthProperties authProperties;
 
@@ -41,9 +41,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and().httpBasic();
     }
 
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.authenticationEntryPoint(belongAuthExceptionEntryPoint)
-                .accessDeniedHandler(belongAccessDeniedHandler);
-    }
+    //@Override
+    //public void configure(ResourceServerSecurityConfigurer resources) {
+    //    //resources.authenticationEntryPoint(new BelongAuthExceptionEntryPoint())
+    //    //        .accessDeniedHandler(new BelongAccessDeniedHandler());
+    //}
 }

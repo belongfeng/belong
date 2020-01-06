@@ -27,7 +27,13 @@ public class UserDetailService implements UserDetailsService {
     }
 
     public BelongAuthUser loadUserByWechatAppletCode(String code) throws UsernameNotFoundException {
-        WxUserInfoVO wxUserInfoVO = remoteWxUserAuthFService.baseLogin(code).getData();
+        //WxUserInfoVO wxUserInfoVO = remoteWxUserAuthFService.baseLogin(code).getData();
+        WxUserInfoVO wxUserInfoVO=new WxUserInfoVO();
+        wxUserInfoVO.setEnabled(true);
+        wxUserInfoVO.setAvatarUrl("img");
+        wxUserInfoVO.setMobile("setMobile");
+        wxUserInfoVO.setId("123456789");
+        wxUserInfoVO.setNickName("name");
         if (wxUserInfoVO == null) {
             throw new InvalidGrantException("请再次检查code是否正确，尝试刷新！");
         }

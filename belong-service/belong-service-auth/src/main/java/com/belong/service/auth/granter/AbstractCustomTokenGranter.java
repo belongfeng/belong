@@ -1,6 +1,7 @@
 package com.belong.service.auth.granter;
 
 import com.belong.common.auth.entity.BelongAuthUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
@@ -25,7 +26,7 @@ public abstract class AbstractCustomTokenGranter extends AbstractTokenGranter {
         Map<String, String> parameters = new LinkedHashMap(tokenRequest.getRequestParameters());
         BelongAuthUser belongAuthUser = getCustomUser(parameters);
         if (belongAuthUser == null) {
-            throw new InvalidGrantException("无法获取用户信息");
+            throw new InvalidGrantException("无法获取用户信息!");
         }
         OAuth2Authentication authentication = super.getOAuth2Authentication(client, tokenRequest);
         authentication.setDetails(belongAuthUser);
