@@ -37,15 +37,6 @@
             <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
 
-
-        <!--jwt-->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jwt.version}</version>
-        </dependency>
-
-
         <!-- redis模块-->
         <dependency>
             <groupId>com.group</groupId>

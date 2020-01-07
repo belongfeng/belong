@@ -73,11 +73,6 @@ management:
 belong:
   auth:
     anonUrl: /actuator/**,/doc.html,/v2/api-docs,/v2/api-docs-ext,/client/**,/token/**
-    enableJwt: true
-    ## 1天刷新  60 * 60 * 24 * 1
-    refreshTokenSeconds: 10
-    ## 2小时过期  60 * 60 * 2
-    accessTokenSeconds: 10
     jwtAccessKey: belong-auth
 
 

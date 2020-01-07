@@ -6,8 +6,8 @@ package com.belong.common.core.constant;
  * @author fengyu
  */
 public class Constants {
-    public static final String AUTHORIZATION = "authorization" ;
-    public static final String TOKEN_TYPE_BEARER = "Bearer" ;
+    public static final String AUTHORIZATION = "Authorization" ;
+    public static final String TOKEN_TYPE_BEARER = "Bearer " ;
     /**
      * 删除标记1：正常
      */

@@ -31,6 +31,7 @@ public abstract class AbstractCustomTokenGranter extends AbstractTokenGranter {
         OAuth2Authentication authentication = super.getOAuth2Authentication(client, tokenRequest);
         authentication.setDetails(belongAuthUser);
         authentication.setAuthenticated(true);
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
         return authentication;
     }
 

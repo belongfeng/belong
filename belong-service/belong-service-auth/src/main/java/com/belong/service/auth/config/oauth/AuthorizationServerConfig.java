@@ -59,13 +59,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //redis获取客户端方式
         clients.withClientDetails(redisClientDetailsService);
-        //内存配置客户端方式
-        //System.out.println("加密的se："+passwordEncoder().encode("xiliangmen666"));
-        //clients.inMemory()
-        //        .withClient("belong-service-wechat-wxapplet")
-        //        .secret(passwordEncoder().encode("xiliangmen666"))
-        //        .scopes("all")
-        //        .authorizedGrantTypes("wacode", "sms", "refresh_token");
     }
 
 
@@ -84,12 +77,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @SuppressWarnings("unchecked")
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        //TokenEnhancerChain enhancerChain=new TokenEnhancerChain();
-        //enhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(),jwtAccessTokenConverter()));
-        //
-        //endpoints.tokenStore(tokenStore()).userDetailsService(userDetailService)
-        //        .authenticationManager(authenticationManager).exceptionTranslator(belongWebResponseExceptionTranslator).tokenEnhancer(enhancerChain);
-
         endpoints
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .reuseRefreshTokens(false)
@@ -97,9 +84,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(belongWebResponseExceptionTranslator);
-        if (properties.getEnableJwt()) {
-            endpoints.accessTokenConverter(jwtAccessTokenConverter());
-        }
+        //if (properties.getEnableJwt()) {
+        //    endpoints.accessTokenConverter(jwtAccessTokenConverter());
+        //}
+        endpoints.accessTokenConverter(jwtAccessTokenConverter());
         List<TokenGranter> tokenGranters = getTokenGranters(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory());
         tokenGranters.add(endpoints.getTokenGranter());
         endpoints.tokenGranter(new CompositeTokenGranter(tokenGranters));
@@ -107,15 +95,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public TokenStore tokenStore() {
-        if (properties.getEnableJwt()) {
-            RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
-            redisTokenStore.setPrefix("belong_" + "oauth:");
-            //增加uuid是为了防止每次生成的token一样
-            redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
-            return redisTokenStore;
-        } else {
-            return new JwtTokenStore(jwtAccessTokenConverter());
-        }
+        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+        redisTokenStore.setPrefix("belong_" + "oauth:");
+        //增加uuid是为了防止每次生成的token一样
+        redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
+        return redisTokenStore;
     }
 
     @Bean
@@ -124,8 +108,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
-        tokenServices.setAccessTokenValiditySeconds(properties.getAccessTokenSeconds());
-        tokenServices.setRefreshTokenValiditySeconds(properties.getRefreshTokenSeconds());
+        tokenServices.setAccessTokenValiditySeconds(10);
+        tokenServices.setRefreshTokenValiditySeconds(10);
         tokenServices.setClientDetailsService(redisClientDetailsService);
         return tokenServices;
     }
