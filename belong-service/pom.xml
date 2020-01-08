@@ -20,5 +20,6 @@
         <module>belong-service-wechat-applet</module>
         <module>belong-service-tx-manager</module>
         <module>belong-service-auth</module>
+        <module>belong-service-system</module>
     </modules>
 </project>

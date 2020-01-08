@@ -9,11 +9,10 @@
         <artifactId>belong-service</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <groupId>com.group</groupId>
     <artifactId>belong-service-auth</artifactId>
     <description>授权服务</description>
-
+    <packaging>jar</packaging>
     <properties>
         <docker.image.prefix>belong-service-auth</docker.image.prefix>
     </properties>
@@ -109,6 +108,12 @@
         <dependency>
             <groupId>com.group</groupId>
             <artifactId>belong-common-datasource</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-transaction</artifactId>
             <version>${belong.version}</version>
         </dependency>
 

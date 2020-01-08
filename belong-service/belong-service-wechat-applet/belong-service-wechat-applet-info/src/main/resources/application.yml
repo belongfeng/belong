@@ -48,6 +48,12 @@ mybatis-plus:
     #    日志打印
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+security:
+  oauth2:
+    resource:
+      id: belong-service-wechat-applet
+      user-info-uri: http://belongAuth.com:20001/user
+      prefer-token-info: false
 
 
 #lcn配置
@@ -58,8 +64,3 @@ tx-lcn:
     loadbalance:
 #      为保证性能开启TX-LCN重写的负载策略
       enabled: true
-
-security:
-  jwt:
-    secret: k09BQnaF
-    expiration: 604800 #7Days

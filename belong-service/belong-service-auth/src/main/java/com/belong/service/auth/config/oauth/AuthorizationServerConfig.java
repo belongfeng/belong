@@ -57,6 +57,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        System.out.println("客户端：belong-service-wechat-public   密码："+passwordEncoder().encode("belong-service-wechat-public:xiliangmen666"));
+        System.out.println("客户端：belong-service-wechat-applet   密码："+passwordEncoder().encode("belong-service-wechat-applet:xiliangmen666"));
+        System.out.println("客户端：belong-service-system   密码："+passwordEncoder().encode("belong-service-system:xiliangmen666"));
         //redis获取客户端方式
         clients.withClientDetails(redisClientDetailsService);
     }
@@ -84,9 +87,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(belongWebResponseExceptionTranslator);
-        //if (properties.getEnableJwt()) {
-        //    endpoints.accessTokenConverter(jwtAccessTokenConverter());
-        //}
         endpoints.accessTokenConverter(jwtAccessTokenConverter());
         List<TokenGranter> tokenGranters = getTokenGranters(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory());
         tokenGranters.add(endpoints.getTokenGranter());
@@ -108,8 +108,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(tokenStore());
         tokenServices.setSupportRefreshToken(true);
-        tokenServices.setAccessTokenValiditySeconds(10);
-        tokenServices.setRefreshTokenValiditySeconds(10);
         tokenServices.setClientDetailsService(redisClientDetailsService);
         return tokenServices;
     }

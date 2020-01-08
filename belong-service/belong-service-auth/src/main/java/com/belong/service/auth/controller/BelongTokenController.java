@@ -1,13 +1,11 @@
 package com.belong.service.auth.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.belong.common.auth.constant.SecurityConstants;
 import com.belong.common.auth.util.SecurityUtils;
 import com.belong.common.core.base.ResponseVO;
 import com.belong.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
@@ -16,7 +14,6 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -90,14 +87,11 @@ public class BelongTokenController {
             return ResponseVO.ok("退出失败，token 无效");
         }
         OAuth2Authentication auth2Authentication = tokenStore.readAuthentication(accessToken);
-        // 清空用户信息
-        //cacheManager.getCache(CacheConstants.USER_DETAILS)
-        //        .evict(auth2Authentication.getName());
         // 清空access token
         tokenStore.removeAccessToken(accessToken);
         // 清空 refresh token
         OAuth2RefreshToken refreshToken = accessToken.getRefreshToken();
-        if(StringUtils.isNotNull(refreshToken)){
+        if (StringUtils.isNotNull(refreshToken)) {
             tokenStore.removeRefreshToken(refreshToken);
         }
         return ResponseVO.ok();

@@ -1,5 +1,5 @@
 server:
-  port: 10001
+  port: 10002
 # 日志配置
 logging:
   level:
@@ -7,7 +7,7 @@ logging:
     org.springframework: warn
 spring:
   application:
-    name: belong-service-wechat-applet-info
+    name: belong-service-wechat-applet-casus
   cloud:
     config:
       uri: http://127.0.0.1:520
@@ -31,12 +31,6 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
 
-security:
-  oauth2:
-    resource:
-      id: eshop-member
-      user-info-uri: http://localhost:1202/auth/api/member
-      prefer-token-info: false
 
 feign:
   hystrix:
@@ -47,28 +41,13 @@ feign:
         execution:
           isolation:
             thread:
-              timeoutInMilliseconds: 50000
+              timeoutInMilliseconds: 4000
   client:
     config:
       default:
-        connectTimeout: 50000
-        readTimeout: 50000
+        connectTimeout: 4000
+        readTimeout: 4000
 
-ribbon:
-  eager-load:
-    enabled: true
-  #说明：同一台实例的最大自动重试次数，默认为1次，不包括首次
-  MaxAutoRetries: 0
-  #说明：要重试的下一个实例的最大数量，默认为1，不包括第一次被调用的实例
-  MaxAutoRetriesNextServer: 0
-  #说明：是否所有的操作都重试，默认为true
-  OkToRetryOnAllOperations: false
-  #说明：从注册中心刷新服务器列表信息的时间间隔，默认为2000毫秒，即2秒
-  ServerListRefreshInterval: 2000
-  #说明：使用Apache HttpClient连接超时时间，单位为毫秒
-  ConnectTimeout: 6000
-  #说明：使用Apache HttpClient读取的超时时间，单位为毫秒
-  ReadTimeout: 50000
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:

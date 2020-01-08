@@ -23,24 +23,11 @@
 
         <dependency>
             <groupId>com.group</groupId>
-            <artifactId>belong-common-swagger</artifactId>
-            <version>${belong.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>com.group</groupId>
             <artifactId>belong-service-wechat-applet-info-api</artifactId>
             <version>${belong.version}</version>
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.group</groupId>
-            <artifactId>belong-common-redis</artifactId>
-            <version>${belong.version}</version>
-            <optional>true</optional>
-        </dependency>
 
         <dependency>
             <groupId>com.group</groupId>
@@ -54,19 +41,6 @@
             <artifactId>belong-common-core</artifactId>
             <version>${belong.version}</version>
             <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>com.group</groupId>
-            <artifactId>belong-common-exception</artifactId>
-            <version>${belong.version}</version>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- fastjson-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
         </dependency>
 
         <dependency>
