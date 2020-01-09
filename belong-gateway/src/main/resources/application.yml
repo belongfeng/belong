@@ -24,6 +24,25 @@ spring:
         locator:
           enabled: true
       routes:
+        #授权中心
+        - id: belong-service-auth
+          uri: lb://belong-service-auth
+          predicates:
+            - Path=/oauth/**
+          filters:
+            # 限流配置
+            - CacheRequest
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+              # 降级配置
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: 'forward:/fallback'
         #微信小程序个人中心模块
         - id: belong-service-wechat-applet-info
           uri: lb://belong-service-wechat-applet-info
@@ -116,3 +135,10 @@ hystrix:
     requestVolumeThreshold: 20     #启用熔断器功能窗口时间内的最小请求数，假设我们设置的窗口时间为10秒，
     sleepWindowInMilliseconds: 5000    #所以此配置的作用是指定熔断器打开后多长时间内允许一次请求尝试执行，官方默认配置为5秒。
     errorThresholdPercentage: 50   #窗口时间内超过50%的请求失败后就会打开熔断器将后续请求快速失败掉,默认配置为50
+
+belong:
+  gateway:
+    #    禁止外部访问的 URI，多个值的话以逗号分隔
+    forbidRequestUri:
+    #    放开的路径
+    anonRequestUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/doc.html,/docs/**,/test,/doc.html,/docs/**

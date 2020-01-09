@@ -24,6 +24,7 @@ project:
       mchId: 1530459401
       mchKey: 2f64407894d42842a4389503096d8fa1
       keyPath: 123
+  anonUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/doc.html,/docs/**,/,/csrf
 
 mybatis-plus:
   # 搜索指定包别名
@@ -62,5 +63,5 @@ tx-lcn:
     manager-address: 127.0.0.1:9998
   springcloud:
     loadbalance:
-#      为保证性能开启TX-LCN重写的负载策略
+      #      为保证性能开启TX-LCN重写的负载策略
       enabled: true

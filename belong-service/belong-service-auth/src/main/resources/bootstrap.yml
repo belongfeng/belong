@@ -72,7 +72,7 @@ management:
 
 belong:
   auth:
-    anonUrl: /actuator/**,/doc.html,/v2/api-docs,/v2/api-docs-ext,/client/**,/token/**
+    anonUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/doc.html,/docs/**,/,/csrf,/client/**,/token/**
     jwtAccessKey: belong-auth
 
 

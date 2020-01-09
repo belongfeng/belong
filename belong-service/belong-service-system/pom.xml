@@ -111,6 +111,12 @@
             <artifactId>belong-common-transaction</artifactId>
             <version>${belong.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.group</groupId>
+            <artifactId>belong-common-auth</artifactId>
+            <version>${belong.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

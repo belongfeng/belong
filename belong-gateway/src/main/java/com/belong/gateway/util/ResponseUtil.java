@@ -28,7 +28,7 @@ public class ResponseUtil {
     /**
      * 方法实现说明:定义返回体
      *
-     * @param exchange
+     * @param originalResponse
      * @param code
      * @param msg
      * @return reactor.core.publisher.Mono<java.lang.Void>
@@ -36,8 +36,7 @@ public class ResponseUtil {
      * @author fengyu
      * @date 2019/9/25 11:51
      */
-    public static Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange, int code, String msg) {
-        ServerHttpResponse originalResponse = exchange.getResponse();
+    public static Mono<Void> setUnauthorizedResponse(ServerHttpResponse originalResponse, int code, String msg) {
         originalResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
         originalResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         byte[] response = null;

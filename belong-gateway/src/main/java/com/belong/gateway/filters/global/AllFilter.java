@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.gateway.route.Route;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+
+import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*;
 
 
 /**
@@ -58,6 +65,19 @@ public class AllFilter implements GlobalFilter, Ordered {
             Long startTime = exchange.getAttribute("startTime");
             if (startTime != null) {
                 long executeTime = (System.currentTimeMillis() - startTime);
+                URI url = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
+                Route route = exchange.getAttribute(GATEWAY_ROUTE_ATTR);
+                LinkedHashSet<URI> uris = exchange.getAttribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+                URI originUri = null;
+                if (uris != null) {
+                    originUri = uris.stream().findFirst().orElse(null);
+                }
+                if (url != null && route != null && originUri != null) {
+                    log.info("转发请求：{}://{}{} --> 目标服务：{}，目标地址：{}://{}{}，转发时间：{}",
+                            originUri.getScheme(), originUri.getAuthority(), originUri.getPath(),
+                            route.getId(), url.getScheme(), url.getAuthority(), url.getPath(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                    );
+                }
                 log.info("网关转发耗时=======>{}ms,转发状态=======>{}", executeTime, Objects.requireNonNull(exchange.getResponse().getStatusCode()).value());
             }
         }));

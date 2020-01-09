@@ -1,9 +1,8 @@
-package com.belong.service.auth.config.oauth;
+package com.belong.service.wechat.applet.info.configure;
 
 import com.belong.common.auth.entity.EndpointConstant;
 import com.belong.common.auth.handler.BelongAccessDeniedHandler;
 import com.belong.common.auth.handler.BelongAuthExceptionEntryPoint;
-import com.belong.service.auth.config.properties.AuthProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +21,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
-    private AuthProperties authProperties;
+    private WechatAppletInfoProperties wechatAppletInfoProperties;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(authProperties.getAnonUrl(), ",");
+        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(wechatAppletInfoProperties.getAnonUrl(), ",");
 
         http.csrf().disable()
                 .requestMatchers().antMatchers(EndpointConstant.ALL)

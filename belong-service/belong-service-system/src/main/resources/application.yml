@@ -24,7 +24,7 @@ project:
       mchId: 1530459401
       mchKey: 2f64407894d42842a4389503096d8fa1
       keyPath: 123
-
+  anonUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs/**,/doc.html,/docs/**,/,/csrf
 
 
 mybatis-plus:
