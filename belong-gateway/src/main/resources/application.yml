@@ -32,7 +32,6 @@ spring:
           filters:
             # 限流配置
             - CacheRequest
-            - StripPrefix=1
             - name: RequestRateLimiter
               args:
                 key-resolver: '#{@remoteAddrKeyResolver}'
