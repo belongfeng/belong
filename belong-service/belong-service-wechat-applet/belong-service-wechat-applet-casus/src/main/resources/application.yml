@@ -54,7 +54,7 @@ security:
   oauth2:
     resource:
       id: belong-service-wechat-applet
-      user-info-uri: http://belongAuth.com:20001/user
+      user-info-uri: http://belongAuth.com:20001/auth/user
       prefer-token-info: false
 
 #lcn配置

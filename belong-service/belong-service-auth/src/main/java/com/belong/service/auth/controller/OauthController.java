@@ -34,7 +34,14 @@ public class OauthController {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());
     }
 
-    //定制申请返回实体
+    /**
+     * 方法实现说明:定制申请返回实体
+     *
+     * @param accessToken
+     * @return com.belong.common.core.base.ResponseVO
+     * @throws
+     * @author belongfeng
+     */
     private ResponseVO custom(OAuth2AccessToken accessToken) {
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
         //Map<String, Object> data = new LinkedHashMap(token.getAdditionalInformation());

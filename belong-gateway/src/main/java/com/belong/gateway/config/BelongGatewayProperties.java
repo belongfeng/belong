@@ -19,5 +19,10 @@ public class BelongGatewayProperties {
      */
     private String forbidRequestUri;
 
-    private String anonRequestUrl;
+    private String AnonRequestUrl;
+
+    private String WxAppletAnonRequestUrl;
+
+
+    private String AuthAnonRequestUrl;
 }

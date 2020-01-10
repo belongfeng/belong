@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * @Description: 微信小程序个人中心服务以及扫码服务启动类
+ * @Description: 授权服务启动类
  * @Author: fengyu
  * @CreateDate: 2019/10/28 15:27
  * @UpdateDate: 2019/10/28 15:27

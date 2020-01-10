@@ -1,6 +1,5 @@
-package com.belong.gateway.filters.wxapplet;
+package com.belong.gateway.filters.auth;
 
-import com.belong.common.core.base.ResponseVO;
 import com.belong.common.core.constant.Constants;
 import com.belong.gateway.config.BelongGatewayProperties;
 import com.belong.gateway.util.ResponseUtil;
@@ -10,34 +9,21 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.cloud.gateway.route.Route;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-
-import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*;
-
 /**
- * @Description: 微信小程序拦截器
- * @Author: fengyu
- * @CreateDate: 2019/12/5 10:07
- * @UpdateDate: 2019/12/5 10:07
- * @Version: 1.0
- */
+* @Description:    
+* @Author:         fengyu
+* @CreateDate:     2020/1/10 13:54
+*/
 @Component
 @Slf4j
-public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.Config> {
-    @Autowired
-    private StringRedisTemplate redisTemplate;
+public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
     @Autowired
     private BelongGatewayProperties properties;
     private AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -73,7 +59,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
     private boolean checkAnonUri(ServerHttpRequest request) {
         String uri = request.getPath().toString();
         boolean shouldForward = false;
-        String anonRequestUrl = properties.getAnonRequestUrl()+properties.getWxAppletAnonRequestUrl();
+        String anonRequestUrl = properties.getAnonRequestUrl()+properties.getAuthAnonRequestUrl();
         String[] anonRequestUris = anonRequestUrl.split(",");
         if (anonRequestUris != null && ArrayUtils.isNotEmpty(anonRequestUris)) {
             for (String u : anonRequestUris) {
@@ -104,7 +90,7 @@ public class WxAppletFilter extends AbstractGatewayFilterFactory<WxAppletFilter.
         return null;
     }
 
-    public WxAppletFilter() {
+    public AuthFilter() {
         super(Config.class);
     }
 

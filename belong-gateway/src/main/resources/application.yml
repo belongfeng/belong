@@ -28,10 +28,12 @@ spring:
         - id: belong-service-auth
           uri: lb://belong-service-auth
           predicates:
-            - Path=/oauth/**
+            - Path=/auth/**
           filters:
             # 限流配置
             - CacheRequest
+            - StripPrefix=1
+            - AuthFilter
             - name: RequestRateLimiter
               args:
                 key-resolver: '#{@remoteAddrKeyResolver}'
@@ -139,5 +141,8 @@ belong:
   gateway:
     #    禁止外部访问的 URI，多个值的话以逗号分隔
     forbidRequestUri:
-    #    放开的路径
-    anonRequestUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/doc.html,/docs/**,/test,/doc.html,/docs/**
+#
+    AnonRequestUrl: /actuator/**,/swagger-ui.html,/webjars/**,/swagger-resources/**,/v2/api-docs,/doc.html,/docs/**,/test,/doc.html,/docs/**,
+    #    微信小程序放开的路径
+    WxAppletAnonRequestUrl:
+    AuthAnonRequestUrl: /oauth/token,/token/**,
