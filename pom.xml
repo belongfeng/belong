@@ -33,7 +33,7 @@
         <poi.version>3.17</poi.version>
         <velocity.version>1.7</velocity.version>
         <common-pool.version>2.6.2</common-pool.version>
-        <guava.version>26.0-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <hutool.version>4.5.13</hutool.version>
         <dozer.version>5.5.1</dozer.version>
         <!--jwt-->
