@@ -22,7 +22,7 @@
         <spring-cloud-starter-stream-rabbit.version>2.1.2.RELEASE</spring-cloud-starter-stream-rabbit.version>
 
         <lombok.version>1.18.8</lombok.version>
-        <fastjson.version>1.2.49</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <jackson.version>2.10.0</jackson.version>
         <netty-all.version>4.1.36.Final</netty-all.version>
         <oshi.version>3.9.1</oshi.version>
