@@ -41,7 +41,7 @@
 
         <mybatis-plus-boot-starter.version>3.2.0</mybatis-plus-boot-starter.version>
         <druid.version>1.1.14</druid.version>
-        <mysql.con.version>8.0.16</mysql.con.version>
+        <mysql.con.version>8.0.28</mysql.con.version>
 
         <springfox.version>2.9.2</springfox.version>
         <swagger.bootstrap.version>1.9.6</swagger.bootstrap.version>
